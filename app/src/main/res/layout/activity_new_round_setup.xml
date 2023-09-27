@@ -4,7 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewRoundSetupActivity">
+    tools:context=".NewRoundSetupActivity"
+    android:padding="8dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="new round" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -28,10 +36,11 @@
             android:text="Location: "
             android:textSize="22sp"
             android:layout_marginTop="2dp"
-            android:layout_marginEnd="92dp"
+            android:layout_marginEnd="84dp"
             android:layout_marginStart="16dp"/>
 
         <EditText
+            android:id="@+id/et_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Tunix Country Club"
@@ -52,10 +61,11 @@
             android:text="Course Name: "
             android:textSize="22sp"
             android:layout_marginTop="2dp"
-            android:layout_marginEnd="44dp"
+            android:layout_marginEnd="36dp"
             android:layout_marginStart="16dp"/>
 
         <EditText
+            android:id="@+id/et_course_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Red Course"
@@ -76,30 +86,35 @@
             android:text="Number of holes: "
             android:textSize="22sp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"/>
 
         <RadioGroup
+            android:id="@+id/rg_holes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/rb_nine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="9" />
 
             <RadioButton
+                android:id="@+id/rb_eighteen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="18" />
 
             <RadioButton
+                android:id="@+id/rb_twenty_seven"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="27" />
 
             <RadioButton
+                android:id="@+id/rb_thirty_six"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="36" />
@@ -115,12 +130,14 @@
         android:layout_margin="16dp">
 
         <Button
+            android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Back"
             android:layout_marginEnd="16dp"/>
 
         <Button
+            android:id="@+id/btn_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Start"
