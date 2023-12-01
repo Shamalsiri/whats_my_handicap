@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#D838983B"
+    android:visibility="visible"
     tools:context=".fragments.LoginFragment">
 
 
@@ -86,6 +87,7 @@
         android:layout_marginTop="11dp"
         android:text="Show Error Here"
         android:textColor="#FF0C0C"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_password" />

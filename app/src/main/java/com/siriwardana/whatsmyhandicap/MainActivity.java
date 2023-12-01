@@ -28,16 +28,21 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.onL
     }
 
     private void loadFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
     @Override
-    public void onLoginButtonClicked() {
+    public void onLoginButtonClicked(boolean canLogin) {
         Log.d("SSiri", "Login Button Clicked");
+        Log.d("SSiri", "Can Login: " + canLogin);
+
+        if (canLogin) {
+            // TODO: Open next Activity
+        }
     }
 
     @Override
@@ -47,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.onL
     }
 
     @Override
-    public void onRegisterNewUser() {
+    public void onRegisterNewUser(boolean canRegister) {
         Log.d("SSiri", "New User Register");
     }
 

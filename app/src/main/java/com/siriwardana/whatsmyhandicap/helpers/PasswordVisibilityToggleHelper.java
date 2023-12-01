@@ -1,4 +1,4 @@
-package com.siriwardana.whatsmyhandicap.fragments;
+package com.siriwardana.whatsmyhandicap.helpers;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
@@ -45,12 +45,12 @@ public class PasswordVisibilityToggleHelper {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    public View.OnTouchListener getPasswordTouchListener(final EditText passET) {
+    public View.OnTouchListener getPasswordTouchListener(final EditText passwordET) {
         return (v, event) -> {
             final int DRAWABLE_RIGHT = 2;
             if (event.getAction() == MotionEvent.ACTION_UP) {
-                if (event.getRawX() >= (passET.getRight() - passET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                    togglePasswordVisibility(passET);
+                if (event.getRawX() >= (passwordET.getRight() - passwordET.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    togglePasswordVisibility(passwordET);
                     return true;
                 }
             }
