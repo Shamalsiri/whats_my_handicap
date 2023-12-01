@@ -11,19 +11,23 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.siriwardana.whatsmyhandicap.R;
+import com.siriwardana.whatsmyhandicap.database.Converters;
+import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
+import com.siriwardana.whatsmyhandicap.database.User;
 import com.siriwardana.whatsmyhandicap.helpers.PasswordVisibilityToggleHelper;
 import com.siriwardana.whatsmyhandicap.helpers.UserRegistrationHelper;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class RegisterFragment extends Fragment {
 
     private PasswordVisibilityToggleHelper passwordVisibilityToggleHelper;
     private UserRegistrationHelper userRegistrationHelper;
     private TextView errorMsgTV;
-
     private EditText fNameET, lNameET, dobET,
             emailET, emailConfirmET, passwordET, passwordConfirmET;
+    private DatabaseSingleton dbSingleton;
+    private String fName, lName, dob, email, confirmEmail, password, confirmPassword;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -49,6 +53,7 @@ public class RegisterFragment extends Fragment {
         passwordET = (EditText) view.findViewById(R.id.et_passwd);
         passwordConfirmET = (EditText) view.findViewById(R.id.et_passwd_confirm);
 
+        dbSingleton = DatabaseSingleton.getDBInstance(getContext().getApplicationContext());
 
         // Password visibility toggle logic
         passwordVisibilityToggleHelper = new PasswordVisibilityToggleHelper();
@@ -73,9 +78,7 @@ public class RegisterFragment extends Fragment {
                     validateNewUser(emailET.getText().toString().trim());
 
             if (canRegister) {
-                // place holder
-                errorMsgTV.setText("Can Register");
-                errorMsgTV.setVisibility(View.VISIBLE);
+                registerNewUser();
             }
             ((OnRegisterButtonClickListener) requireActivity()).onRegisterNewUser(canRegister);
         });
@@ -84,18 +87,21 @@ public class RegisterFragment extends Fragment {
     }
 
     public boolean validateNewUser(String email) {
-        //Todo: validate that the email isn't on the db already.
-        return true;
+        if( dbSingleton.UserDao().getUserCountByEmail(email) == 0 ) {
+            return true;
+        }
+        showErrorMsg("Email is already Registered");
+        return false;
     }
 
     public boolean validateRegisterFormInput() {
-        String fName = fNameET.getText().toString().trim();
-        String lName = lNameET.getText().toString().trim();
-        String dob = dobET.getText().toString().trim();
-        String email = emailET.getText().toString().trim();
-        String confirmEmail = emailConfirmET.getText().toString().trim();
-        String password = passwordET.getText().toString().trim();
-        String confirmPassword = passwordConfirmET.getText().toString().trim();
+        fName = fNameET.getText().toString().trim();
+        lName = lNameET.getText().toString().trim();
+        dob = dobET.getText().toString().trim();
+        email = emailET.getText().toString().trim();
+        confirmEmail = emailConfirmET.getText().toString().trim();
+        password = passwordET.getText().toString().trim();
+        confirmPassword = passwordConfirmET.getText().toString().trim();
 
         errorMsgTV.setVisibility(View.INVISIBLE);
 
@@ -136,6 +142,25 @@ public class RegisterFragment extends Fragment {
         }
 
         return true;
+    }
+
+    public void registerNewUser(){
+        Date birthday = userRegistrationHelper.str2Date(dob);
+        long bDay;
+        if(birthday != null) {
+            bDay = Converters.dateToTimestamp(birthday);
+        } else {
+            bDay = Long.parseLong(null);
+        }
+
+        User newUser = new User();
+        newUser.setFirstName(fName);
+        newUser.setLastName(lName);
+        newUser.setDob(bDay);
+        newUser.setEmail(email);
+        newUser.setPassword(password);
+
+        dbSingleton.UserDao().insert(newUser);
     }
 
     public void showErrorMsg(String msg) {

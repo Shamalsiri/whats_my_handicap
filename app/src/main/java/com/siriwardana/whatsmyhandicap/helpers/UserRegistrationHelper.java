@@ -26,7 +26,6 @@ public class UserRegistrationHelper {
 
     public boolean isValidDate(String inputDate) {
         SimpleDateFormat sdf  = new SimpleDateFormat("MM-dd-yyyy");
-        SimpleDateFormat sdf1 = new SimpleDateFormat("MM/dd/yyyy");
         sdf.setLenient(false);
 
         Date date;
@@ -35,14 +34,21 @@ public class UserRegistrationHelper {
             Log.d("SSIRI", "Valid date: " + date);
             return true;
         } catch (ParseException e) {
-            try {
-                date = sdf1.parse(inputDate);
-                Log.d("SSIRI", "Valid date: " + date);
-                return true;
-            } catch (ParseException er) {
-                Log.d("SSIRI", "invalid date");
-                return false;
-            }
+            Log.d("SSIRI", "invalid date");
+            return false;
+        }
+    }
+
+    public Date str2Date(String inputDate) {
+        SimpleDateFormat sdf  = new SimpleDateFormat("MM-dd-yyyy");
+        sdf.setLenient(false);
+
+        Date date;
+        try {
+            date = sdf.parse(inputDate);
+            return date;
+        } catch (ParseException e) {
+            return null;
         }
     }
 

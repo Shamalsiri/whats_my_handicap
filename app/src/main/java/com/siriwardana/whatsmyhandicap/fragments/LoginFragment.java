@@ -1,8 +1,6 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +10,19 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.siriwardana.whatsmyhandicap.R;
+import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
+import com.siriwardana.whatsmyhandicap.database.User;
 import com.siriwardana.whatsmyhandicap.helpers.PasswordVisibilityToggleHelper;
 import com.siriwardana.whatsmyhandicap.helpers.UserRegistrationHelper;
 
 public class LoginFragment extends Fragment {
 
     private PasswordVisibilityToggleHelper passwordVisibilityToggleHelper;
-
     private UserRegistrationHelper userRegistrationHelper;
+    private DatabaseSingleton dbSingleton;
     private EditText emailET, passwordET;
     private TextView errorTV;
+    private int uID;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -40,24 +41,29 @@ public class LoginFragment extends Fragment {
 
         //Needed to validate the email
         userRegistrationHelper = new UserRegistrationHelper();
+        //Needed to validate login
+        dbSingleton = DatabaseSingleton.getDBInstance(getContext().getApplicationContext());
 
         view.findViewById(R.id.btn_login).setOnClickListener(v -> {
+            String email = emailET.getText().toString().trim();
+            String password = passwordET.getText().toString().trim();
 
-            boolean canLogin = validateLogin(emailET, passwordET);
-            if (!userRegistrationHelper.validateEmail(emailET.getText().toString().trim())) {
-                errorTV.setText("Invalid email");
-                errorTV.setVisibility(View.VISIBLE);
+            errorTV.setVisibility(View.INVISIBLE);
+
+            boolean canLogin;
+            if (!userRegistrationHelper.validateEmail(email)) {
+                showErrorMsg("Invalid email format");
                 canLogin = false;
-            } else if (!validateLogin(emailET, passwordET)) {
-                errorTV.setText("Username and Password didn't match our records");
-                errorTV.setVisibility(View.VISIBLE);
+            } else if (!validateLoginCredentials(email, password)) {
+                showErrorMsg("Username and Password didn't match our records");
                 canLogin = false;
             } else {
                 errorTV.setText("");
                 errorTV.setVisibility(View.INVISIBLE);
+                canLogin = true;
             }
 
-            ((onLoginButtonClickListener) requireActivity()).onLoginButtonClicked(canLogin);
+            ((onLoginButtonClickListener) requireActivity()).onLoginButtonClicked(canLogin, uID);
         });
 
         view.findViewById(R.id.btn_register).setOnClickListener(v -> {
@@ -73,25 +79,24 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    private boolean validateEmail(CharSequence email) {
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    public void showErrorMsg(String msg) {
+        errorTV.setText(msg);
+        errorTV.setVisibility(View.VISIBLE);
     }
 
-    private boolean validateLogin(EditText emailEt, EditText passwordET) {
-        String email = emailEt.getText().toString();
-        String pass  = passwordET.getText().toString();
+    private boolean validateLoginCredentials(String email, String password) {
+        User user;
+        user = dbSingleton.UserDao().getUserByEmail(email);
 
-        //TODO: Validate against credentials DB Table;
-        if(email.length() > 5 && pass.length() > 5) {
-            Log.d("SSIRI", "Login Email: " + email);
-            Log.d("SSIRI", "Login Password: " + pass);
+        if(user != null && user.getPassword().equals(password)) {
+            uID = user.getUID();
             return true;
         }
         return false;
     }
 
     public interface onLoginButtonClickListener {
-        void onLoginButtonClicked(boolean loginAllowed);
+        void onLoginButtonClicked(boolean loginAllowed, int uID);
         void onRegisterButtonClicked();
     }
 }

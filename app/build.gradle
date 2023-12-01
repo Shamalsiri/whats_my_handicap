@@ -1,10 +1,12 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
     namespace 'com.siriwardana.whatsmyhandicap'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.siriwardana.whatsmyhandicap"
@@ -14,6 +16,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
     buildTypes {
@@ -23,9 +31,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
     buildFeatures {
         viewBinding true
     }
@@ -53,4 +66,15 @@ dependencies {
         }
 
     }
+
+//    implementation 'androidx.room:room-runtime:2.6.1'
+//    kapt 'androidx.room:room-compiler:2.6.1'
+
+    def room_version = "2.6.1"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt "androidx.room:room-compiler:$room_version"
 }
