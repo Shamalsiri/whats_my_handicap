@@ -17,7 +17,8 @@ import android.widget.Toast;
 import com.siriwardana.whatsmyhandicap.fragments.LoginFragment;
 import com.siriwardana.whatsmyhandicap.fragments.RegisterFragment;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.onLoginButtonClickListener, RegisterFragment.OnRegisterButtonClickListener {
+public class LoginActivity extends AppCompatActivity implements
+        LoginFragment.onLoginButtonClickListener, RegisterFragment.OnRegisterButtonClickListener {
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
@@ -39,13 +40,13 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.on
     }
 
     @Override
-    public void onLoginButtonClicked(boolean canLogin, int uID) {
+    public void onLoginButtonClicked(boolean canLogin, int userId) {
         Log.d("SSiri", "Login Button Clicked");
         Log.d("SSiri", "Can Login: " + canLogin);
 
         if (canLogin) {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("uID", uID);
+            intent.putExtra("userId", userId);
             startActivity(intent);
             finish();
         }
@@ -62,15 +63,16 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.on
         // close keyboard
         View view = this.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm =
+                    (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
         Log.d("SSiri", "New User Register");
         Log.d("SSIRI", "registered: " + registered);
         if(registered) {
-            Toast.makeText(LoginActivity.this, "User successfully Registered", Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(LoginActivity.this, "User successfully Registered",
+                            Toast.LENGTH_SHORT).show();
 
             getSupportFragmentManager().popBackStack();
         }

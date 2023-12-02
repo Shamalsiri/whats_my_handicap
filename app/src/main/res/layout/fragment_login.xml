@@ -28,7 +28,6 @@
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_login" />
 
     <ImageView
@@ -39,7 +38,6 @@
         android:background="#331F1F"
         android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,6 +52,9 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
+
+        android:text="shamal1@gmail.com"
+
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:textSize="20sp"
@@ -75,6 +76,9 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
+
+        android:text="123456"
+
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

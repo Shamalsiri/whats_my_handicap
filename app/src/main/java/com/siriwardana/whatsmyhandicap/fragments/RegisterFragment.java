@@ -39,8 +39,8 @@ public class RegisterFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_register, container, false);
-
         userRegistrationHelper = new UserRegistrationHelper();
+        dbSingleton = DatabaseSingleton.getDBInstance(getContext().getApplicationContext());
 
         errorMsgTV = (TextView) view.findViewById(R.id.tv_error_msg);
         errorMsgTV.setVisibility(View.INVISIBLE);
@@ -53,7 +53,6 @@ public class RegisterFragment extends Fragment {
         passwordET = (EditText) view.findViewById(R.id.et_passwd);
         passwordConfirmET = (EditText) view.findViewById(R.id.et_passwd_confirm);
 
-        dbSingleton = DatabaseSingleton.getDBInstance(getContext().getApplicationContext());
 
         // Password visibility toggle logic
         passwordVisibilityToggleHelper = new PasswordVisibilityToggleHelper();

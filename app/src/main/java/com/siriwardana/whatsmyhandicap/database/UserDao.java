@@ -10,6 +10,12 @@ import java.util.List;
 @Dao
 public interface UserDao {
 
+    @Insert
+    void insert(User... users);
+
+    @Delete
+    void delete(User user);
+
     @Query("SELECT * FROM user")
     List<User> getAllUser();
 
@@ -18,11 +24,5 @@ public interface UserDao {
 
     @Query("SELECT * FROM user WHERE user.email =:email")
     User getUserByEmail(String email);
-
-    @Insert
-    void insert(User... users);
-
-    @Delete
-    void delete(User user);
 
 }

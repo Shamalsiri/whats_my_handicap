@@ -22,7 +22,7 @@ public class LoginFragment extends Fragment {
     private DatabaseSingleton dbSingleton;
     private EditText emailET, passwordET;
     private TextView errorTV;
-    private int uID;
+    private int userId;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment {
 
             boolean canLogin;
             if (!userRegistrationHelper.validateEmail(email)) {
-                showErrorMsg("Invalid email format");
+                showErrorMsg("Invalid email");
                 canLogin = false;
             } else if (!validateLoginCredentials(email, password)) {
                 showErrorMsg("Username and Password didn't match our records");
@@ -63,7 +63,7 @@ public class LoginFragment extends Fragment {
                 canLogin = true;
             }
 
-            ((onLoginButtonClickListener) requireActivity()).onLoginButtonClicked(canLogin, uID);
+            ((onLoginButtonClickListener) requireActivity()).onLoginButtonClicked(canLogin, userId);
         });
 
         view.findViewById(R.id.btn_register).setOnClickListener(v -> {
@@ -72,8 +72,10 @@ public class LoginFragment extends Fragment {
 
         // Password visibility toggle logic
         passwordVisibilityToggleHelper = new PasswordVisibilityToggleHelper();
-        passwordET.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ic_password_visibility_off,0);
-        passwordET.setOnTouchListener(passwordVisibilityToggleHelper.getPasswordTouchListener(passwordET));
+        passwordET.setCompoundDrawablesWithIntrinsicBounds(0,0,
+                R.drawable.ic_password_visibility_off,0);
+        passwordET.setOnTouchListener(passwordVisibilityToggleHelper
+                .getPasswordTouchListener(passwordET));
 
 
         return view;
@@ -89,7 +91,7 @@ public class LoginFragment extends Fragment {
         user = dbSingleton.UserDao().getUserByEmail(email);
 
         if(user != null && user.getPassword().equals(password)) {
-            uID = user.getUID();
+            userId = user.getUserId();
             return true;
         }
         return false;

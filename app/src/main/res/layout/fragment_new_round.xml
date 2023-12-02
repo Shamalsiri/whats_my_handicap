@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.NewRoundFragment">
+
+
+    <TextView
+        android:id="@+id/tv_num_holes_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:text="Number of Holes:"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_course_name" />
+
+    <TextView
+        android:id="@+id/tv_club_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:text="Club Name:"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_new_round_title" />
+
+    <TextView
+        android:id="@+id/tv_course_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:text="Course Name:"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_club_name_label" />
+
+    <EditText
+        android:id="@+id/et_club_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="Enter Club name"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_club_name_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_club_name_title" />
+
+    <EditText
+        android:id="@+id/et_course_name"
+        android:layout_width="363dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter Course name"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="@+id/tv_course_name_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_course_name_title" />
+
+    <TextView
+        android:id="@+id/tv_club_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="This field is required"
+        android:textColor="#E80303"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/et_club_name"
+        app:layout_constraintTop_toBottomOf="@+id/et_club_name" />
+
+    <TextView
+        android:id="@+id/tv_num_holes_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="This field is required"
+        android:textColor="#E80303"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/rg_num_holes"
+        app:layout_constraintTop_toBottomOf="@+id/rg_num_holes" />
+
+    <RadioGroup
+        android:id="@+id/rg_num_holes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_num_holes_title">
+
+        <RadioButton
+            android:id="@+id/rb_9_holes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="9 Holes"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/rb_18_holes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="18 Holes"
+            android:textSize="18sp" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tv_new_round_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="New Round Setup"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_nr_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:text="Back"
+        app:layout_constraintEnd_toStartOf="@+id/btn_nr_start_round"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_num_holes_label" />
+
+    <Button
+        android:id="@+id/btn_nr_start_round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Round"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_nr_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_nr_back"
+        app:layout_constraintTop_toTopOf="@+id/btn_nr_back" />
+</androidx.constraintlayout.widget.ConstraintLayout>
