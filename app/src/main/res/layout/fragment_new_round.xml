@@ -58,11 +58,13 @@
 
     <EditText
         android:id="@+id/et_course_name"
-        android:layout_width="363dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
         android:ems="10"
         android:hint="Enter Course name"
         android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_course_name_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_course_name_title" />
 
