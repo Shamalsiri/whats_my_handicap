@@ -7,60 +7,89 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.siriwardana.whatsmyhandicap.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RoundDataEntryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RoundDataEntryFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private EditText parET, distanceET;
+    private TextView holeNumTV, holeScoreTV, totalScoreTV;
+    private ImageButton addStrokeIB, minusStrokeIB;
+    private Button prevHoleBTN, nextHoleBTN;
+    private int numHoles, roundId, userId, currentHole = 1;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public RoundDataEntryFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RoundDataEntryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RoundDataEntryFragment newInstance(String param1, String param2) {
-        RoundDataEntryFragment fragment = new RoundDataEntryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_round_data_entry, container, false);
+        View view =  inflater.inflate(R.layout.fragment_round_data_entry, container, false);
+
+        parET = (EditText)  view.findViewById(R.id.et_par);
+        distanceET = (EditText) view.findViewById(R.id.et_distance);
+
+        holeNumTV = (TextView) view.findViewById(R.id.tv_hole_num);
+        holeScoreTV = (TextView) view.findViewById(R.id.tv_hole_score);
+        totalScoreTV = (TextView) view.findViewById(R.id.tv_total_score);
+
+        minusStrokeIB = (ImageButton) view.findViewById(R.id.ib_minus_stroke);
+        addStrokeIB = (ImageButton) view.findViewById(R.id.ib_plus_stroke);
+
+        prevHoleBTN = (Button) view.findViewById(R.id.btn_prev_hole);
+        nextHoleBTN = (Button) view.findViewById(R.id.btn_next_hole);
+
+        Bundle test = this.getArguments();
+        if(test != null) {
+            numHoles = test.getInt("numHoles");
+            roundId = test.getInt("roundId");
+            userId = test.getInt("userId");
+
+        }
+
+        loadHoleData();
+
+        nextHoleBTN.setOnClickListener(v ->
+                //Todo: Validate all data is entered
+                //Todo: Store the hole data in the db
+                //Todo: update the fragment with new data.
+
+                ((onRoundDataEntryFragmentButtonClickListener) requireActivity())
+                        .onNextHoleButtonClicked()
+        );
+
+
+
+
+
+        return view;
     }
+
+    private void loadHoleData() {
+        if (currentHole == 1) {
+            //Todo: code for the first hole
+            totalScoreTV.setText("0");
+        } else if (currentHole == numHoles) {
+            //Todo: code for the last hole
+        }
+
+        holeNumTV.setText(Integer.toString(currentHole));
+        holeScoreTV.setText("0");
+
+    }
+
+    public interface onRoundDataEntryFragmentButtonClickListener {
+        void onNextHoleButtonClicked();
+        void onPrevHoleButtonClicked();
+        void onMinusStrokeButtonClicked();
+        void onPlusStrokeButtonClicked();
+    }
+
 }

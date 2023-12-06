@@ -16,7 +16,8 @@ import com.siriwardana.whatsmyhandicap.fragments.RoundDataEntryFragment;
 
 public class MainActivity extends AppCompatActivity
         implements MainFragment.onMainFragmentButtonClickListener,
-        NewRoundFragment.onNewRoundButtonClickListener {
+        NewRoundFragment.onNewRoundButtonClickListener,
+        RoundDataEntryFragment.onRoundDataEntryFragmentButtonClickListener {
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity
         Intent intent = getIntent();
         if(intent != null) {
             userId = intent.getIntExtra("userId", 0);
+            Log.d("SSIRI", "Main Activity user Id: " + userId);
         }
 
 
@@ -74,7 +76,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onStartButtonClicked(boolean canStart, int roundId) {
+    public void onStartButtonClicked(boolean canStart, int roundId, int numHoles) {
         Log.d("SSIRI", "Can Start: " + canStart);
         if(canStart) {
             this.roundId = roundId;
@@ -82,10 +84,31 @@ public class MainActivity extends AppCompatActivity
             Bundle bundle = new Bundle();
             bundle.putInt("userId", userId);
             bundle.putInt("roundId", roundId);
+            bundle.putInt("numHoles", numHoles);
             RoundDataEntryFragment rdeFragment = new RoundDataEntryFragment();
             rdeFragment.setArguments(bundle);
             loadFragment(rdeFragment);
 
         }
+    }
+
+    @Override
+    public void onNextHoleButtonClicked() {
+
+    }
+
+    @Override
+    public void onPrevHoleButtonClicked() {
+
+    }
+
+    @Override
+    public void onMinusStrokeButtonClicked() {
+
+    }
+
+    @Override
+    public void onPlusStrokeButtonClicked() {
+
     }
 }
