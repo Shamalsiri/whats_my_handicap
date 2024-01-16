@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.RoundDataEntryFragment">
-
+    tools:context=".fragments.RoundDataEntryFragment"
+    tools:layout_editor_absoluteX="-6dp"
+    tools:layout_editor_absoluteY="-21dp">
 
     <EditText
         android:id="@+id/et_par"
@@ -16,11 +17,10 @@
         android:gravity="center"
         android:hint="###"
         android:inputType="number"
-        android:textAlignment="center"
         android:text="4"
+        android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/tv_hole_num"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,163 +34,54 @@
         app:layout_constraintTop_toBottomOf="@+id/et_par" />
 
     <TextView
+        android:id="@+id/tv_hole_num"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:gravity="center"
+        android:text="18"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/et_distance_hole"
+        app:layout_constraintEnd_toStartOf="@+id/et_distance_hole"
+        app:layout_constraintStart_toEndOf="@+id/et_par"
+        app:layout_constraintTop_toTopOf="@+id/et_distance_hole" />
+
+    <TextView
         android:id="@+id/tv_hole_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hole Number"
         app:layout_constraintEnd_toEndOf="@+id/tv_hole_num"
         app:layout_constraintStart_toStartOf="@+id/tv_hole_num"
-        app:layout_constraintTop_toBottomOf="@+id/tv_hole_num" />
-
-    <TextView
-        android:id="@+id/tv_hole_num"
-        android:layout_width="44dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="16dp"
-        android:text="18"
-        android:textAlignment="center"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/et_distance_hole"
-        android:layout_width="59dp"
-        android:layout_height="61dp"
-        android:ems="10"
-        android:gravity="center"
-        android:text="16"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/et_par"
-        app:layout_constraintEnd_toStartOf="@+id/et_distance"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/et_par"
-        app:layout_constraintTop_toTopOf="@+id/et_par" />
+        app:layout_constraintTop_toBottomOf="@+id/et_par" />
 
     <EditText
         android:id="@+id/et_distance_hole"
-        android:layout_width="48dp"
+        android:layout_width="56dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:ems="10"
-        android:gravity="center"
         android:hint="###"
         android:inputType="number"
         android:text="530"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_hole_title"
         android:textAlignment="textEnd"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_hole_num"
-        app:layout_constraintTop_toTopOf="@+id/tv_hole_num" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_distance_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Distance"
-        app:layout_constraintEnd_toEndOf="@+id/et_distance"
-        app:layout_constraintStart_toStartOf="@+id/et_distance"
-        app:layout_constraintTop_toBottomOf="@+id/et_distance" />
-
-    <Button
-        android:id="@+id/btn_prev"
-        android:id="@+id/btn_prev_hole"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_next"
-        app:layout_constraintEnd_toStartOf="@+id/imageView4"
-        android:layout_marginBottom="44dp"
-        android:text="Prev Hole"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_next_hole"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn_next"
-        android:id="@+id/btn_next_hole"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
-        android:text="Next Hole"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btn_prev_hole" />
-        app:layout_constraintStart_toEndOf="@+id/imageView4" />
-
-    <TextView
-        android:id="@+id/tv_hole_score"
-        android:id="@+id/tv_stroke_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="#"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
-
-    <TextView
-        android:id="@+id/tv_total_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="###"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="105dp"
-        android:layout_height="105dp"
-        android:layout_marginTop="88dp"
-        android:src="@drawable/baseline_check_box_outline_blank_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_hole_title" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="105dp"
-        android:layout_height="93dp"
-        android:layout_marginTop="80dp"
-        android:src="@drawable/baseline_check_box_outline_blank_24"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next_hole"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/ib_minus_stroke"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#00ffffff"
-    <ImageView
-        android:id="@+id/iv_minus"
-        android:layout_width="33dp"
-        android:layout_height="34dp"
-        android:src="@drawable/baseline_remove_circle"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.675"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_stroke_count" />
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
-
-    <ImageButton
-        android:id="@+id/ib_plus_stroke"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#00ffffff"
-    <ImageView
-        android:id="@+id/iv_plus"
-        android:layout_width="33dp"
-        android:layout_height="33dp"
-        android:src="@drawable/baseline_add_circle"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/tv_stroke_count" />
+        app:layout_constraintEnd_toEndOf="@+id/et_distance_hole"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/et_distance_hole"
+        app:layout_constraintTop_toBottomOf="@+id/et_distance_hole" />
 
     <TextView
         android:id="@+id/tv_yards"
@@ -213,16 +104,104 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_hole_title" />
 
+
+    <ImageView
+        android:id="@+id/iv_minus"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/baseline_remove_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/stroke_count_border"
+        app:layout_constraintEnd_toStartOf="@+id/stroke_count_border"
+        app:layout_constraintTop_toTopOf="@+id/stroke_count_border"
+        app:layout_constraintVertical_bias="0.492" />
+
+    <ImageView
+        android:id="@+id/iv_plus"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/baseline_add_circle"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:layout_constraintBottom_toBottomOf="@+id/stroke_count_border"
+        app:layout_constraintStart_toEndOf="@+id/stroke_count_border"
+        app:layout_constraintTop_toTopOf="@+id/stroke_count_border" />
+
+    <ImageView
+        android:id="@+id/stroke_count_border"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/baseline_check_box_outline_blank_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_hole_title" />
+
+    <TextView
+        android:id="@+id/tv_stroke_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#"
+        app:layout_constraintBottom_toBottomOf="@+id/stroke_count_border"
+        app:layout_constraintEnd_toEndOf="@+id/stroke_count_border"
+        app:layout_constraintStart_toStartOf="@+id/stroke_count_border"
+        app:layout_constraintTop_toTopOf="@+id/stroke_count_border" />
+
     <TextView
         android:id="@+id/tv_error_msg2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text=""
         android:textColor="#ED1B08"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/stroke_count_border" />
+
+
+    <ImageView
+        android:id="@+id/iv_round_score_border"
+        android:layout_width="105dp"
+        android:layout_height="93dp"
+        android:src="@drawable/baseline_check_box_outline_blank_24"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stroke_count_border" />
+
+    <TextView
+        android:id="@+id/tv_round_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="###"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_round_score_border"
+        app:layout_constraintEnd_toEndOf="@+id/iv_round_score_border"
+        app:layout_constraintStart_toStartOf="@+id/iv_round_score_border"
+        app:layout_constraintTop_toTopOf="@+id/iv_round_score_border" />
+
+
+    <Button
+        android:id="@+id/btn_prev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:text="Prev Hole"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_next"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:text="Next Hole"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_prev" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
