@@ -1,0 +1,28 @@
+package com.siriwardana.whatsmyhandicap.database;
+
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+
+import java.util.List;
+
+@Dao
+public interface HoleDao {
+
+    @Insert
+    void insert(Hole... holes);
+
+    @Delete
+    void delete(Hole hole);
+
+    @Query("SELECT * FROM hole")
+    List<Hole> getAllHoles();
+
+    @Query("SELECT * FROM hole WHERE hole.round_id = :roundId ORDER BY hole.holeId DESC")
+    List<Hole> getHolesByRound(int roundId);
+
+    @Query("SELECT * FROM hole WHERE hole.round_id = :roundId " +
+            "AND hole.hole_number = :holeNum ORDER BY hole.holeId DESC LIMIT 1")
+    Hole getHoleByRound(int roundId, int holeNum);
+}

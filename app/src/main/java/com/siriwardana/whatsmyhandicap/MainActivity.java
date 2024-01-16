@@ -16,9 +16,9 @@ import com.siriwardana.whatsmyhandicap.fragments.RoundDataEntryFragment;
 
 public class MainActivity extends AppCompatActivity
         implements MainFragment.onMainFragmentButtonClickListener,
-        NewRoundFragment.onNewRoundButtonClickListener {
+        NewRoundFragment.onNewRoundButtonClickListener,
+        RoundDataEntryFragment.onRoundDataEntryButtonClickListener{
 
-    private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
     private int userId, roundId;
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void loadFragment(Fragment fragment){
-        fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_fragment_container, fragment);
         fragmentTransaction.addToBackStack(null);
@@ -87,5 +87,17 @@ public class MainActivity extends AppCompatActivity
             loadFragment(rdeFragment);
 
         }
+    }
+
+    @Override
+    public void onPrevButtonClicked(boolean isExit) {
+        if( isExit) {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
+    @Override
+    public void onNextButtonClicked() {
+
     }
 }
