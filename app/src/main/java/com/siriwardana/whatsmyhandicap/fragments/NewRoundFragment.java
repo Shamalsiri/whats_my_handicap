@@ -70,7 +70,7 @@ public class NewRoundFragment extends Fragment {
 
             if(canStart) {
                 Round newRound = new Round();
-                newRound.setUserId(123);
+                newRound.setUserId(userId);
                 newRound.setClubName(clubName);
                 newRound.setCourseName(courseName);
                 newRound.setNumHoles(numHoles);
@@ -78,7 +78,8 @@ public class NewRoundFragment extends Fragment {
                 roundId = dbSingleton.RoundDao().getLatestRoundId();
             }
 
-            ((onNewRoundButtonClickListener) requireActivity()).onStartButtonClicked(canStart, roundId);
+            ((onNewRoundButtonClickListener) requireActivity()).onStartButtonClicked(canStart,
+                    roundId, numHoles);
         });
         return view;
     }
@@ -109,6 +110,6 @@ public class NewRoundFragment extends Fragment {
 
     public interface onNewRoundButtonClickListener {
         void onBackButtonClicked();
-        void onStartButtonClicked(boolean canStart, int roundId);
+        void onStartButtonClicked(boolean canStart, int roundId, int numHoles);
     }
 }

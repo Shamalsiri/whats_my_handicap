@@ -13,9 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:gravity="center"
         android:hint="###"
         android:inputType="number"
         android:textAlignment="center"
+        android:text="4"
+        android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/tv_hole_num"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,53 +52,74 @@
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/et_distance_hole"
+        android:layout_width="59dp"
+        android:layout_height="61dp"
+        android:ems="10"
+        android:gravity="center"
+        android:text="16"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_par"
+        app:layout_constraintEnd_toStartOf="@+id/et_distance"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/et_par"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/et_par" />
 
     <EditText
         android:id="@+id/et_distance_hole"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:ems="10"
+        android:gravity="center"
         android:hint="###"
         android:inputType="number"
+        android:text="530"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_hole_title"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_hole_num"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/tv_hole_num" />
 
     <TextView
         android:id="@+id/tv_distance_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Distance"
-        app:layout_constraintEnd_toEndOf="@+id/et_distance_hole"
-        app:layout_constraintStart_toStartOf="@+id/et_distance_hole"
-        app:layout_constraintTop_toBottomOf="@+id/et_distance_hole" />
+        app:layout_constraintEnd_toEndOf="@+id/et_distance"
+        app:layout_constraintStart_toStartOf="@+id/et_distance"
+        app:layout_constraintTop_toBottomOf="@+id/et_distance" />
 
     <Button
         android:id="@+id/btn_prev"
+        android:id="@+id/btn_prev_hole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="@+id/btn_next"
         app:layout_constraintEnd_toStartOf="@+id/imageView4"
+        android:layout_marginBottom="44dp"
+        android:text="Prev Hole"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_next_hole"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_next"
+        android:id="@+id/btn_next_hole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="Button"
+        android:layout_marginBottom="44dp"
+        android:text="Next Hole"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_prev_hole" />
         app:layout_constraintStart_toEndOf="@+id/imageView4" />
 
     <TextView
+        android:id="@+id/tv_hole_score"
         android:id="@+id/tv_stroke_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -119,7 +143,7 @@
         android:id="@+id/imageView"
         android:layout_width="105dp"
         android:layout_height="105dp"
-        android:layout_marginTop="77dp"
+        android:layout_marginTop="88dp"
         android:src="@drawable/baseline_check_box_outline_blank_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -131,27 +155,40 @@
         android:layout_height="93dp"
         android:layout_marginTop="80dp"
         android:src="@drawable/baseline_check_box_outline_blank_24"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next_hole"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.0" />
 
+    <ImageButton
+        android:id="@+id/ib_minus_stroke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00ffffff"
     <ImageView
         android:id="@+id/iv_minus"
         android:layout_width="33dp"
         android:layout_height="34dp"
         android:src="@drawable/baseline_remove_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.675"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_stroke_count" />
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
+    <ImageButton
+        android:id="@+id/ib_plus_stroke"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00ffffff"
     <ImageView
         android:id="@+id/iv_plus"
         android:layout_width="33dp"
         android:layout_height="33dp"
         android:src="@drawable/baseline_add_circle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.31"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/tv_stroke_count" />
 
@@ -186,5 +223,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
