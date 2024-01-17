@@ -2,8 +2,6 @@ package com.siriwardana.whatsmyhandicap.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,31 +12,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 
-import java.util.List;
-
 public class RoundDataEntryFragment extends Fragment {
 
     private EditText parET, distanceET;
-    private TextView holeNumTV, holeScoreTV, totalScoreTV;
-    private ImageButton addStrokeIB, minusStrokeIB;
-    private Button prevHoleBTN, nextHoleBTN;
-    private int numHoles, roundId, userId, currentHole = 1;
-    private DatabaseSingleton dbSingleton;
-    private int userId, roundId, holeNum, numStrokes, totalScore, totalPar, roundScore;
+    private TextView holeNumTV, strokeCountTV, roundScoreTV, errorMsg1TV, errorMsg2TV;
+    private int numHoles, roundId, userId,
+            currentHole, roundHoleCount, numStrokes, totalPar, roundScore;
+    private ImageView minusIV, plusIV;
+    private Button prevBTN, nextBTN;
 
-    EditText parET, distanceET;
-    TextView holeNumTV, strokeCountTV, totalScoreTV, errorMsg1TV, errorMsg2TV;
-    ImageView minusIV, plusIV;
-    Button prevBTN, nextBTN;
+    private DatabaseSingleton dbSingleton;
 
     final private String MODE_NEW_ROUND = "new_round";
     final private String MODE_SINGLE_HOLE = "single_hole";
@@ -52,81 +40,35 @@ public class RoundDataEntryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_round_data_entry, container, false);
-
-        parET = (EditText)  view.findViewById(R.id.et_par);
-        distanceET = (EditText) view.findViewById(R.id.et_distance);
-
-        holeNumTV = (TextView) view.findViewById(R.id.tv_hole_num);
-        holeScoreTV = (TextView) view.findViewById(R.id.tv_hole_score);
-        totalScoreTV = (TextView) view.findViewById(R.id.tv_total_score);
-
-        minusStrokeIB = (ImageButton) view.findViewById(R.id.ib_minus_stroke);
-        addStrokeIB = (ImageButton) view.findViewById(R.id.ib_plus_stroke);
-
-        prevHoleBTN = (Button) view.findViewById(R.id.btn_prev_hole);
-        nextHoleBTN = (Button) view.findViewById(R.id.btn_next_hole);
-
-        Bundle test = this.getArguments();
-        if(test != null) {
-            numHoles = test.getInt("numHoles");
-            roundId = test.getInt("roundId");
-            userId = test.getInt("userId");
-
-        }
-
-        loadHoleData();
-
-        nextHoleBTN.setOnClickListener(v ->
-                //Todo: Validate all data is entered
-                //Todo: Store the hole data in the db
-                //Todo: update the fragment with new data.
-
-                ((onRoundDataEntryFragmentButtonClickListener) requireActivity())
-                        .onNextHoleButtonClicked()
-        );
-
-
-
-
-
-        return view;
-    }
-
-    private void loadHoleData() {
-        if (currentHole == 1) {
-            //Todo: code for the first hole
-            totalScoreTV.setText("0");
-        } else if (currentHole == numHoles) {
-            //Todo: code for the last hole
-        }
-
-        holeNumTV.setText(Integer.toString(currentHole));
-        holeScoreTV.setText("0");
-
         View view = inflater.inflate(R.layout.fragment_round_data_entry, container, false);
         dbSingleton = DatabaseSingleton.getDBInstance(getContext().getApplicationContext());
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            userId = bundle.getInt("userId");
-            roundId = bundle.getInt("roundId");
+
+        parET = view.findViewById(R.id.et_par);
+        distanceET = view.findViewById(R.id.et_hole_distance);
+
+        holeNumTV = view.findViewById(R.id.tv_hole_num);
+        strokeCountTV = view.findViewById(R.id.tv_stroke_count);
+        roundScoreTV = view.findViewById(R.id.tv_round_score);
+        errorMsg1TV = view.findViewById(R.id.tv_error_msg1);
+        errorMsg2TV = view.findViewById(R.id.tv_error_msg2);
+
+        minusIV = view.findViewById(R.id.iv_minus);
+        plusIV = view.findViewById(R.id.iv_plus);
+        prevBTN = view.findViewById(R.id.btn_prev);
+        nextBTN = view.findViewById(R.id.btn_next);
+
+        String mode;
+        Bundle test = this.getArguments();
+        if (test != null) {
+            roundHoleCount = test.getInt("numHoles");
+            roundId = test.getInt("roundId");
+            userId = test.getInt("userId");
+            mode = test.getString("mode");
+
         }
-
-        parET = (EditText) view.findViewById(R.id.et_par);
-        distanceET = (EditText) view.findViewById(R.id.et_distance_hole);
-
-        holeNumTV = (TextView) view.findViewById(R.id.tv_hole_num);
-        strokeCountTV = (TextView) view.findViewById(R.id.tv_stroke_count);
-        totalScoreTV = (TextView) view.findViewById(R.id.tv_total_score);
-        errorMsg1TV = (TextView) view.findViewById(R.id.tv_error_msg1);
-        errorMsg2TV = (TextView) view.findViewById(R.id.tv_error_msg2);
-
-        minusIV = (ImageView) view.findViewById(R.id.iv_minus);
-        plusIV = (ImageView) view.findViewById(R.id.iv_plus);
-        prevBTN = (Button) view.findViewById(R.id.btn_prev);
-        nextBTN = (Button) view.findViewById(R.id.btn_next);
-
+        // Todo: Remove next 2 lines
         String tempMode = "new_round";
+        mode = tempMode;
 
         switch (tempMode) {
             case MODE_NEW_ROUND:
@@ -149,8 +91,10 @@ public class RoundDataEntryFragment extends Fragment {
                     ((onRoundDataEntryButtonClickListener) requireActivity())
                             .onPrevButtonClicked(true);
                 } else {
-                    holeNum--;
-                    loadHole(holeNum);
+                    if(currentHole > 1) {
+                        currentHole--;
+                        loadHoleFromDB(currentHole);
+                    }
                 }
             }
         });
@@ -162,13 +106,20 @@ public class RoundDataEntryFragment extends Fragment {
                     if (validateData()) {
                         Log.d("SSIRI", "Validated");
                         saveHoleData();
-                        holeNum++;
-                        loadNextHole();
+                        currentHole++;
+                        if (holeDataExist(currentHole))
+                        {
+                            loadHoleFromDB(currentHole);
+                        } else {
+                            loadNewHole();
+
+                        }
 
                     }
                 }
             }
         });
+
 
         plusIV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,7 +129,6 @@ public class RoundDataEntryFragment extends Fragment {
 
             }
         });
-
 
         minusIV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,14 +144,91 @@ public class RoundDataEntryFragment extends Fragment {
         return view;
     }
 
-    private void loadHole(int holeNum) {
-        Hole hole = (Hole) dbSingleton.HoleDao().getHoleByRound(roundId, holeNum);
+    private boolean holeDataExist(int holeNum) {
+        Hole hole;
+        hole = dbSingleton.HoleDao().getHoleByRound(roundId, holeNum);
 
-        holeNumTV.setText(Integer.toString(holeNum));
-        Log.d("SSIRI", "hole par: " + hole.getPar());
+        return hole != null? true: false;
 
     }
 
+    /**
+     * Setup the first hole for a new round
+     */
+    private void startNewRound() {
+        currentHole = 1;
+        numStrokes = 0;
+        roundScore = 0;
+        setHoleSpecificBtnUI();
+
+        roundScoreTV.setText("E");
+        strokeCountTV.setText("0");
+
+    }
+
+    /**
+     * Setup the button UI changes needed for each hole
+     * update the hole number on UI
+     */
+    private void setHoleSpecificBtnUI() {
+        if (currentHole == 1) {
+            prevBTN.setText("Exit");
+            nextBTN.setText("Next Hole");
+        } else if (currentHole == 2) {
+            prevBTN.setText("Prev Hole");
+        } else if (currentHole == 9 && roundHoleCount == 9) {
+            nextBTN.setText("Save Round");
+        } else if (currentHole == 18) {
+            nextBTN.setText("Save Round");
+        }
+
+        holeNumTV.setText(String.valueOf(currentHole));
+    }
+
+    /**
+     * Setup the UI for a new hole
+     * Reset par, distance and stroke count
+     */
+    private void setNewHoleUI() {
+        setHoleSpecificBtnUI();
+        numStrokes = 0;
+        parET.setText(null);
+        distanceET.setText(null);
+        strokeCountTV.setText(String.valueOf(numStrokes));
+
+        if (roundScore == 0) {
+            roundScoreTV.setText("E");
+        } else {
+            roundScoreTV.setText(String.valueOf(roundScore));
+        }
+    }
+
+    /**
+     * Load new hole
+     */
+    private void loadNewHole() {
+        setNewHoleUI();
+    }
+
+    private void loadHoleFromDB(int holeNum) {
+        setNewHoleUI();
+        Hole hole;
+        hole = dbSingleton.HoleDao().getHoleByRound(roundId, holeNum);
+
+        parET.setText(String.valueOf(hole.getPar()));
+        distanceET.setText(String.valueOf(hole.getDistance()));
+        strokeCountTV.setText(String.valueOf(hole.strokeCount));
+        if (holeNum == 1) {
+            roundScoreTV.setText("E");
+        } else {
+            calculateRoundScore(holeNum - 1);
+        }
+    }
+
+    /**
+     *  Validate that the all necessary data is entered by the user
+     *  Show error messages if needed.
+     */
     private boolean validateData() {
         boolean validated = true;
 
@@ -210,7 +237,6 @@ public class RoundDataEntryFragment extends Fragment {
             errorMsg1TV.setText("Enter Par and Distance");
             validated = false;
         } else {
-            errorMsg1TV.setVisibility(View.GONE);
             int par = Integer.valueOf(parET.getText().toString().trim());
             if (par < 3 || par > 5) {
                 errorMsg1TV.setVisibility(View.VISIBLE);
@@ -220,16 +246,12 @@ public class RoundDataEntryFragment extends Fragment {
 
         }
 
-
         int strokeCount = Integer.valueOf(strokeCountTV.getText().toString().trim());
         if (strokeCount < 1) {
             errorMsg2TV.setVisibility(View.VISIBLE);
             errorMsg2TV.setText("Enter the Stroke Count");
             validated = false;
-        } else {
-            errorMsg2TV.setVisibility(View.GONE);
         }
-
 
         if (validated) {
             errorMsg1TV.setVisibility(View.GONE);
@@ -240,87 +262,50 @@ public class RoundDataEntryFragment extends Fragment {
         }
     }
 
-    private void saveHoleData() {
+    /**
+     * Save hole data to the database
+     */
+    private void saveHoleData(){
         int par = Integer.valueOf(parET.getText().toString().trim());
         int distance = distanceET.getText().toString().length() > 0 ?
                 Integer.valueOf(distanceET.getText().toString().trim()) :
                 0;
-        totalScore = totalScore + numStrokes;
-        totalPar = totalPar + par;
-        roundScore = totalScore - totalPar;
+
+        int holeScore = numStrokes - par;
 
         Hole hole = new Hole();
         hole.setRoundId(roundId);
         hole.setUserId(userId);
-        hole.setHoleNumber(holeNum);
+        hole.setHoleNumber(currentHole);
         hole.setPar(par);
         hole.setDistance(distance);
         hole.setStrokeCount(numStrokes);
-        hole.setScore(roundScore);
+        hole.setHoleScore(holeScore);
         dbSingleton.HoleDao().insert(hole);
 
-
+        calculateRoundScore(currentHole);
 
     }
 
-    private void loadNextHole() {
-        if (holeNum == 2) {
-            prevBTN.setText("Prev Hole");
-            loadNewHole();
-        } else if (holeNum == 18) {
-            nextBTN.setText("Save Round");
-            loadNewHole();
-        } else {
-            loadNewHole();
+    /**
+     * calculate the roundScore so far.
+     */
+    private void calculateRoundScore(int holeNum) {
+        int score = 0;
+        Hole hole;
+        for (int i = 1; i <= holeNum; i++) {
+            hole = dbSingleton.HoleDao().getHoleByRound(roundId, i);
+            score = score + hole.getHoleScore();
         }
+        roundScore = score;
+        Log.d("SSIRI", "Score: " + roundScore);
     }
 
-    private void loadNewHole() {
-        holeNumTV.setText(Integer.toString(holeNum));
-        parET.setText("");
-        distanceET.setText("");
-        strokeCountTV.setText("0");
-        if (totalScore == 0) {
-            totalScoreTV.setText("E");
-        } else {
-            totalScoreTV.setText(Integer.toString(totalScore));
-        }
-    }
-
-    private void loadHole(int holeNum, int par, @Nullable int distance, int strokeCount, int score) {
-        holeNumTV.setText(Integer.toString(holeNum));
-        parET.setText(Integer.toString(par));
-        distanceET.setText(Integer.toString(distance));
-        strokeCountTV.setText(Integer.toString(strokeCount));
-        totalScoreTV.setText(Integer.toString(score));
-    }
-
-    private void startNewRound() {
-        holeNum = 1;
-        numStrokes = 0;
-        totalScore = 0;
-        totalPar = 0;
-        totalScoreTV.setText("E");
-        strokeCountTV.setText("0");
-        holeNumTV.setText(Integer.toString(holeNum));
-        prevBTN.setText("Exit");
-        nextBTN.setText("Next Hole");
-
-    }
 
     public interface onRoundDataEntryButtonClickListener {
         void onPrevButtonClicked(boolean isExit);
 
         void onNextButtonClicked();
-    }
-
-
-
-    public interface onRoundDataEntryFragmentButtonClickListener {
-        void onNextHoleButtonClicked();
-        void onPrevHoleButtonClicked();
-        void onMinusStrokeButtonClicked();
-        void onPlusStrokeButtonClicked();
     }
 
 }

@@ -25,4 +25,7 @@ public interface HoleDao {
     @Query("SELECT * FROM hole WHERE hole.round_id = :roundId " +
             "AND hole.hole_number = :holeNum ORDER BY hole.holeId DESC LIMIT 1")
     Hole getHoleByRound(int roundId, int holeNum);
+
+    @Query("SELECT COUNT(hole_score) FROM hole WHERE hole.round_id = :roundId")
+    int getRoundHoleCount(int roundId);
 }

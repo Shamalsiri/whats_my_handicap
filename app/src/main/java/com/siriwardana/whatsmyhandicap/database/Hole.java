@@ -28,8 +28,8 @@ public class Hole {
     @ColumnInfo(name = "stroke_count")
     public int strokeCount;
 
-    @ColumnInfo(name = "score")
-    public int score;
+    @ColumnInfo(name = "hole_score")
+    public int holeScore;
 
     public int getHoleId() {
         return holeId;
@@ -87,11 +87,11 @@ public class Hole {
         this.strokeCount = strokeCount;
     }
 
-    public int getScore() {
-        return score;
+    public int getHoleScore() {
+        return holeScore;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setHoleScore(int holeScore) {
+        this.holeScore = holeScore;
     }
 }

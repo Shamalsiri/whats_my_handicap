@@ -18,8 +18,6 @@ public class MainActivity extends AppCompatActivity
         implements MainFragment.onMainFragmentButtonClickListener,
         NewRoundFragment.onNewRoundButtonClickListener,
         RoundDataEntryFragment.onRoundDataEntryButtonClickListener{
-        NewRoundFragment.onNewRoundButtonClickListener,
-        RoundDataEntryFragment.onRoundDataEntryFragmentButtonClickListener {
 
     private FragmentTransaction fragmentTransaction;
     private int userId, roundId;
@@ -91,26 +89,6 @@ public class MainActivity extends AppCompatActivity
             loadFragment(rdeFragment);
 
         }
-    }
-
-    @Override
-    public void onNextHoleButtonClicked() {
-
-    }
-
-    @Override
-    public void onPrevHoleButtonClicked() {
-
-    }
-
-    @Override
-    public void onMinusStrokeButtonClicked() {
-
-    }
-
-    @Override
-    public void onPlusStrokeButtonClicked() {
-
     }
 
     @Override

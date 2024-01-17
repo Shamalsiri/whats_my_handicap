@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {User.class, Round.class, Hole.class}, version = 7)
+@Database(entities = {User.class, Round.class, Hole.class}, version = 8)
 @TypeConverters(Converters.class)
 public abstract class DatabaseSingleton extends RoomDatabase {
 
@@ -19,6 +19,7 @@ public abstract class DatabaseSingleton extends RoomDatabase {
     public static DatabaseSingleton getDBInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(), DatabaseSingleton.class, "WMH_DB")
+                    .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
                     .build();
         }
