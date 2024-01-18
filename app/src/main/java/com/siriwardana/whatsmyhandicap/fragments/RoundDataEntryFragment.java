@@ -105,14 +105,20 @@ public class RoundDataEntryFragment extends Fragment {
                 if (nextBTN.getText().toString().equalsIgnoreCase("Next Hole")) {
                     if (validateData()) {
                         Log.d("SSIRI", "Validated");
-                        saveHoleData();
-                        currentHole++;
                         if (holeDataExist(currentHole))
                         {
+                            Hole hole = dbSingleton.HoleDao().getHoleByRound(roundId, currentHole);
+                            updateHoleData(hole);
+                        } else {
+                            saveHoleData(new Hole());
+                        }
+
+                        currentHole++;
+                        if (holeDataExist(currentHole)) {
                             loadHoleFromDB(currentHole);
+
                         } else {
                             loadNewHole();
-
                         }
 
                     }
@@ -144,6 +150,11 @@ public class RoundDataEntryFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Check if hole data exist in the db
+     * @param holeNum
+     * @return
+     */
     private boolean holeDataExist(int holeNum) {
         Hole hole;
         hole = dbSingleton.HoleDao().getHoleByRound(roundId, holeNum);
@@ -196,6 +207,7 @@ public class RoundDataEntryFragment extends Fragment {
         distanceET.setText(null);
         strokeCountTV.setText(String.valueOf(numStrokes));
 
+        calculateRoundScore(currentHole);
         if (roundScore == 0) {
             roundScoreTV.setText("E");
         } else {
@@ -210,6 +222,10 @@ public class RoundDataEntryFragment extends Fragment {
         setNewHoleUI();
     }
 
+    /**
+     * Load hole data from the db
+     * @param holeNum
+     */
     private void loadHoleFromDB(int holeNum) {
         setNewHoleUI();
         Hole hole;
@@ -226,8 +242,9 @@ public class RoundDataEntryFragment extends Fragment {
     }
 
     /**
-     *  Validate that the all necessary data is entered by the user
-     *  Show error messages if needed.
+     * Validate that the all necessary data is entered by the user
+     * Show error messages if needed.
+     * @return
      */
     private boolean validateData() {
         boolean validated = true;
@@ -264,8 +281,34 @@ public class RoundDataEntryFragment extends Fragment {
 
     /**
      * Save hole data to the database
+     * @param hole
      */
-    private void saveHoleData(){
+    private void saveHoleData(Hole hole){
+        Log.d("SSIRI", "Saving values for hole: " + hole.getHoleNumber());
+
+        hole = createHoleObject(hole);
+        dbSingleton.HoleDao().insert(hole);
+        calculateRoundScore(currentHole);
+
+    }
+
+    /**
+     * Update the existing hole record
+     * @param hole
+     */
+    private void updateHoleData(Hole hole) {
+        Log.d("SSIRI", "Updating values for hole: " + hole.getHoleNumber());
+        hole = createHoleObject(hole);
+        dbSingleton.HoleDao().update(hole);
+        calculateRoundScore(currentHole);
+    }
+
+    /**
+     * Setup a hole with all data in current fragment
+     * @param hole
+     * @return
+     */
+    private Hole createHoleObject(Hole hole) {
         int par = Integer.valueOf(parET.getText().toString().trim());
         int distance = distanceET.getText().toString().length() > 0 ?
                 Integer.valueOf(distanceET.getText().toString().trim()) :
@@ -273,7 +316,6 @@ public class RoundDataEntryFragment extends Fragment {
 
         int holeScore = numStrokes - par;
 
-        Hole hole = new Hole();
         hole.setRoundId(roundId);
         hole.setUserId(userId);
         hole.setHoleNumber(currentHole);
@@ -281,22 +323,24 @@ public class RoundDataEntryFragment extends Fragment {
         hole.setDistance(distance);
         hole.setStrokeCount(numStrokes);
         hole.setHoleScore(holeScore);
-        dbSingleton.HoleDao().insert(hole);
 
-        calculateRoundScore(currentHole);
-
+        return hole;
     }
 
     /**
-     * calculate the roundScore so far.
+     * Calculate the roundScore so far.
+     * @param holeNum
      */
     private void calculateRoundScore(int holeNum) {
         int score = 0;
         Hole hole;
-        for (int i = 1; i <= holeNum; i++) {
-            hole = dbSingleton.HoleDao().getHoleByRound(roundId, i);
-            score = score + hole.getHoleScore();
+        if (holeNum != 1) {
+            for (int i = 1; i <= holeNum; i++) {
+                hole = dbSingleton.HoleDao().getHoleByRound(roundId, i);
+                score = score + hole.getHoleScore();
+            }
         }
+
         roundScore = score;
         Log.d("SSIRI", "Score: " + roundScore);
     }
