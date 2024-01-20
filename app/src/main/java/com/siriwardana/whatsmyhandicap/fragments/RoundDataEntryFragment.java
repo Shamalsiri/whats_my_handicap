@@ -89,6 +89,15 @@ public class RoundDataEntryFragment extends Fragment {
             public void onClick(View view) {
                 if (prevBTN.getText().toString().equalsIgnoreCase("Exit")) {
                     Log.d("SSIRI", "Exit Button Clicked");
+
+                    List<Hole> holeList = dbSingleton.HoleDao().getHolesByRound(roundId);
+                    int numHolesInRound = holeList.size();
+                    if ((numHolesThisRound == 9 && numHolesInRound != 9) ||
+                            (numHolesThisRound == 18 && numHolesInRound != 18)) {
+                        //Todo: Remove data in holes table with roundId
+                        Log.d("SSIRI", "Removing all holes with roundId: " + roundId);
+                    }
+
                     ((onRoundDataEntryButtonClickListener) requireActivity())
                             .onPrevButtonClicked(true);
                 } else {
@@ -155,7 +164,6 @@ public class RoundDataEntryFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
@@ -188,7 +196,6 @@ public class RoundDataEntryFragment extends Fragment {
     private void loadHole(int holeNum) {
         if (holeDataExist(holeNum)) {
             loadHoleFromDB(holeNum);
-
         } else {
             loadNewHole();
         }
