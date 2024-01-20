@@ -2,6 +2,7 @@ package com.siriwardana.whatsmyhandicap.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -17,20 +18,18 @@ import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 
+import java.util.List;
+import java.util.Objects;
+
 public class RoundDataEntryFragment extends Fragment {
 
     private EditText parET, distanceET;
     private TextView holeNumTV, strokeCountTV, roundScoreTV, errorMsg1TV, errorMsg2TV;
-    private int numHoles, roundId, userId,
-            currentHole, roundHoleCount, numStrokes, totalPar, roundScore;
+    private int roundId, userId, currentHole, numHolesThisRound, numStrokes, roundScore;
     private ImageView minusIV, plusIV;
     private Button prevBTN, nextBTN;
 
     private DatabaseSingleton dbSingleton;
-
-    final private String MODE_NEW_ROUND = "new_round";
-    final private String MODE_SINGLE_HOLE = "single_hole";
-    final private String MODE_EDIT_ROUND = "edit_round";
 
     public RoundDataEntryFragment() {
         // Required empty public constructor
@@ -54,44 +53,47 @@ public class RoundDataEntryFragment extends Fragment {
 
         minusIV = view.findViewById(R.id.iv_minus);
         plusIV = view.findViewById(R.id.iv_plus);
+
         prevBTN = view.findViewById(R.id.btn_prev);
         nextBTN = view.findViewById(R.id.btn_next);
 
-        String mode;
-        Bundle test = this.getArguments();
-        if (test != null) {
-            roundHoleCount = test.getInt("numHoles");
-            roundId = test.getInt("roundId");
-            userId = test.getInt("userId");
-            mode = test.getString("mode");
+        final String MODE_NEW_ROUND = "new_round"; // default case
+        final String MODE_SINGLE_HOLE = "single_hole";
+        final String MODE_EDIT_ROUND = "edit_round";
 
+        String mode = "";
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            numHolesThisRound = bundle.getInt("numHoles");
+            roundId = bundle.getInt("roundId");
+            userId = bundle.getInt("userId");
+            mode = bundle.getString("mode");
         }
-        // Todo: Remove next 2 lines
-        String tempMode = "new_round";
-        mode = tempMode;
 
-        switch (tempMode) {
-            case MODE_NEW_ROUND:
-                Log.d("SSIRI", "New Round");
-                startNewRound();
-                break;
-
+        switch (mode) {
             case MODE_SINGLE_HOLE:
-                Log.d("SSIRI", "Single Hole");
+                Log.d("SSIRI", "Open Round Data Fragment in Mode: Single Hole");
                 break;
 
             case MODE_EDIT_ROUND:
-                Log.d("SSIRI", "Edit Round");
+                Log.d("SSIRI", "Open Round Data Fragment in Mode: Edit Round");
+                break;
+            default:
+                Log.d("SSIRI", "Open Round Data Fragment in Mode: New Round");
+                startNewRound();
+                break;
         }
 
         prevBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (prevBTN.getText().toString().equalsIgnoreCase("Exit")) {
+                    Log.d("SSIRI", "Exit Button Clicked");
                     ((onRoundDataEntryButtonClickListener) requireActivity())
                             .onPrevButtonClicked(true);
                 } else {
-                    if(currentHole > 1) {
+                    Log.d("SSIRI", "Prev Hole Button Clicked");
+                    if (currentHole > 1) {
                         currentHole--;
                         loadHoleFromDB(currentHole);
                     }
@@ -102,26 +104,31 @@ public class RoundDataEntryFragment extends Fragment {
         nextBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (nextBTN.getText().toString().equalsIgnoreCase("Next Hole")) {
+                String btnText = nextBTN.getText().toString();
+                if (btnText.equalsIgnoreCase("Next Hole")) {
+                    Log.d("SSIRI", "Next Hole Button Clicked");
                     if (validateData()) {
-                        Log.d("SSIRI", "Validated");
-                        if (holeDataExist(currentHole))
-                        {
-                            Hole hole = dbSingleton.HoleDao().getHoleByRound(roundId, currentHole);
-                            updateHoleData(hole);
-                        } else {
-                            saveHoleData(new Hole());
-                        }
-
+                        saveHoleData(currentHole);
                         currentHole++;
-                        if (holeDataExist(currentHole)) {
-                            loadHoleFromDB(currentHole);
-
-                        } else {
-                            loadNewHole();
-                        }
+                        loadHole(currentHole);
 
                     }
+                } else if (btnText.equalsIgnoreCase("Save Round")) {
+                    Log.d("SSIRI", "Save Round Hole Button Clicked");
+                    if (validateData()) {
+                        saveHoleData(currentHole);
+                    }
+
+                    List<Hole> holeList = dbSingleton.HoleDao().getHolesByRound(roundId);
+                    int numHolesInRound = holeList.size();
+                    if (numHolesInRound % 9 == 0) {
+                        //Todo: Open confirm score fragment
+                        Log.d("SSIRI", "Opening confirm score fragment");
+                    }
+
+                    ((onRoundDataEntryButtonClickListener) requireActivity())
+                            .onPrevButtonClicked(true);
+
                 }
             }
         });
@@ -130,6 +137,7 @@ public class RoundDataEntryFragment extends Fragment {
         plusIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("SSIRI", "Add Stroke Button clicked");
                 numStrokes++;
                 strokeCountTV.setText(String.valueOf(numStrokes));
 
@@ -140,6 +148,7 @@ public class RoundDataEntryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (numStrokes > 0) {
+                    Log.d("SSIRI", "Minus Stroke Button clicked");
                     numStrokes--;
                     strokeCountTV.setText(String.valueOf(numStrokes));
                 }
@@ -151,7 +160,43 @@ public class RoundDataEntryFragment extends Fragment {
     }
 
     /**
+     * save hole data
+     *
+     * @param holeNum
+     */
+    private void saveHoleData(int holeNum) {
+        if (holeDataExist(holeNum)) {
+            Hole hole = dbSingleton.HoleDao().getHoleByRound(roundId, holeNum);
+            updateHoleData(hole);
+        } else {
+            saveHoleData(new Hole());
+        }
+    }
+
+    /**
+     * Load new hole
+     */
+    private void loadNewHole() {
+        setNewHoleUI();
+    }
+
+    /**
+     * load hole
+     *
+     * @param holeNum
+     */
+    private void loadHole(int holeNum) {
+        if (holeDataExist(holeNum)) {
+            loadHoleFromDB(holeNum);
+
+        } else {
+            loadNewHole();
+        }
+    }
+
+    /**
      * Check if hole data exist in the db
+     *
      * @param holeNum
      * @return
      */
@@ -159,8 +204,7 @@ public class RoundDataEntryFragment extends Fragment {
         Hole hole;
         hole = dbSingleton.HoleDao().getHoleByRound(roundId, holeNum);
 
-        return hole != null? true: false;
-
+        return hole != null ? true : false;
     }
 
     /**
@@ -174,7 +218,6 @@ public class RoundDataEntryFragment extends Fragment {
 
         roundScoreTV.setText("E");
         strokeCountTV.setText("0");
-
     }
 
     /**
@@ -183,17 +226,15 @@ public class RoundDataEntryFragment extends Fragment {
      */
     private void setHoleSpecificBtnUI() {
         if (currentHole == 1) {
-            prevBTN.setText("Exit");
-            nextBTN.setText("Next Hole");
+            prevBTN.setText(R.string.exit);
+            nextBTN.setText(R.string.next_hole);
         } else if (currentHole == 2) {
-            prevBTN.setText("Prev Hole");
-        } else if (currentHole == 9 && roundHoleCount == 9) {
-            nextBTN.setText("Save Round");
+            prevBTN.setText(R.string.prev_hole);
+        } else if (currentHole == 9 && numHolesThisRound == 9) {
+            nextBTN.setText(R.string.save_round);
         } else if (currentHole == 18) {
-            nextBTN.setText("Save Round");
+            nextBTN.setText(R.string.save_round);
         }
-
-        holeNumTV.setText(String.valueOf(currentHole));
     }
 
     /**
@@ -202,6 +243,7 @@ public class RoundDataEntryFragment extends Fragment {
      */
     private void setNewHoleUI() {
         setHoleSpecificBtnUI();
+        holeNumTV.setText(String.valueOf(currentHole));
         numStrokes = 0;
         parET.setText(null);
         distanceET.setText(null);
@@ -216,14 +258,8 @@ public class RoundDataEntryFragment extends Fragment {
     }
 
     /**
-     * Load new hole
-     */
-    private void loadNewHole() {
-        setNewHoleUI();
-    }
-
-    /**
      * Load hole data from the db
+     *
      * @param holeNum
      */
     private void loadHoleFromDB(int holeNum) {
@@ -245,6 +281,7 @@ public class RoundDataEntryFragment extends Fragment {
     /**
      * Validate that the all necessary data is entered by the user
      * Show error messages if needed.
+     *
      * @return
      */
     private boolean validateData() {
@@ -252,22 +289,21 @@ public class RoundDataEntryFragment extends Fragment {
 
         if (parET.getText().toString().length() == 0) {
             errorMsg1TV.setVisibility(View.VISIBLE);
-            errorMsg1TV.setText("Enter Par and Distance");
+            errorMsg1TV.setText(R.string.enter_par_and_distance);
             validated = false;
         } else {
-            int par = Integer.valueOf(parET.getText().toString().trim());
+            int par = Integer.parseInt(parET.getText().toString().trim());
             if (par < 3 || par > 5) {
                 errorMsg1TV.setVisibility(View.VISIBLE);
-                errorMsg1TV.setText("Invalid par value");
+                errorMsg1TV.setText(R.string.invalid_par_value);
                 validated = false;
             }
-
         }
 
-        int strokeCount = Integer.valueOf(strokeCountTV.getText().toString().trim());
+        int strokeCount = Integer.parseInt(strokeCountTV.getText().toString().trim());
         if (strokeCount < 1) {
             errorMsg2TV.setVisibility(View.VISIBLE);
-            errorMsg2TV.setText("Enter the Stroke Count");
+            errorMsg2TV.setText(R.string.enter_the_stroke_count);
             validated = false;
         }
 
@@ -282,35 +318,40 @@ public class RoundDataEntryFragment extends Fragment {
 
     /**
      * Save hole data to the database
+     *
      * @param hole
      */
-    private void saveHoleData(Hole hole){
-        Log.d("SSIRI", "Saving values for hole: " + hole.getHoleNumber());
-
+    private void saveHoleData(Hole hole) {
         hole = createHoleObject(hole);
+
+        Log.d("SSIRI", "Saving values for hole: " + hole.getHoleNumber());
         dbSingleton.HoleDao().insert(hole);
     }
 
     /**
      * Update the existing hole record
+     *
      * @param hole
      */
     private void updateHoleData(Hole hole) {
-        Log.d("SSIRI", "Updating values for hole: " + hole.getHoleNumber());
         hole = createHoleObject(hole);
+
+        Log.d("SSIRI", "Updating values for hole: " + hole.getHoleNumber());
         dbSingleton.HoleDao().update(hole);
+
         calculateRoundScore(currentHole);
     }
 
     /**
      * Setup a hole with all data in current fragment
+     *
      * @param hole
      * @return
      */
     private Hole createHoleObject(Hole hole) {
-        int par = Integer.valueOf(parET.getText().toString().trim());
+        int par = Integer.parseInt(parET.getText().toString().trim());
         int distance = distanceET.getText().toString().length() > 0 ?
-                Integer.valueOf(distanceET.getText().toString().trim()) :
+                Integer.parseInt(distanceET.getText().toString().trim()) :
                 0;
 
         int holeScore = numStrokes - par;
@@ -328,6 +369,7 @@ public class RoundDataEntryFragment extends Fragment {
 
     /**
      * Calculate the roundScore so far.
+     *
      * @param holeNum
      */
     private void calculateRoundScore(int holeNum) {
@@ -341,7 +383,6 @@ public class RoundDataEntryFragment extends Fragment {
         }
 
         roundScore = score;
-        Log.d("SSIRI", "Score: " + roundScore);
     }
 
 

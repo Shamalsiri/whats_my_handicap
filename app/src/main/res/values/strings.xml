@@ -20,4 +20,11 @@
     <string name="verify_email">Verify Email</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_par_and_distance">Enter Par and Distance</string>
+    <string name="invalid_par_value">Invalid par value</string>
+    <string name="enter_the_stroke_count">Enter the Stroke Count</string>
+    <string name="exit">Exit</string>
+    <string name="next_hole">Next Hole</string>
+    <string name="prev_hole">Prev Hole</string>
+    <string name="save_round">Save Round</string>
 </resources>

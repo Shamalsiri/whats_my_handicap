@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity
             bundle.putInt("userId", userId);
             bundle.putInt("roundId", roundId);
             bundle.putInt("numHoles", numHoles);
+            bundle.putString("mode","new_round");
             RoundDataEntryFragment rdeFragment = new RoundDataEntryFragment();
             rdeFragment.setArguments(bundle);
             loadFragment(rdeFragment);
