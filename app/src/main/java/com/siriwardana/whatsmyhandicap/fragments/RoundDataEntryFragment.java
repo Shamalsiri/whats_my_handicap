@@ -207,7 +207,7 @@ public class RoundDataEntryFragment extends Fragment {
         distanceET.setText(null);
         strokeCountTV.setText(String.valueOf(numStrokes));
 
-        calculateRoundScore(currentHole);
+        calculateRoundScore(currentHole - 1);
         if (roundScore == 0) {
             roundScoreTV.setText("E");
         } else {
@@ -230,10 +230,11 @@ public class RoundDataEntryFragment extends Fragment {
         setNewHoleUI();
         Hole hole;
         hole = dbSingleton.HoleDao().getHoleByRound(roundId, holeNum);
+        numStrokes = hole.getStrokeCount();
 
         parET.setText(String.valueOf(hole.getPar()));
         distanceET.setText(String.valueOf(hole.getDistance()));
-        strokeCountTV.setText(String.valueOf(hole.strokeCount));
+        strokeCountTV.setText(String.valueOf(numStrokes));
         if (holeNum == 1) {
             roundScoreTV.setText("E");
         } else {
@@ -288,8 +289,6 @@ public class RoundDataEntryFragment extends Fragment {
 
         hole = createHoleObject(hole);
         dbSingleton.HoleDao().insert(hole);
-        calculateRoundScore(currentHole);
-
     }
 
     /**
@@ -334,7 +333,7 @@ public class RoundDataEntryFragment extends Fragment {
     private void calculateRoundScore(int holeNum) {
         int score = 0;
         Hole hole;
-        if (holeNum != 1) {
+        if (holeNum != 1 || holeDataExist(1)) {
             for (int i = 1; i <= holeNum; i++) {
                 hole = dbSingleton.HoleDao().getHoleByRound(roundId, i);
                 score = score + hole.getHoleScore();
