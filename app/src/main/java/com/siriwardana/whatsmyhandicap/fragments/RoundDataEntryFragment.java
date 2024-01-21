@@ -1,8 +1,11 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -26,9 +29,9 @@ public class RoundDataEntryFragment extends Fragment {
     private EditText parET, distanceET;
     private TextView holeNumTV, strokeCountTV, roundScoreTV, errorMsg1TV, errorMsg2TV;
     private int roundId, userId, currentHole, numHolesThisRound, numStrokes, roundScore;
-    private ImageView minusIV, plusIV;
-    private Button prevBTN, nextBTN;
+    private Button prevBTN, nextBTN, exitBTN;
 
+    private Context context;
     private DatabaseSingleton dbSingleton;
 
     public RoundDataEntryFragment() {
@@ -40,7 +43,8 @@ public class RoundDataEntryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_round_data_entry, container, false);
-        dbSingleton = DatabaseSingleton.getDBInstance(getContext().getApplicationContext());
+        context = getContext().getApplicationContext();
+        dbSingleton = DatabaseSingleton.getDBInstance(context);
 
         parET = view.findViewById(R.id.et_par);
         distanceET = view.findViewById(R.id.et_hole_distance);
@@ -51,11 +55,13 @@ public class RoundDataEntryFragment extends Fragment {
         errorMsg1TV = view.findViewById(R.id.tv_error_msg1);
         errorMsg2TV = view.findViewById(R.id.tv_error_msg2);
 
+        final ImageView minusIV, plusIV;
         minusIV = view.findViewById(R.id.iv_minus);
         plusIV = view.findViewById(R.id.iv_plus);
 
         prevBTN = view.findViewById(R.id.btn_prev);
         nextBTN = view.findViewById(R.id.btn_next);
+        exitBTN = view.findViewById(R.id.btn_exit);
 
         final String MODE_NEW_ROUND = "new_round"; // default case
         final String MODE_SINGLE_HOLE = "single_hole";
@@ -90,16 +96,7 @@ public class RoundDataEntryFragment extends Fragment {
                 if (prevBTN.getText().toString().equalsIgnoreCase("Exit")) {
                     Log.d("SSIRI", "Exit Button Clicked");
 
-                    List<Hole> holeList = dbSingleton.HoleDao().getHolesByRound(roundId);
-                    int numHolesInRound = holeList.size();
-                    if ((numHolesThisRound == 9 && numHolesInRound != 9) ||
-                            (numHolesThisRound == 18 && numHolesInRound != 18)) {
-                        //Todo: Remove data in holes table with roundId
-                        Log.d("SSIRI", "Removing all holes with roundId: " + roundId);
-                    }
-
-                    ((onRoundDataEntryButtonClickListener) requireActivity())
-                            .onPrevButtonClicked(true);
+                    exit();
                 } else {
                     Log.d("SSIRI", "Prev Hole Button Clicked");
                     if (currentHole > 1) {
@@ -142,6 +139,13 @@ public class RoundDataEntryFragment extends Fragment {
             }
         });
 
+        exitBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exit();
+            }
+        });
+
 
         plusIV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +169,23 @@ public class RoundDataEntryFragment extends Fragment {
         });
 
         return view;
+    }
+
+    /**
+     * Remove round hole data since round wasn't completed.
+     * exit
+     */
+    private void exit() {
+        List<Hole> holeList = dbSingleton.HoleDao().getHolesByRound(roundId);
+        int numHolesInRound = holeList.size();
+        if ((numHolesThisRound == 9 && numHolesInRound != 9) ||
+                (numHolesThisRound == 18 && numHolesInRound != 18)) {
+            //Todo: Remove data in holes table with roundId
+            Log.d("SSIRI", "Removing all holes with roundId: " + roundId);
+        }
+
+        ((onRoundDataEntryButtonClickListener) requireActivity())
+                .onPrevButtonClicked(true);
     }
 
     /**
@@ -234,14 +255,21 @@ public class RoundDataEntryFragment extends Fragment {
     private void setHoleSpecificBtnUI() {
         if (currentHole == 1) {
             prevBTN.setText(R.string.exit);
+            prevBTN.setBackgroundColor(ContextCompat.getColor(context, R.color.wmh_red));
+            exitBTN.setVisibility(View.GONE);
+
             nextBTN.setText(R.string.next_hole);
         } else if (currentHole == 2) {
             prevBTN.setText(R.string.prev_hole);
+            prevBTN.setBackgroundColor(ContextCompat.getColor(context, R.color.wmh_orange));
+            exitBTN.setVisibility(View.VISIBLE);
         } else if (currentHole == 9 && numHolesThisRound == 9) {
             nextBTN.setText(R.string.save_round);
         } else if (currentHole == 18) {
             nextBTN.setText(R.string.save_round);
         }
+
+
     }
 
     /**

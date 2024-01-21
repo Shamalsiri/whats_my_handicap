@@ -26,4 +26,5 @@
     <string name="next_hole">Next Hole</string>
     <string name="prev_hole">Prev Hole</string>
     <string name="save_round">Save Round</string>
+    <string name="finish_round">Finish Round</string>
 </resources>
