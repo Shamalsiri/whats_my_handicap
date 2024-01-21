@@ -1,10 +1,8 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -20,9 +18,9 @@ import android.widget.TextView;
 import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Hole;
+import com.siriwardana.whatsmyhandicap.database.Round;
 
 import java.util.List;
-import java.util.Objects;
 
 public class RoundDataEntryFragment extends Fragment {
 
@@ -130,6 +128,8 @@ public class RoundDataEntryFragment extends Fragment {
                     if (numHolesInRound % 9 == 0) {
                         //Todo: Open confirm score fragment
                         Log.d("SSIRI", "Opening confirm score fragment");
+
+                        updateRoundWithScore();
                     }
 
                     ((onRoundDataEntryButtonClickListener) requireActivity())
@@ -169,6 +169,18 @@ public class RoundDataEntryFragment extends Fragment {
         });
 
         return view;
+    }
+
+    /**
+     * Update the score column on the round table with the score
+     */
+    private void updateRoundWithScore() {
+        Round round = dbSingleton.RoundDao().getRoundById(roundId);
+        calculateRoundScore(round.getNumHoles());
+        round.setScore(roundScore);
+
+        Log.d("SSIRI", "updating the round record with the score");
+        dbSingleton.RoundDao().update(round);
     }
 
     /**

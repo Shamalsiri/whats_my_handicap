@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {User.class, Round.class, Hole.class}, version = 9)
+@Database(entities = {User.class, Round.class, Hole.class}, version = 10)
 @TypeConverters(Converters.class)
 public abstract class DatabaseSingleton extends RoomDatabase {
 

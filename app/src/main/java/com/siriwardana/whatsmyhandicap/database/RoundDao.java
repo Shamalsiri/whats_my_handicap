@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -12,6 +13,9 @@ public interface RoundDao {
 
     @Insert
     void insert(Round... rounds);
+
+    @Update
+    void update (Round... rounds);
 
     @Delete
     void delete(Round round);
@@ -24,5 +28,8 @@ public interface RoundDao {
 
     @Query("SELECT round.roundId FROM round ORDER BY round.roundId DESC")
     int getLatestRoundId();
+
+    @Query("SELECT * FROM round WHERE round.roundId = :roundId")
+    Round getRoundById(int roundId);
 
 }

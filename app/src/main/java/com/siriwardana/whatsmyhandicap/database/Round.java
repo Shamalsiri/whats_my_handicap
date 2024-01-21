@@ -1,7 +1,9 @@
 package com.siriwardana.whatsmyhandicap.database;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 @Entity
@@ -21,6 +23,10 @@ public class Round {
 
     @ColumnInfo(name = "num_holes")
     public int numHoles;
+
+    @ColumnInfo(name = "score")
+    @Nullable
+    public int score;
 
     public int getRoundId() {
         return roundId;
@@ -60,5 +66,13 @@ public class Round {
 
     public void setNumHoles(int numHoles) {
         this.numHoles = numHoles;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
