@@ -32,4 +32,7 @@ public interface RoundDao {
     @Query("SELECT * FROM round WHERE round.roundId = :roundId")
     Round getRoundById(int roundId);
 
+    @Query("SELECT round.roundId FROM round WHERE round.user_id = :userId ORDER BY round.score ASC LIMIT 1")
+    int getBestRoundIdByUser(int userId);
+
 }

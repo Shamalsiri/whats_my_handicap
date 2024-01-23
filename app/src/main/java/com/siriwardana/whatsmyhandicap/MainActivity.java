@@ -12,6 +12,7 @@ import android.widget.Button;
 
 import com.siriwardana.whatsmyhandicap.fragments.MainFragment;
 import com.siriwardana.whatsmyhandicap.fragments.NewRoundFragment;
+import com.siriwardana.whatsmyhandicap.fragments.PreviousScoresFragment;
 import com.siriwardana.whatsmyhandicap.fragments.RoundDataEntryFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -66,6 +67,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPrevScoreButtonClicked(int userId) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("userId", userId);
+        PreviousScoresFragment previousScoresFragment = new PreviousScoresFragment();
+        previousScoresFragment.setArguments(bundle);
+        loadFragment(previousScoresFragment);
 
     }
 

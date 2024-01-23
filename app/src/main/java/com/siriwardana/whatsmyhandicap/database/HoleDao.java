@@ -23,7 +23,7 @@ public interface HoleDao {
     @Query("SELECT * FROM hole")
     List<Hole> getAllHoles();
 
-    @Query("SELECT * FROM hole WHERE hole.round_id = :roundId ORDER BY hole.holeId DESC")
+    @Query("SELECT * FROM hole WHERE hole.round_id = :roundId ORDER BY hole.holeId ASC")
     List<Hole> getHolesByRound(int roundId);
 
     @Query("SELECT * FROM hole WHERE hole.round_id = :roundId " +
