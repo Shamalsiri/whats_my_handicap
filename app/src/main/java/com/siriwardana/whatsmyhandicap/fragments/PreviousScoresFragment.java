@@ -40,6 +40,7 @@ public class PreviousScoresFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_previous_scores, container, false);
 
+        //todo: import userId
         RecyclerView bestHoleRecyclerView, allScoresRecyclerView;
         bestHoleRecyclerView = view.findViewById(R.id.rv_hole_data);
         allScoresRecyclerView = view.findViewById(R.id.rv_all_rounds);
@@ -52,8 +53,9 @@ public class PreviousScoresFragment extends Fragment {
         databaseSingleton = DatabaseSingleton.getDBInstance(getContext());
         int roundId = databaseSingleton.RoundDao().getBestRoundIdByUser(1);
         List<Hole> holes = databaseSingleton.HoleDao().getHolesByRound(roundId);
-        updateBestHoleTotal(holes, roundId);
 
+        //best hole data
+        updateBestHoleTotal(holes, roundId);
         bestHoleRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
         bestHoleRecyclerView.setAdapter(new HoleDataAdapter(view.getContext(), holes));
 

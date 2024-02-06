@@ -1,7 +1,9 @@
 package com.siriwardana.whatsmyhandicap.helpers;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
+import com.siriwardana.whatsmyhandicap.dialogs.EditHoleDialog;
 
 import java.util.List;
 
@@ -36,6 +39,7 @@ public class RoundDataAdapter extends RecyclerView.Adapter<RoundDataViewHolder> 
         Round round = roundDataList.get(position).getRound();
         List<Hole> holes = roundDataList.get(position).getHoles();
 
+        int roundId = round.getRoundId();
         String location = round.getClubName() + " | " + round.getCourseName() + " Course";
 
         holder.holeDataRV.setLayoutManager(new LinearLayoutManager(context,
@@ -44,6 +48,15 @@ public class RoundDataAdapter extends RecyclerView.Adapter<RoundDataViewHolder> 
 
         holder.courseNameTV.setText(location);
         updateHoleTotal(holes, holder);
+
+        holder.editHoleIB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("SSIRI", "Edit " + location + " Clicked");
+                EditHoleDialog editHoleDialog = new EditHoleDialog(context, round);
+                editHoleDialog.show();
+            }
+        });
     }
 
     @Override
