@@ -30,6 +30,7 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
     Spinner selectHoleSP;
     int roundId, holeId;
     Round round;
+    Hole hole;
     Context context;
     DatabaseSingleton databaseSingleton;
 
@@ -52,7 +53,7 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
         scoreTV = findViewById(R.id.tv_edit_score);
 
         editClubNameBTN = findViewById(R.id.btn_edit_club_name);
-        editScoreBTN.setOnClickListener(this);
+        editClubNameBTN.setOnClickListener(this);
         editCourseNameBTN = findViewById(R.id.btn_edit_course_name);
         editCourseNameBTN.setOnClickListener(this);
         editDistanceBTN = findViewById(R.id.btn_edit_distance);
@@ -127,13 +128,13 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
                 break;
         }
 
-        editDataDialog = new EditDataDialog(context, mode);
+        editDataDialog = new EditDataDialog(context, mode, hole, round);
         editDataDialog.show();
 
     }
 
     public void updateDataByHole(int holeNum) {
-        Hole hole = databaseSingleton.HoleDao().getHoleByRound(round.getRoundId(), holeNum);
+        hole = databaseSingleton.HoleDao().getHoleByRound(round.getRoundId(), holeNum);
         int score = hole.getHoleScore();
         distanceTV.setText(String.valueOf(hole.getDistance()));
         parTV.setText(String.valueOf(hole.getPar()));

@@ -40,10 +40,10 @@
 
     <EditText
         android:id="@+id/et_new_value"
-        android:layout_width="44dp"
+        android:layout_width="72dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="####"
+        android:hint="new value"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/tv_current_value" />
@@ -52,6 +52,7 @@
         android:id="@+id/tv_current_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toTopOf="@+id/tv_label_original_value" />
@@ -70,20 +71,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="28dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="#F44336"
         android:text="Exit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_edit_save"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_new_value"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/et_new_value" />
 
     <Button
         android:id="@+id/btn_edit_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
+        android:layout_marginStart="20dp"
         android:backgroundTint="#4CAF50"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
