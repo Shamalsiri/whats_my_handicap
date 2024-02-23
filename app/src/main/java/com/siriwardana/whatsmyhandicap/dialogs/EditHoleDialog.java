@@ -2,6 +2,7 @@ package com.siriwardana.whatsmyhandicap.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
+import com.siriwardana.whatsmyhandicap.helpers.DataStorageHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +33,17 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
     int roundId, holeId;
     Round round;
     Hole hole;
+    int currentHoleNumber;
     Context context;
     DatabaseSingleton databaseSingleton;
+    DataStorageHelper dataStorageHelper;
 
     public EditHoleDialog(@NonNull Context context, Round round) {
         super(context);
         this.context = context;
         this.round = round;
         databaseSingleton = DatabaseSingleton.getDBInstance(context);
+        dataStorageHelper = new DataStorageHelper(context);
     }
 
     @Override
@@ -93,7 +98,8 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d("SSIRI", "Selected: " + i);
-                updateDataByHole(i + 1);
+                currentHoleNumber = i + 1;
+                updateUIByHole(currentHoleNumber);
             }
 
             @Override
@@ -131,10 +137,19 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
         editDataDialog = new EditDataDialog(context, mode, hole, round);
         editDataDialog.show();
 
+        editDataDialog.setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                updateUIByHole(currentHoleNumber);
+            }
+        });
+
+
     }
 
-    public void updateDataByHole(int holeNum) {
-        hole = databaseSingleton.HoleDao().getHoleByRound(round.getRoundId(), holeNum);
+    public void updateUIByHole(int holeNum) {
+        Log.d("SSIRI", "Current Hole: " + holeNum);
+        hole = dataStorageHelper.getHoleByRound(round.getRoundId(), holeNum);
         int score = hole.getHoleScore();
         distanceTV.setText(String.valueOf(hole.getDistance()));
         parTV.setText(String.valueOf(hole.getPar()));
@@ -146,6 +161,6 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
         clubNameTV.setText(round.getClubName());
         courseNameTV.setText(round.getCourseName());
 
-        updateDataByHole(1);
+        updateUIByHole(currentHoleNumber + 1);
     }
 }

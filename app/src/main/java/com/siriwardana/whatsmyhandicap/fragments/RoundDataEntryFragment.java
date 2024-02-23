@@ -19,6 +19,7 @@ import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
+import com.siriwardana.whatsmyhandicap.helpers.DataStorageHelper;
 
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class RoundDataEntryFragment extends Fragment {
 
     private Context context;
     private DatabaseSingleton dbSingleton;
+    private DataStorageHelper dataStorageHelper;
 
     public RoundDataEntryFragment() {
         // Required empty public constructor
@@ -43,6 +45,7 @@ public class RoundDataEntryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_round_data_entry, container, false);
         context = getContext().getApplicationContext();
         dbSingleton = DatabaseSingleton.getDBInstance(context);
+        dataStorageHelper = new DataStorageHelper(context);
 
         parET = view.findViewById(R.id.et_par);
         distanceET = view.findViewById(R.id.et_hole_distance);
@@ -123,7 +126,7 @@ public class RoundDataEntryFragment extends Fragment {
                         saveHoleData(currentHole);
                     }
 
-                    List<Hole> holeList = dbSingleton.HoleDao().getHolesByRound(roundId);
+                    List<Hole> holeList = dataStorageHelper.getHolesByRound(roundId);
                     int numHolesInRound = holeList.size();
                     if (numHolesInRound % 9 == 0) {
                         //Todo: Open confirm score fragment
@@ -188,7 +191,7 @@ public class RoundDataEntryFragment extends Fragment {
      * exit
      */
     private void exit() {
-        List<Hole> holeList = dbSingleton.HoleDao().getHolesByRound(roundId);
+        List<Hole> holeList = dataStorageHelper.getHolesByRound(roundId);
         int numHolesInRound = holeList.size();
         if ((numHolesThisRound == 9 && numHolesInRound != 9) ||
                 (numHolesThisRound == 18 && numHolesInRound != 18)) {
@@ -207,7 +210,7 @@ public class RoundDataEntryFragment extends Fragment {
      */
     private void saveHoleData(int holeNum) {
         if (holeDataExist(holeNum)) {
-            Hole hole = dbSingleton.HoleDao().getHoleByRound(roundId, holeNum);
+            Hole hole = dataStorageHelper.getHoleByRound(roundId, holeNum);
             updateHoleData(hole);
         } else {
             saveHoleData(new Hole());
@@ -242,7 +245,7 @@ public class RoundDataEntryFragment extends Fragment {
      */
     private boolean holeDataExist(int holeNum) {
         Hole hole;
-        hole = dbSingleton.HoleDao().getHoleByRound(roundId, holeNum);
+        hole = dataStorageHelper.getHoleByRound(roundId, holeNum);
 
         return hole != null ? true : false;
     }
@@ -312,7 +315,7 @@ public class RoundDataEntryFragment extends Fragment {
     private void loadHoleFromDB(int holeNum) {
         setNewHoleUI();
         Hole hole;
-        hole = dbSingleton.HoleDao().getHoleByRound(roundId, holeNum);
+        hole = dataStorageHelper.getHoleByRound(roundId, holeNum);
         numStrokes = hole.getStrokeCount();
 
         parET.setText(String.valueOf(hole.getPar()));
@@ -372,7 +375,7 @@ public class RoundDataEntryFragment extends Fragment {
         hole = createHoleObject(hole);
 
         Log.d("SSIRI", "Saving values for hole: " + hole.getHoleNumber());
-        dbSingleton.HoleDao().insert(hole);
+        dataStorageHelper.insertHoleData(hole);
     }
 
     /**
@@ -384,7 +387,7 @@ public class RoundDataEntryFragment extends Fragment {
         hole = createHoleObject(hole);
 
         Log.d("SSIRI", "Updating values for hole: " + hole.getHoleNumber());
-        dbSingleton.HoleDao().update(hole);
+        dataStorageHelper.updateHole(hole);
 
         calculateRoundScore(currentHole);
     }
@@ -398,8 +401,7 @@ public class RoundDataEntryFragment extends Fragment {
     private Hole createHoleObject(Hole hole) {
         int par = Integer.parseInt(parET.getText().toString().trim());
         int distance = distanceET.getText().toString().length() > 0 ?
-                Integer.parseInt(distanceET.getText().toString().trim()) :
-                0;
+                Integer.parseInt(distanceET.getText().toString().trim()) : 0;
 
         int holeScore = numStrokes - par;
 
@@ -424,7 +426,7 @@ public class RoundDataEntryFragment extends Fragment {
         Hole hole;
         if (holeNum != 1 || holeDataExist(1)) {
             for (int i = 1; i <= holeNum; i++) {
-                hole = dbSingleton.HoleDao().getHoleByRound(roundId, i);
+                hole = dataStorageHelper.getHoleByRound(roundId, i);
                 score = score + hole.getHoleScore();
             }
         }

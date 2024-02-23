@@ -1,5 +1,6 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ public class PreviousScoresFragment extends Fragment {
     private TextView bestTotalDistanceTV, bestTotalParTV, bestTotalScore, bestCourseName;
     private Button exitBTN;
     private DatabaseSingleton databaseSingleton;
+    private View view;
+    private RecyclerView bestHoleRecyclerView, allScoresRecyclerView;
 
 
     public PreviousScoresFragment(){
@@ -38,10 +41,10 @@ public class PreviousScoresFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_previous_scores, container, false);
+        view = inflater.inflate(R.layout.fragment_previous_scores, container, false);
 
         //todo: import userId
-        RecyclerView bestHoleRecyclerView, allScoresRecyclerView;
+
         bestHoleRecyclerView = view.findViewById(R.id.rv_hole_data);
         allScoresRecyclerView = view.findViewById(R.id.rv_all_rounds);
         bestTotalDistanceTV = view.findViewById(R.id.tv_round_distance);
@@ -50,18 +53,14 @@ public class PreviousScoresFragment extends Fragment {
         bestCourseName = view.findViewById(R.id.tv_best_course_name);
         exitBTN = view.findViewById(R.id.btn_exit_home);
 
-        databaseSingleton = DatabaseSingleton.getDBInstance(getContext());
-        int roundId = databaseSingleton.RoundDao().getBestRoundIdByUser(1);
-        List<Hole> holes = databaseSingleton.HoleDao().getHolesByRound(roundId);
+        Context context = getContext();
+        databaseSingleton = DatabaseSingleton.getDBInstance(context);
 
-        //best hole data
-        updateBestHoleTotal(holes, roundId);
-        bestHoleRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false));
-        bestHoleRecyclerView.setAdapter(new HoleDataAdapter(view.getContext(), holes));
+        //best round data
+        updateBestRoundRecyclerView(context);
 
-        List<RoundData> roundDataList = generateAllRoundData();
-        allScoresRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        allScoresRecyclerView.setAdapter(new RoundDataAdapter(view.getContext(), roundDataList));
+        //all round data
+        updateAllRoundRecyclerView(context);
 
         exitBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,9 +72,25 @@ public class PreviousScoresFragment extends Fragment {
         return view;
     }
 
+    private void updateAllRoundRecyclerView(Context context) {
+        List<RoundData> roundDataList = generateAllRoundData();
+        allScoresRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        allScoresRecyclerView.setAdapter(new RoundDataAdapter(context, roundDataList));
+    }
+
+    private void updateBestRoundRecyclerView(Context context) {
+        //todo: update the userId
+        int roundId = databaseSingleton.RoundDao().getBestRoundIdByUser(1);
+        List<Hole> holes = databaseSingleton.HoleDao().getHolesByRound(roundId);
+        updateBestHoleTotal(holes, roundId);
+        bestHoleRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        bestHoleRecyclerView.setAdapter(new HoleDataAdapter(context, holes));
+    }
+
     private List<RoundData> generateAllRoundData() {
         List<RoundData> roundDataList = new ArrayList<RoundData>();
-        List<Round> roundList = databaseSingleton.RoundDao().getAllRounds();
+        //todo: update the userId
+        List<Round> roundList = databaseSingleton.RoundDao().getRoundsByUser(1);
         List<Hole>  holeList;
         for(int i = 0; i < roundList.size(); i++) {
             Round round = roundList.get(i);

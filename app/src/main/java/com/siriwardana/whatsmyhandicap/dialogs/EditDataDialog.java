@@ -24,6 +24,7 @@ import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
+import com.siriwardana.whatsmyhandicap.helpers.DataStorageHelper;
 
 public class EditDataDialog extends Dialog {
 
@@ -32,6 +33,7 @@ public class EditDataDialog extends Dialog {
     Button saveBTN, exitBTN;
     ImageButton closeIB;
     DatabaseSingleton databaseSingleton;
+    DataStorageHelper dataStorageHelper;
     EditModeEnums mode;
     Hole hole;
     Round round;
@@ -39,6 +41,7 @@ public class EditDataDialog extends Dialog {
     public EditDataDialog(@NonNull Context context, EditModeEnums mode, Hole hole, Round round) {
         super(context);
         databaseSingleton = DatabaseSingleton.getDBInstance(context);
+        dataStorageHelper = new DataStorageHelper(context);
         this.mode = mode;
         this.hole = hole;
         this.round = round;
@@ -75,17 +78,17 @@ public class EditDataDialog extends Dialog {
             case EDIT_DISTANCE:
                 updateTitle("Distance");
                 newValET.setInputType(InputType.TYPE_CLASS_NUMBER);
-                currentValTV.setText(hole.getDistance());
+                currentValTV.setText(String.valueOf(hole.getDistance()));
                 break;
             case EDIT_PAR:
                 updateTitle("Par");
                 newValET.setInputType(InputType.TYPE_CLASS_NUMBER);
-                currentValTV.setText(hole.getPar());
+                currentValTV.setText(String.valueOf(hole.getPar()));
                 break;
             case EDIT_SCORE:
                 updateTitle("Stroke Count");
                 newValET.setInputType(InputType.TYPE_CLASS_NUMBER);
-                currentValTV.setText(hole.getStrokeCount());
+                currentValTV.setText(String.valueOf(hole.getStrokeCount()));
                 break;
         }
 
@@ -96,6 +99,7 @@ public class EditDataDialog extends Dialog {
 
                 if (!TextUtils.isEmpty(newValue)) {
                     saveData();
+                    dismiss();
                 } else {
                     showToast("Enter a value to save or click exit to close");
                 }
@@ -177,22 +181,44 @@ public class EditDataDialog extends Dialog {
     }
 
     private void saveClubName() {
+        String value = newValET.getText().toString().trim();
+        round.setClubName(value);
+
+        dataStorageHelper.updateRound(round);
 
     }
 
     private void saveCourseName() {
+        String value = newValET.getText().toString().trim();
+        round.setCourseName(value);
 
+        dataStorageHelper.updateRound(round);
     }
 
     private void saveDistance() {
+        String value = newValET.getText().toString().trim();
+        hole.setDistance(Integer.parseInt(value));
 
+        dataStorageHelper.updateHole(hole);
     }
 
     private void savePar() {
+        String value = newValET.getText().toString().trim();
+        hole.setPar(Integer.parseInt(value));
+        hole.setHoleScore(hole.getStrokeCount() - hole.getPar());
 
+        dataStorageHelper.updateHole(hole);
+        dataStorageHelper.updateRoundScore(round.getRoundId());
     }
 
     private void saveStrokeCount() {
+        String value = newValET.getText().toString().trim();
+        int strokeCount = Integer.parseInt(value);
+        
+        hole.setStrokeCount(strokeCount);
+        hole.setHoleScore(strokeCount - hole.getPar());
 
+        dataStorageHelper.updateHole(hole);
+        dataStorageHelper.updateRoundScore(round.getRoundId());
     }
 }

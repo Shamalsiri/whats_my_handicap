@@ -1,10 +1,12 @@
 package com.siriwardana.whatsmyhandicap.helpers;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
 import com.siriwardana.whatsmyhandicap.dialogs.EditHoleDialog;
+import com.siriwardana.whatsmyhandicap.fragments.PreviousScoresFragment;
 
 import java.util.List;
 
@@ -49,12 +52,20 @@ public class RoundDataAdapter extends RecyclerView.Adapter<RoundDataViewHolder> 
         holder.courseNameTV.setText(location);
         updateHoleTotal(holes, holder);
 
-        holder.editHoleIB.setOnClickListener(new View.OnClickListener() {
+        holder.editRoundIB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d("SSIRI", "Edit " + location + " Clicked");
-                EditHoleDialog editHoleDialog = new EditHoleDialog(context, round);
-                editHoleDialog.show();
+                EditHoleDialog editRoundDialog = new EditHoleDialog(context, round);
+                editRoundDialog.show();
+
+                editRoundDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        //todo: reload the data on PreviousScoreFragment
+
+                    }
+                });
             }
         });
     }

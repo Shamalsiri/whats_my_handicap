@@ -12,7 +12,7 @@ import com.siriwardana.whatsmyhandicap.R;
 public class RoundDataViewHolder extends RecyclerView.ViewHolder {
 
     TextView courseNameTV, dateTV, totalDistanceTV, totalParTV, totalScoreTV;
-    ImageButton editHoleIB;
+    ImageButton editRoundIB;
     RecyclerView holeDataRV;
     public RoundDataViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -23,7 +23,7 @@ public class RoundDataViewHolder extends RecyclerView.ViewHolder {
         totalParTV = itemView.findViewById(R.id.tv_round_par);
         totalScoreTV = itemView.findViewById(R.id.tv_round_total_score);
 
-        editHoleIB = itemView.findViewById(R.id.ib_edit_hole);
+        editRoundIB = itemView.findViewById(R.id.ib_edit_round);
 
         holeDataRV = itemView.findViewById(R.id.rv_round_holes_data);
     }

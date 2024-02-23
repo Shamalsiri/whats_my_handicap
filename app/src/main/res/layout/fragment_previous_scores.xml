@@ -61,17 +61,6 @@
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/ib_edit_hole"
-        android:layout_width="28dp"
-        android:layout_height="80dp"
-        android:padding="4dp"
-        android:backgroundTint="@android:color/transparent"
-        android:src="@drawable/ic_edit"
-        android:text="edit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ll_labels" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_hole_data"
         android:layout_width="0dp"
@@ -90,7 +79,7 @@
         android:orientation="vertical"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/ib_edit_hole"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ll_labels">
 
         <TextView
