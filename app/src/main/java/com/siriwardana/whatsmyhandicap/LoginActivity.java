@@ -3,16 +3,15 @@ package com.siriwardana.whatsmyhandicap;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.siriwardana.whatsmyhandicap.fragments.LoginFragment;
 import com.siriwardana.whatsmyhandicap.fragments.RegisterFragment;
@@ -70,9 +69,9 @@ public class LoginActivity extends AppCompatActivity implements
 
         Log.d("SSiri", "New User Register");
         Log.d("SSIRI", "registered: " + registered);
-        if(registered) {
+        if (registered) {
             Toast.makeText(LoginActivity.this, "User successfully Registered",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();
 
             getSupportFragmentManager().popBackStack();
         }

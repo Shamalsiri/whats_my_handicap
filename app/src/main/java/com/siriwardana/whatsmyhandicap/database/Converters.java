@@ -1,5 +1,7 @@
 package com.siriwardana.whatsmyhandicap.database;
+
 import androidx.room.TypeConverter;
+
 import java.util.Date;
 
 public class Converters {

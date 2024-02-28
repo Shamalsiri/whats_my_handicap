@@ -11,9 +11,12 @@ import androidx.room.TypeConverters;
 @TypeConverters(Converters.class)
 public abstract class DatabaseSingleton extends RoomDatabase {
 
-    public  abstract UserDao UserDao();
+    public abstract UserDao UserDao();
+
     public abstract RoundDao RoundDao();
+
     public abstract HoleDao HoleDao();
+
     private static DatabaseSingleton INSTANCE;
 
     public static DatabaseSingleton getDBInstance(Context context) {

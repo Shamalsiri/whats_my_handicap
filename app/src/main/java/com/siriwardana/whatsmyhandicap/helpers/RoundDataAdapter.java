@@ -87,7 +87,9 @@ public class RoundDataAdapter extends RecyclerView.Adapter<RoundDataViewHolder> 
         for (int i = 0; i < holes.size(); i++) {
             hole = holes.get(i);
 
-            if(hole.getDistance() == 0) { distanceNotEntered = true; }
+            if (hole.getDistance() == 0) {
+                distanceNotEntered = true;
+            }
             totalScore = totalScore + hole.getHoleScore();
             totalPar = totalPar + hole.getPar();
             totalDistance = totalDistance + hole.getDistance();

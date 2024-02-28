@@ -1,6 +1,5 @@
 package com.siriwardana.whatsmyhandicap.dialogs;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -8,7 +7,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.Constraints;
 
 import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
@@ -127,7 +124,7 @@ public class EditDataDialog extends Dialog {
         alertDialog.setMessage("You are exiting without saving any changes");
 
 
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Exit", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Exit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // here you can add functions
                 alertDialog.dismiss();
@@ -135,7 +132,7 @@ public class EditDataDialog extends Dialog {
             }
         });
 
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL,"Cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // here you can add functions
                 alertDialog.dismiss();
@@ -145,6 +142,7 @@ public class EditDataDialog extends Dialog {
 
         alertDialog.show();
     }
+
     private void setEditTextWidth() {
         int width = currentValTV.getLayoutParams().width;
         ViewGroup.LayoutParams layoutParams = newValET.getLayoutParams();
@@ -153,7 +151,7 @@ public class EditDataDialog extends Dialog {
     }
 
     private void showToast(String msg) {
-        Toast.makeText(getContext(), msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     private void saveData() {
@@ -214,7 +212,7 @@ public class EditDataDialog extends Dialog {
     private void saveStrokeCount() {
         String value = newValET.getText().toString().trim();
         int strokeCount = Integer.parseInt(value);
-        
+
         hole.setStrokeCount(strokeCount);
         hole.setHoleScore(strokeCount - hole.getPar());
 

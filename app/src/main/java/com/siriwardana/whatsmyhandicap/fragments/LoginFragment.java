@@ -72,8 +72,8 @@ public class LoginFragment extends Fragment {
 
         // Password visibility toggle logic
         passwordVisibilityToggleHelper = new PasswordVisibilityToggleHelper();
-        passwordET.setCompoundDrawablesWithIntrinsicBounds(0,0,
-                R.drawable.ic_password_visibility_off,0);
+        passwordET.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+                R.drawable.ic_password_visibility_off, 0);
         passwordET.setOnTouchListener(passwordVisibilityToggleHelper
                 .getPasswordTouchListener(passwordET));
 
@@ -90,7 +90,7 @@ public class LoginFragment extends Fragment {
         User user;
         user = dbSingleton.UserDao().getUserByEmail(email);
 
-        if(user != null && user.getPassword().equals(password)) {
+        if (user != null && user.getPassword().equals(password)) {
             userId = user.getUserId();
             return true;
         }
@@ -99,6 +99,7 @@ public class LoginFragment extends Fragment {
 
     public interface onLoginButtonClickListener {
         void onLoginButtonClicked(boolean loginAllowed, int uID);
+
         void onRegisterButtonClicked();
     }
 }

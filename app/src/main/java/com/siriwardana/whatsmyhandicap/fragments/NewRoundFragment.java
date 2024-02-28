@@ -1,17 +1,16 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
@@ -39,7 +38,7 @@ public class NewRoundFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_round, container, false);
         dbSingleton = DatabaseSingleton.getDBInstance(getContext().getApplicationContext());
         Bundle bundle = getArguments();
-        if(bundle != null) {
+        if (bundle != null) {
             userId = bundle.getInt("userId");
         }
 
@@ -54,9 +53,9 @@ public class NewRoundFragment extends Fragment {
 
         holesRG = view.findViewById(R.id.rg_num_holes);
 
-        backBTN.setOnClickListener(v->
-                        ((onNewRoundButtonClickListener)requireActivity()).onBackButtonClicked()
-                );
+        backBTN.setOnClickListener(v ->
+                ((onNewRoundButtonClickListener) requireActivity()).onBackButtonClicked()
+        );
 
         startRoundBTN.setOnClickListener(v -> {
             clubNameLabelTV.setVisibility(View.GONE);
@@ -68,7 +67,7 @@ public class NewRoundFragment extends Fragment {
             boolean canStart;
             canStart = validateNewRoundForm(view);
 
-            if(canStart) {
+            if (canStart) {
                 Round newRound = new Round();
                 newRound.setUserId(userId);
                 newRound.setClubName(clubName);
@@ -87,15 +86,15 @@ public class NewRoundFragment extends Fragment {
     private boolean validateNewRoundForm(View v) {
 
         boolean canStart = true;
-        if(clubName.length() < 2) {
+        if (clubName.length() < 2) {
             clubNameLabelTV.setVisibility(View.VISIBLE);
             canStart = false;
         }
 
         int checkedRB = holesRG.getCheckedRadioButtonId();
-        if (checkedRB != -1 ){
+        if (checkedRB != -1) {
             checkedRadioButton = v.findViewById(checkedRB);
-            if(checkedRadioButton.getText().toString().equalsIgnoreCase("9 Holes")) {
+            if (checkedRadioButton.getText().toString().equalsIgnoreCase("9 Holes")) {
                 numHoles = 9;
             } else {
                 numHoles = 18;
@@ -110,6 +109,7 @@ public class NewRoundFragment extends Fragment {
 
     public interface onNewRoundButtonClickListener {
         void onBackButtonClicked();
+
         void onStartButtonClicked(boolean canStart, int roundId, int numHoles);
     }
 }

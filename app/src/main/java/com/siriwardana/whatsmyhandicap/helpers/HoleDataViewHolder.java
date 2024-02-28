@@ -11,6 +11,7 @@ import com.siriwardana.whatsmyhandicap.R;
 public class HoleDataViewHolder extends RecyclerView.ViewHolder {
 
     TextView holeTV, distanceTV, parTV, scoreTV;
+
     public HoleDataViewHolder(@NonNull View itemView) {
         super(itemView);
 

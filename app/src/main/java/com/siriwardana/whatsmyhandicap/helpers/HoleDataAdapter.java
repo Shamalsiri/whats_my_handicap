@@ -13,7 +13,7 @@ import com.siriwardana.whatsmyhandicap.database.Hole;
 import java.util.List;
 
 public class HoleDataAdapter extends RecyclerView.Adapter<HoleDataViewHolder> {
-    
+
     Context context;
     List<Hole> holes;
 
@@ -21,6 +21,7 @@ public class HoleDataAdapter extends RecyclerView.Adapter<HoleDataViewHolder> {
         this.context = context;
         this.holes = holes;
     }
+
     @NonNull
     @Override
     public HoleDataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,5 +43,7 @@ public class HoleDataAdapter extends RecyclerView.Adapter<HoleDataViewHolder> {
     }
 
     @Override
-    public int getItemCount() { return holes.size(); }
+    public int getItemCount() {
+        return holes.size();
+    }
 }

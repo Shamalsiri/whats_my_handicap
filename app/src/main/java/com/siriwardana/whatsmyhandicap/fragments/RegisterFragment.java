@@ -56,14 +56,14 @@ public class RegisterFragment extends Fragment {
 
         // Password visibility toggle logic
         passwordVisibilityToggleHelper = new PasswordVisibilityToggleHelper();
-        passwordET.setCompoundDrawablesWithIntrinsicBounds(0,0,
-                R.drawable.ic_password_visibility_off,0);
+        passwordET.setCompoundDrawablesWithIntrinsicBounds(0, 0,
+                R.drawable.ic_password_visibility_off, 0);
         passwordET.setOnTouchListener(
                 passwordVisibilityToggleHelper.getPasswordTouchListener(passwordET));
 
         // Password visibility toggle logic
-        passwordConfirmET.setCompoundDrawablesWithIntrinsicBounds(0,0
-                ,R.drawable.ic_password_visibility_off,0);
+        passwordConfirmET.setCompoundDrawablesWithIntrinsicBounds(0, 0
+                , R.drawable.ic_password_visibility_off, 0);
         passwordConfirmET.setOnTouchListener(
                 passwordVisibilityToggleHelper.getPasswordTouchListener(passwordConfirmET));
 
@@ -86,7 +86,7 @@ public class RegisterFragment extends Fragment {
     }
 
     public boolean validateNewUser(String email) {
-        if( dbSingleton.UserDao().getUserCountByEmail(email) == 0 ) {
+        if (dbSingleton.UserDao().getUserCountByEmail(email) == 0) {
             return true;
         }
         showErrorMsg("Email is already Registered");
@@ -113,29 +113,29 @@ public class RegisterFragment extends Fragment {
         }
 
         // Check for a valid date
-        if(!userRegistrationHelper.isValidDate(dob)) {
+        if (!userRegistrationHelper.isValidDate(dob)) {
             showErrorMsg("Invalid dob. Enter the date in format mm-dd-yyyy");
             return false;
         }
 
         // Check for a valid email
-        if(!userRegistrationHelper.validateEmail(email)) {
+        if (!userRegistrationHelper.validateEmail(email)) {
             showErrorMsg("Invalid email");
             return false;
         }
-        if(!userRegistrationHelper.validateEmail(confirmEmail)) {
+        if (!userRegistrationHelper.validateEmail(confirmEmail)) {
             showErrorMsg("Invalid confirm email");
             return false;
         }
 
         // Check if emails match
-        if(!userRegistrationHelper.validateStringMatch(email, confirmEmail)) {
+        if (!userRegistrationHelper.validateStringMatch(email, confirmEmail)) {
             showErrorMsg("Emails do not match");
             return false;
         }
 
         // Check if password match
-        if(!userRegistrationHelper.validateStringMatch(password, confirmPassword)) {
+        if (!userRegistrationHelper.validateStringMatch(password, confirmPassword)) {
             showErrorMsg("Passwords do not match");
             return false;
         }
@@ -143,10 +143,10 @@ public class RegisterFragment extends Fragment {
         return true;
     }
 
-    public void registerNewUser(){
+    public void registerNewUser() {
         Date birthday = userRegistrationHelper.str2Date(dob);
         long bDay;
-        if(birthday != null) {
+        if (birthday != null) {
             bDay = Converters.dateToTimestamp(birthday);
         } else {
             bDay = Long.parseLong(null);
@@ -169,6 +169,7 @@ public class RegisterFragment extends Fragment {
 
     public interface OnRegisterButtonClickListener {
         void onRegisterNewUser(boolean canRegister);
+
         void onBackButtonPressed();
     }
 }

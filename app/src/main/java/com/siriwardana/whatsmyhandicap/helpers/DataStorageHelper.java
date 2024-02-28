@@ -3,7 +3,6 @@ package com.siriwardana.whatsmyhandicap.helpers;
 import android.content.Context;
 import android.util.Log;
 
-import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
@@ -31,7 +30,7 @@ public class DataStorageHelper {
     }
 
     public Hole getHoleByRound(int roundId, int holeNumber) {
-       return databaseSingleton.HoleDao().getHoleByRound(roundId, holeNumber);
+        return databaseSingleton.HoleDao().getHoleByRound(roundId, holeNumber);
     }
 
     public List<Hole> getHolesByRound(int roundId) {
@@ -52,7 +51,7 @@ public class DataStorageHelper {
         int numHoles = round.getNumHoles();
         Hole hole;
         int score = 0;
-        for(int i = 0; i < numHoles; i++) {
+        for (int i = 0; i < numHoles; i++) {
             hole = holes.get(i);
             score = score + hole.getHoleScore();
         }

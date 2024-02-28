@@ -2,17 +2,10 @@ package com.siriwardana.whatsmyhandicap.helpers;
 
 import android.util.Log;
 import android.util.Patterns;
-import android.widget.EditText;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 public class UserRegistrationHelper {
 
@@ -25,7 +18,7 @@ public class UserRegistrationHelper {
     }
 
     public boolean isValidDate(String inputDate) {
-        SimpleDateFormat sdf  = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
         sdf.setLenient(false);
 
         Date date;
@@ -40,7 +33,7 @@ public class UserRegistrationHelper {
     }
 
     public Date str2Date(String inputDate) {
-        SimpleDateFormat sdf  = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
         sdf.setLenient(false);
 
         Date date;

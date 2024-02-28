@@ -17,8 +17,8 @@ import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
-import com.siriwardana.whatsmyhandicap.helpers.ReloadPreviousScoreUICallback;
 import com.siriwardana.whatsmyhandicap.helpers.HoleDataAdapter;
+import com.siriwardana.whatsmyhandicap.helpers.ReloadPreviousScoreUICallback;
 import com.siriwardana.whatsmyhandicap.helpers.RoundData;
 import com.siriwardana.whatsmyhandicap.helpers.RoundDataAdapter;
 
@@ -35,7 +35,7 @@ public class PreviousScoresFragment extends Fragment implements ReloadPreviousSc
     private Context context;
 
 
-    public PreviousScoresFragment(){
+    public PreviousScoresFragment() {
 
     }
 
@@ -91,8 +91,8 @@ public class PreviousScoresFragment extends Fragment implements ReloadPreviousSc
     private List<RoundData> generateAllRoundData() {
         List<RoundData> roundDataList = new ArrayList<RoundData>();
         List<Round> roundList = databaseSingleton.RoundDao().getRoundsByUser(userId);
-        List<Hole>  holeList;
-        for(int i = 0; i < roundList.size(); i++) {
+        List<Hole> holeList;
+        for (int i = 0; i < roundList.size(); i++) {
             Round round = roundList.get(i);
             holeList = databaseSingleton.HoleDao().getHolesByRound(round.getRoundId());
 
@@ -110,7 +110,7 @@ public class PreviousScoresFragment extends Fragment implements ReloadPreviousSc
 
         round = databaseSingleton.RoundDao().getRoundById(roundId);
         int size = bestRound.size();
-        if(size == 0) {
+        if (size == 0) {
             Log.d("SSIRI", "No Data in the db yet");
             return;
         }
@@ -122,7 +122,9 @@ public class PreviousScoresFragment extends Fragment implements ReloadPreviousSc
         for (int i = 0; i < size; i++) {
             hole = bestRound.get(i);
 
-            if(hole.getDistance() == 0) { distanceNotEntered = true; }
+            if (hole.getDistance() == 0) {
+                distanceNotEntered = true;
+            }
             totalScore = totalScore + hole.getHoleScore();
             totalPar = totalPar + hole.getPar();
             totalDistance = totalDistance + hole.getDistance();
@@ -133,7 +135,6 @@ public class PreviousScoresFragment extends Fragment implements ReloadPreviousSc
         bestTotalParTV.setText(String.valueOf(totalPar));
         bestTotalDistanceTV.setText(distanceNotEntered ? "-" : String.valueOf(totalDistance));
         bestCourseName.setText(courseName);
-
 
 
     }

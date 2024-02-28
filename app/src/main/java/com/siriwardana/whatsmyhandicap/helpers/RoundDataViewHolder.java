@@ -14,6 +14,7 @@ public class RoundDataViewHolder extends RecyclerView.ViewHolder {
     TextView courseNameTV, dateTV, totalDistanceTV, totalParTV, totalScoreTV;
     ImageButton editRoundIB;
     RecyclerView holeDataRV;
+
     public RoundDataViewHolder(@NonNull View itemView) {
         super(itemView);
 

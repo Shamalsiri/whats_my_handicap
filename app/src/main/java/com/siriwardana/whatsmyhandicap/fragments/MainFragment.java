@@ -1,15 +1,14 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.siriwardana.whatsmyhandicap.R;
 
@@ -68,8 +67,11 @@ public class MainFragment extends Fragment {
 
     public interface onMainFragmentButtonClickListener {
         void onNewRoundButtonClicked();
+
         void onPrevScoreButtonClicked(int userId);
+
         void onSettingsButtonClicked();
+
         void onLogoutButtonClicked();
     }
 }

@@ -15,7 +15,7 @@ public interface RoundDao {
     void insert(Round... rounds);
 
     @Update
-    void update (Round... rounds);
+    void update(Round... rounds);
 
     @Delete
     void delete(Round round);
