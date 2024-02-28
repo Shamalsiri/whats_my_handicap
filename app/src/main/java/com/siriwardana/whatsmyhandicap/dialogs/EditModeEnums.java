@@ -5,6 +5,6 @@ public enum EditModeEnums {
     EDIT_CLUB_NAME,
     EDIT_DISTANCE,
     EDIT_PAR,
-    EDIT_SCORE;
+    EDIT_SCORE
 
 }

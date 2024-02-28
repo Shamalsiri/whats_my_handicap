@@ -34,10 +34,10 @@ public class LoginFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        emailET = (EditText) view.findViewById(R.id.et_email_address);
-        passwordET = (EditText) view.findViewById(R.id.et_password);
+        emailET = view.findViewById(R.id.et_email_address);
+        passwordET = view.findViewById(R.id.et_password);
 
-        errorTV = (TextView) view.findViewById(R.id.tv_error);
+        errorTV = view.findViewById(R.id.tv_error);
 
         //Needed to validate the email
         userRegistrationHelper = new UserRegistrationHelper();

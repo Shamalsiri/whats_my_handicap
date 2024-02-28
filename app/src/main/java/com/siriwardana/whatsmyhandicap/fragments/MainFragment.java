@@ -33,14 +33,14 @@ public class MainFragment extends Fragment {
         Bundle bundle = getArguments();
         this.userId = bundle.getInt("userId");
 
-        newRoundBTN = (Button) view.findViewById(R.id.btn_new_round);
-        prevScoresBTN = (Button) view.findViewById(R.id.btn_prev_scores);
+        newRoundBTN = view.findViewById(R.id.btn_new_round);
+        prevScoresBTN = view.findViewById(R.id.btn_prev_scores);
 
-        handicapTV = (TextView) view.findViewById(R.id.tv_handicap);
-        handicapNoteTV = (TextView) view.findViewById(R.id.tv_handicap_note);
+        handicapTV = view.findViewById(R.id.tv_handicap);
+        handicapNoteTV = view.findViewById(R.id.tv_handicap_note);
 
-        settingsIB = (ImageButton) view.findViewById(R.id.ib_settings);
-        logoutIB = (ImageButton) view.findViewById(R.id.ib_logout);
+        settingsIB = view.findViewById(R.id.ib_settings);
+        logoutIB = view.findViewById(R.id.ib_logout);
 
         newRoundBTN.setOnClickListener(new View.OnClickListener() {
             @Override

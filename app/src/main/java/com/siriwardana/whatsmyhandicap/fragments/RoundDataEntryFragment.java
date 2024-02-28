@@ -247,7 +247,7 @@ public class RoundDataEntryFragment extends Fragment {
         Hole hole;
         hole = dataStorageHelper.getHoleByRound(roundId, holeNum);
 
-        return hole != null ? true : false;
+        return hole != null;
     }
 
     /**

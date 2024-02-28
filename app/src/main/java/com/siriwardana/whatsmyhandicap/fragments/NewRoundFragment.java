@@ -43,16 +43,16 @@ public class NewRoundFragment extends Fragment {
             userId = bundle.getInt("userId");
         }
 
-        backBTN = (Button) view.findViewById(R.id.btn_nr_back);
-        startRoundBTN = (Button) view.findViewById(R.id.btn_nr_start_round);
+        backBTN = view.findViewById(R.id.btn_nr_back);
+        startRoundBTN = view.findViewById(R.id.btn_nr_start_round);
 
-        clubNameET = (EditText) view.findViewById(R.id.et_club_name);
-        courseNameET = (EditText) view.findViewById(R.id.et_course_name);
+        clubNameET = view.findViewById(R.id.et_club_name);
+        courseNameET = view.findViewById(R.id.et_course_name);
 
-        clubNameLabelTV = (TextView) view.findViewById(R.id.tv_club_name_label);
-        numHolesLabelTV = (TextView) view.findViewById(R.id.tv_num_holes_label);
+        clubNameLabelTV = view.findViewById(R.id.tv_club_name_label);
+        numHolesLabelTV = view.findViewById(R.id.tv_num_holes_label);
 
-        holesRG = (RadioGroup) view.findViewById(R.id.rg_num_holes);
+        holesRG = view.findViewById(R.id.rg_num_holes);
 
         backBTN.setOnClickListener(v->
                         ((onNewRoundButtonClickListener)requireActivity()).onBackButtonClicked()
@@ -94,7 +94,7 @@ public class NewRoundFragment extends Fragment {
 
         int checkedRB = holesRG.getCheckedRadioButtonId();
         if (checkedRB != -1 ){
-            checkedRadioButton = (RadioButton) v.findViewById(checkedRB);
+            checkedRadioButton = v.findViewById(checkedRB);
             if(checkedRadioButton.getText().toString().equalsIgnoreCase("9 Holes")) {
                 numHoles = 9;
             } else {

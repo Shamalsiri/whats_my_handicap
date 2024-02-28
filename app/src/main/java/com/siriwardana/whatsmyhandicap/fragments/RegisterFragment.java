@@ -42,16 +42,16 @@ public class RegisterFragment extends Fragment {
         userRegistrationHelper = new UserRegistrationHelper();
         dbSingleton = DatabaseSingleton.getDBInstance(getContext().getApplicationContext());
 
-        errorMsgTV = (TextView) view.findViewById(R.id.tv_error_msg);
+        errorMsgTV = view.findViewById(R.id.tv_error_msg);
         errorMsgTV.setVisibility(View.INVISIBLE);
 
-        fNameET = (EditText) view.findViewById(R.id.et_first_name);
-        lNameET = (EditText) view.findViewById(R.id.et_last_name);
-        dobET = (EditText) view.findViewById(R.id.et_dob);
-        emailET = (EditText) view.findViewById(R.id.et_email);
-        emailConfirmET = (EditText) view.findViewById(R.id.et_email_confirm);
-        passwordET = (EditText) view.findViewById(R.id.et_passwd);
-        passwordConfirmET = (EditText) view.findViewById(R.id.et_passwd_confirm);
+        fNameET = view.findViewById(R.id.et_first_name);
+        lNameET = view.findViewById(R.id.et_last_name);
+        dobET = view.findViewById(R.id.et_dob);
+        emailET = view.findViewById(R.id.et_email);
+        emailConfirmET = view.findViewById(R.id.et_email_confirm);
+        passwordET = view.findViewById(R.id.et_passwd);
+        passwordConfirmET = view.findViewById(R.id.et_passwd_confirm);
 
 
         // Password visibility toggle logic
