@@ -46,32 +46,32 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 onMainFragmentButtonClickListener listener =
                         (onMainFragmentButtonClickListener) requireActivity();
-                listener.onNewRoundButtonClicked();
+                listener.onMainFragmentNewRoundButtonClicked();
             }
         });
 
         // Lambda form of the button click listener (compare to button click above)
         prevScoresBTN.setOnClickListener(v ->
                 ((onMainFragmentButtonClickListener) requireActivity())
-                        .onPrevScoreButtonClicked(userId)
+                        .onMainFragmentPreviousScoreButtonClicked(userId)
         );
 
         settingsIB.setOnClickListener(v ->
-                ((onMainFragmentButtonClickListener) requireActivity()).onSettingsButtonClicked());
+                ((onMainFragmentButtonClickListener) requireActivity()).onMainFragmentSettingsButtonClicked());
 
         logoutIB.setOnClickListener(v ->
-                ((onMainFragmentButtonClickListener) requireActivity()).onLogoutButtonClicked());
+                ((onMainFragmentButtonClickListener) requireActivity()).onMainFragmentLogoutButtonClicked());
 
         return view;
     }
 
     public interface onMainFragmentButtonClickListener {
-        void onNewRoundButtonClicked();
+        void onMainFragmentNewRoundButtonClicked();
 
-        void onPrevScoreButtonClicked(int userId);
+        void onMainFragmentPreviousScoreButtonClicked(int userId);
 
-        void onSettingsButtonClicked();
+        void onMainFragmentSettingsButtonClicked();
 
-        void onLogoutButtonClicked();
+        void onMainFragmentLogoutButtonClicked();
     }
 }

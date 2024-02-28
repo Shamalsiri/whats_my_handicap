@@ -63,11 +63,11 @@ public class LoginFragment extends Fragment {
                 canLogin = true;
             }
 
-            ((onLoginButtonClickListener) requireActivity()).onLoginButtonClicked(canLogin, userId);
+            ((onLoginButtonClickListener) requireActivity()).onLoginFragmentLoginButtonClicked(canLogin, userId);
         });
 
         view.findViewById(R.id.btn_register).setOnClickListener(v -> {
-            ((onLoginButtonClickListener) requireActivity()).onRegisterButtonClicked();
+            ((onLoginButtonClickListener) requireActivity()).onLoginFragmentRegisterButtonClicked();
         });
 
         // Password visibility toggle logic
@@ -98,8 +98,8 @@ public class LoginFragment extends Fragment {
     }
 
     public interface onLoginButtonClickListener {
-        void onLoginButtonClicked(boolean loginAllowed, int uID);
+        void onLoginFragmentLoginButtonClicked(boolean loginAllowed, int uID);
 
-        void onRegisterButtonClicked();
+        void onLoginFragmentRegisterButtonClicked();
     }
 }

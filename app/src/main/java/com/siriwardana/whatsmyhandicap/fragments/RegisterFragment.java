@@ -68,7 +68,7 @@ public class RegisterFragment extends Fragment {
                 passwordVisibilityToggleHelper.getPasswordTouchListener(passwordConfirmET));
 
         view.findViewById(R.id.btn_back).setOnClickListener(v -> {
-            ((OnRegisterButtonClickListener) requireActivity()).onBackButtonPressed();
+            ((OnRegisterButtonClickListener) requireActivity()).onRegisterFragmentBackButtonClicked();
 
         });
 
@@ -79,7 +79,7 @@ public class RegisterFragment extends Fragment {
             if (canRegister) {
                 registerNewUser();
             }
-            ((OnRegisterButtonClickListener) requireActivity()).onRegisterNewUser(canRegister);
+            ((OnRegisterButtonClickListener) requireActivity()).onRegisterFragmentRegisterButtonClicked(canRegister);
         });
 
         return view;
@@ -168,8 +168,8 @@ public class RegisterFragment extends Fragment {
     }
 
     public interface OnRegisterButtonClickListener {
-        void onRegisterNewUser(boolean canRegister);
+        void onRegisterFragmentRegisterButtonClicked(boolean canRegister);
 
-        void onBackButtonPressed();
+        void onRegisterFragmentBackButtonClicked();
     }
 }

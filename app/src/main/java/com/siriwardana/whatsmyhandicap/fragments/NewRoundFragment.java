@@ -54,7 +54,7 @@ public class NewRoundFragment extends Fragment {
         holesRG = view.findViewById(R.id.rg_num_holes);
 
         backBTN.setOnClickListener(v ->
-                ((onNewRoundButtonClickListener) requireActivity()).onBackButtonClicked()
+                ((onNewRoundButtonClickListener) requireActivity()).onNewRoundFragmentBackButtonClicked()
         );
 
         startRoundBTN.setOnClickListener(v -> {
@@ -77,7 +77,7 @@ public class NewRoundFragment extends Fragment {
                 roundId = dbSingleton.RoundDao().getLatestRoundId();
             }
 
-            ((onNewRoundButtonClickListener) requireActivity()).onStartButtonClicked(canStart,
+            ((onNewRoundButtonClickListener) requireActivity()).onNewRoundFragmentStartButtonClicked(canStart,
                     roundId, numHoles);
         });
         return view;
@@ -108,8 +108,8 @@ public class NewRoundFragment extends Fragment {
     }
 
     public interface onNewRoundButtonClickListener {
-        void onBackButtonClicked();
+        void onNewRoundFragmentBackButtonClicked();
 
-        void onStartButtonClicked(boolean canStart, int roundId, int numHoles);
+        void onNewRoundFragmentStartButtonClicked(boolean canStart, int roundId, int numHoles);
     }
 }

@@ -18,6 +18,8 @@ import com.siriwardana.whatsmyhandicap.fragments.RegisterFragment;
 
 public class LoginActivity extends AppCompatActivity implements
         LoginFragment.onLoginButtonClickListener, RegisterFragment.OnRegisterButtonClickListener {
+
+    private final String TAG = LoginActivity.class.getName();
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
@@ -26,11 +28,18 @@ public class LoginActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Log.d(TAG, "onCreate");
         loadFragment(new LoginFragment());
 
     }
 
+    /**
+     * Load fragment
+     *
+     * @param fragment
+     */
     private void loadFragment(Fragment fragment) {
+        Log.d(TAG, "loadFragment: Loading Fragment: " + fragment.toString());
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -38,12 +47,18 @@ public class LoginActivity extends AppCompatActivity implements
         fragmentTransaction.commit();
     }
 
+    /**
+     * Login/ Load MainActivity if able to Login
+     *
+     * @param canLogin
+     * @param userId
+     */
     @Override
-    public void onLoginButtonClicked(boolean canLogin, int userId) {
-        Log.d("SSiri", "Login Button Clicked");
-        Log.d("SSiri", "Can Login: " + canLogin);
+    public void onLoginFragmentLoginButtonClicked(boolean canLogin, int userId) {
+        Log.d(TAG, "onLoginFragmentLoginButtonClicked: Login Button Clicked");
 
         if (canLogin) {
+            Log.d(TAG, "onLoginFragmentLoginButtonClicked: Logging in");
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("userId", userId);
             startActivity(intent);
@@ -51,14 +66,23 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * Open Register Fragment
+     */
     @Override
-    public void onRegisterButtonClicked() {
-        Log.d("SSiri", "Register Button Clicked");
+    public void onLoginFragmentRegisterButtonClicked() {
+        Log.d(TAG, "onLoginFragmentRegisterButtonClicked: Register Button Clicked");
         loadFragment(new RegisterFragment());
     }
 
+    /**
+     * Register New User when register button is clicked
+     *
+     * @param registered
+     */
     @Override
-    public void onRegisterNewUser(boolean registered) {
+    public void onRegisterFragmentRegisterButtonClicked(boolean registered) {
+        Log.d(TAG, "onRegisterFragmentRegisterButtonClicked: Register Button Clicked");
         // close keyboard
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -67,19 +91,22 @@ public class LoginActivity extends AppCompatActivity implements
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
-        Log.d("SSiri", "New User Register");
-        Log.d("SSIRI", "registered: " + registered);
         if (registered) {
             Toast.makeText(LoginActivity.this, "User successfully Registered",
                     Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "onRegisterFragmentRegisterButtonClicked: " +
+                    "User successfully Registered");
 
             getSupportFragmentManager().popBackStack();
         }
     }
 
+    /**
+     * pop Back Stack to the login activity & fragment
+     */
     @Override
-    public void onBackButtonPressed() {
-        Log.d("SSiri", "Back Button Clicked");
+    public void onRegisterFragmentBackButtonClicked() {
+        Log.d(TAG, "onRegisterFragmentBackButtonClicked: Back Button Clicked");
         getSupportFragmentManager().popBackStack();
 
     }

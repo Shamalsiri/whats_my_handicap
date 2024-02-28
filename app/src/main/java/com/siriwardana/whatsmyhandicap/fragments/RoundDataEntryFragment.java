@@ -135,7 +135,7 @@ public class RoundDataEntryFragment extends Fragment {
                     }
 
                     ((onRoundDataEntryButtonClickListener) requireActivity())
-                            .onPrevButtonClicked(true);
+                            .onNewRoundDataEntryPreviousButtonClicked(true);
 
                 }
             }
@@ -199,7 +199,7 @@ public class RoundDataEntryFragment extends Fragment {
         }
 
         ((onRoundDataEntryButtonClickListener) requireActivity())
-                .onPrevButtonClicked(true);
+                .onNewRoundDataEntryPreviousButtonClicked(true);
     }
 
     /**
@@ -435,7 +435,7 @@ public class RoundDataEntryFragment extends Fragment {
 
 
     public interface onRoundDataEntryButtonClickListener {
-        void onPrevButtonClicked(boolean isExit);
+        void onNewRoundDataEntryPreviousButtonClicked(boolean isExit);
 
         void onNextButtonClicked();
     }
