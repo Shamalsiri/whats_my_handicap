@@ -30,6 +30,9 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        Bundle bundle = getArguments();
+        this.userId = bundle.getInt("userId");
+
         newRoundBTN = (Button) view.findViewById(R.id.btn_new_round);
         prevScoresBTN = (Button) view.findViewById(R.id.btn_prev_scores);
 

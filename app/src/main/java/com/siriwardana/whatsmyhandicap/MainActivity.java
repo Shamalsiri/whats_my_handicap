@@ -33,8 +33,11 @@ public class MainActivity extends AppCompatActivity
             Log.d("SSIRI", "Main Activity user Id: " + userId);
         }
 
-
-        loadFragment(new MainFragment());
+        Bundle bundle = new Bundle();
+        bundle.putInt("userId", userId);
+        MainFragment mainFragment = new MainFragment();
+        mainFragment.setArguments(bundle);
+        loadFragment(mainFragment);
     }
 
     public void loadFragment(Fragment fragment){

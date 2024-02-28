@@ -17,6 +17,7 @@ import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
+import com.siriwardana.whatsmyhandicap.helpers.ReloadPreviousScoreUICallback;
 import com.siriwardana.whatsmyhandicap.helpers.HoleDataAdapter;
 import com.siriwardana.whatsmyhandicap.helpers.RoundData;
 import com.siriwardana.whatsmyhandicap.helpers.RoundDataAdapter;
@@ -24,13 +25,14 @@ import com.siriwardana.whatsmyhandicap.helpers.RoundDataAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreviousScoresFragment extends Fragment {
+public class PreviousScoresFragment extends Fragment implements ReloadPreviousScoreUICallback {
     private int userId;
     private TextView bestTotalDistanceTV, bestTotalParTV, bestTotalScore, bestCourseName;
     private Button exitBTN;
     private DatabaseSingleton databaseSingleton;
     private View view;
     private RecyclerView bestHoleRecyclerView, allScoresRecyclerView;
+    private Context context;
 
 
     public PreviousScoresFragment(){
@@ -42,8 +44,8 @@ public class PreviousScoresFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_previous_scores, container, false);
-
-        //todo: import userId
+        Bundle bundle = getArguments();
+        this.userId = bundle.getInt("userId");
 
         bestHoleRecyclerView = view.findViewById(R.id.rv_hole_data);
         allScoresRecyclerView = view.findViewById(R.id.rv_all_rounds);
@@ -53,7 +55,7 @@ public class PreviousScoresFragment extends Fragment {
         bestCourseName = view.findViewById(R.id.tv_best_course_name);
         exitBTN = view.findViewById(R.id.btn_exit_home);
 
-        Context context = getContext();
+        context = getContext();
         databaseSingleton = DatabaseSingleton.getDBInstance(context);
 
         //best round data
@@ -75,12 +77,11 @@ public class PreviousScoresFragment extends Fragment {
     private void updateAllRoundRecyclerView(Context context) {
         List<RoundData> roundDataList = generateAllRoundData();
         allScoresRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        allScoresRecyclerView.setAdapter(new RoundDataAdapter(context, roundDataList));
+        allScoresRecyclerView.setAdapter(new RoundDataAdapter(context, roundDataList, this));
     }
 
     private void updateBestRoundRecyclerView(Context context) {
-        //todo: update the userId
-        int roundId = databaseSingleton.RoundDao().getBestRoundIdByUser(1);
+        int roundId = databaseSingleton.RoundDao().getBestRoundIdByUser(userId);
         List<Hole> holes = databaseSingleton.HoleDao().getHolesByRound(roundId);
         updateBestHoleTotal(holes, roundId);
         bestHoleRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
@@ -89,8 +90,7 @@ public class PreviousScoresFragment extends Fragment {
 
     private List<RoundData> generateAllRoundData() {
         List<RoundData> roundDataList = new ArrayList<RoundData>();
-        //todo: update the userId
-        List<Round> roundList = databaseSingleton.RoundDao().getRoundsByUser(1);
+        List<Round> roundList = databaseSingleton.RoundDao().getRoundsByUser(userId);
         List<Hole>  holeList;
         for(int i = 0; i < roundList.size(); i++) {
             Round round = roundList.get(i);
@@ -138,5 +138,9 @@ public class PreviousScoresFragment extends Fragment {
 
     }
 
-
+    @Override
+    public void reloadUI() {
+        updateAllRoundRecyclerView(context);
+        updateBestRoundRecyclerView(context);
+    }
 }

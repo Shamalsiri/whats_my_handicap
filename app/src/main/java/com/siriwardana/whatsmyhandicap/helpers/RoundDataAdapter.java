@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,10 +23,12 @@ public class RoundDataAdapter extends RecyclerView.Adapter<RoundDataViewHolder> 
 
     Context context;
     List<RoundData> roundDataList;
+    PreviousScoresFragment fragment;
 
-    public RoundDataAdapter(Context context, List<RoundData> roundDataList) {
+    public RoundDataAdapter(Context context, List<RoundData> roundDataList, PreviousScoresFragment fragment) {
         this.context = context;
         this.roundDataList = roundDataList;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -62,7 +63,8 @@ public class RoundDataAdapter extends RecyclerView.Adapter<RoundDataViewHolder> 
                 editRoundDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        //todo: reload the data on PreviousScoreFragment
+                        ReloadPreviousScoreUICallback reloadPreviousScoreUICallback = fragment;
+                        reloadPreviousScoreUICallback.reloadUI();
 
                     }
                 });
