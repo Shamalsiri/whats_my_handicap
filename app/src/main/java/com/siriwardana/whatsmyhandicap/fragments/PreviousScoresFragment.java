@@ -18,14 +18,14 @@ import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
 import com.siriwardana.whatsmyhandicap.helpers.HoleDataAdapter;
-import com.siriwardana.whatsmyhandicap.helpers.ReloadPreviousScoreUICallback;
+import com.siriwardana.whatsmyhandicap.helpers.ReloadScoresCallback;
 import com.siriwardana.whatsmyhandicap.helpers.RoundData;
 import com.siriwardana.whatsmyhandicap.helpers.RoundDataAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreviousScoresFragment extends Fragment implements ReloadPreviousScoreUICallback {
+public class PreviousScoresFragment extends Fragment implements ReloadScoresCallback {
     private int userId;
     private TextView bestTotalDistanceTV, bestTotalParTV, bestTotalScore, bestCourseName;
     private Button exitBTN;
@@ -140,7 +140,7 @@ public class PreviousScoresFragment extends Fragment implements ReloadPreviousSc
     }
 
     @Override
-    public void reloadUI() {
+    public void reloadPreviousScoreUI() {
         updateAllRoundRecyclerView(context);
         updateBestRoundRecyclerView(context);
     }

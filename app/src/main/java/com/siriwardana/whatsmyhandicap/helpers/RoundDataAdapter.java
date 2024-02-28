@@ -63,8 +63,8 @@ public class RoundDataAdapter extends RecyclerView.Adapter<RoundDataViewHolder> 
                 editRoundDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
-                        ReloadPreviousScoreUICallback reloadPreviousScoreUICallback = fragment;
-                        reloadPreviousScoreUICallback.reloadUI();
+                        ReloadScoresCallback reloadPreviousScoreUICallback = fragment;
+                        reloadPreviousScoreUICallback.reloadPreviousScoreUI();
 
                     }
                 });
