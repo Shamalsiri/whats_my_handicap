@@ -21,6 +21,9 @@ public class MainFragment extends Fragment {
     private ImageButton settingsIB, logoutIB;
     private int userId;
 
+    /**
+     * Constructor
+     */
     public MainFragment() {
         // Required empty public constructor
     }

@@ -1,6 +1,7 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.siriwardana.whatsmyhandicap.database.Round;
 
 public class NewRoundFragment extends Fragment {
 
+    private final String TAG = NewRoundFragment.class.getName();
     private Button backBTN, startRoundBTN;
     private EditText clubNameET, courseNameET;
     private TextView clubNameLabelTV, numHolesLabelTV;
@@ -27,6 +29,9 @@ public class NewRoundFragment extends Fragment {
     private int numHoles, userId, roundId;
     private DatabaseSingleton dbSingleton;
 
+    /**
+     * Constructor
+     */
     public NewRoundFragment() {
         // Required empty public constructor
     }
@@ -36,7 +41,7 @@ public class NewRoundFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_round, container, false);
-        dbSingleton = DatabaseSingleton.getDBInstance(getContext().getApplicationContext());
+        dbSingleton = DatabaseSingleton.getDBInstance(getContext());
         Bundle bundle = getArguments();
         if (bundle != null) {
             userId = bundle.getInt("userId");
@@ -58,6 +63,7 @@ public class NewRoundFragment extends Fragment {
         );
 
         startRoundBTN.setOnClickListener(v -> {
+
             clubNameLabelTV.setVisibility(View.GONE);
             numHolesLabelTV.setVisibility(View.GONE);
 
@@ -67,14 +73,17 @@ public class NewRoundFragment extends Fragment {
             boolean canStart;
             canStart = validateNewRoundForm(view);
 
+            Log.d(TAG, "onCreateView: Can Start a New Round: " + canStart);
             if (canStart) {
                 Round newRound = new Round();
                 newRound.setUserId(userId);
                 newRound.setClubName(clubName);
                 newRound.setCourseName(courseName);
                 newRound.setNumHoles(numHoles);
+                Log.d(TAG, "onCreateView: Inserting Round data to the Round table");
                 dbSingleton.RoundDao().insert(newRound);
                 roundId = dbSingleton.RoundDao().getLatestRoundId();
+                Log.d(TAG, "onCreateView: Round Created; RoundId: " + roundId);
             }
 
             ((onNewRoundButtonClickListener) requireActivity()).onNewRoundFragmentStartButtonClicked(canStart,
@@ -83,10 +92,18 @@ public class NewRoundFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Validate that the club name is more than 2 characters
+     * Determine if the round is 9 holes or 18 holes
+     *
+     * @param v
+     * @return
+     */
     private boolean validateNewRoundForm(View v) {
 
         boolean canStart = true;
         if (clubName.length() < 2) {
+            Log.d(TAG, "validateNewRoundForm: Club Name is invalid");
             clubNameLabelTV.setVisibility(View.VISIBLE);
             canStart = false;
         }
@@ -96,10 +113,13 @@ public class NewRoundFragment extends Fragment {
             checkedRadioButton = v.findViewById(checkedRB);
             if (checkedRadioButton.getText().toString().equalsIgnoreCase("9 Holes")) {
                 numHoles = 9;
+                Log.d(TAG, "validateNewRoundForm: 9 holes selected");
             } else {
                 numHoles = 18;
+                Log.d(TAG, "validateNewRoundForm: 18 holes selected");
             }
         } else {
+            Log.d(TAG, "validateNewRoundForm: Number of holes not selected");
             numHolesLabelTV.setVisibility(View.VISIBLE);
             canStart = false;
         }

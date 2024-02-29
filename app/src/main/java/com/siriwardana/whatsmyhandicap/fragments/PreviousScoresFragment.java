@@ -26,15 +26,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PreviousScoresFragment extends Fragment implements ReloadScoresCallback {
+    private final String TAG = PreviousScoresFragment.class.getName();
     private int userId;
     private TextView bestTotalDistanceTV, bestTotalParTV, bestTotalScore, bestCourseName;
     private Button exitBTN;
     private DatabaseSingleton databaseSingleton;
     private View view;
-    private RecyclerView bestHoleRecyclerView, allScoresRecyclerView;
+    private RecyclerView bestRoundRecyclerView, allScoresRecyclerView;
     private Context context;
 
-
+    /**
+     * Constructor
+     */
     public PreviousScoresFragment() {
 
     }
@@ -47,7 +50,7 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
         Bundle bundle = getArguments();
         this.userId = bundle.getInt("userId");
 
-        bestHoleRecyclerView = view.findViewById(R.id.rv_hole_data);
+        bestRoundRecyclerView = view.findViewById(R.id.rv_hole_data);
         allScoresRecyclerView = view.findViewById(R.id.rv_all_rounds);
         bestTotalDistanceTV = view.findViewById(R.id.tv_round_distance);
         bestTotalParTV = view.findViewById(R.id.tv_round_par);
@@ -67,6 +70,7 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
         exitBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, "onCreate: Exit button clicked");
                 requireActivity().onBackPressed();
             }
         });
@@ -74,21 +78,40 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
         return view;
     }
 
+    /**
+     * Update the Recycler View with all Round data for the logged in user
+     *
+     * @param context
+     */
     private void updateAllRoundRecyclerView(Context context) {
+        Log.d(TAG, "updateAllRoundRecyclerView: Updating Recycler View with Round Data");
         List<RoundData> roundDataList = generateAllRoundData();
         allScoresRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         allScoresRecyclerView.setAdapter(new RoundDataAdapter(context, roundDataList, this));
     }
 
+    /**
+     * Update the Best Round Data
+     *
+     * @param context
+     */
     private void updateBestRoundRecyclerView(Context context) {
+        Log.d(TAG, "updateBestRoundRecyclerView: Updating best round data");
         int roundId = databaseSingleton.RoundDao().getBestRoundIdByUser(userId);
         List<Hole> holes = databaseSingleton.HoleDao().getHolesByRound(roundId);
-        updateBestHoleTotal(holes, roundId);
-        bestHoleRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        bestHoleRecyclerView.setAdapter(new HoleDataAdapter(context, holes));
+        updateBestRoundTotal(holes, roundId);
+        bestRoundRecyclerView.setLayoutManager(new LinearLayoutManager(context,
+                LinearLayoutManager.HORIZONTAL, false));
+        bestRoundRecyclerView.setAdapter(new HoleDataAdapter(context, holes));
     }
 
+    /**
+     * Generate all the round data for the user
+     *
+     * @return
+     */
     private List<RoundData> generateAllRoundData() {
+        Log.d(TAG, "generateAllRoundData: Generating all Round Data for the Logged in User");
         List<RoundData> roundDataList = new ArrayList<RoundData>();
         List<Round> roundList = databaseSingleton.RoundDao().getRoundsByUser(userId);
         List<Hole> holeList;
@@ -104,14 +127,24 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
         return roundDataList;
     }
 
-    public void updateBestHoleTotal(List<Hole> bestRound, int roundId) {
+    /**
+     * Update the Best Round total data including:
+     * Total Par
+     * Total Score
+     * Total Distance
+     * Round Club and Course Name
+     *
+     * @param bestRound
+     * @param roundId
+     */
+    public void updateBestRoundTotal(List<Hole> bestRound, int roundId) {
         Hole hole;
         Round round;
 
         round = databaseSingleton.RoundDao().getRoundById(roundId);
         int size = bestRound.size();
         if (size == 0) {
-            Log.d("SSIRI", "No Data in the db yet");
+            Log.d(TAG, "updateBestRoundTotal: No Round Data in the DB yet");
             return;
         }
         boolean distanceNotEntered = false;
@@ -123,6 +156,7 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
             hole = bestRound.get(i);
 
             if (hole.getDistance() == 0) {
+                Log.d(TAG, "updateBestRoundTotal: Distance NOT Entered for hole: " + i + 1);
                 distanceNotEntered = true;
             }
             totalScore = totalScore + hole.getHoleScore();
@@ -139,6 +173,9 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
 
     }
 
+    /**
+     * Implementation of the Callback
+     */
     @Override
     public void reloadPreviousScoreUI() {
         updateAllRoundRecyclerView(context);

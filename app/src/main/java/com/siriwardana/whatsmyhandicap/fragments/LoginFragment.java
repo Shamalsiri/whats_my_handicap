@@ -27,6 +27,9 @@ public class LoginFragment extends Fragment {
     private TextView errorTV;
     private int userId;
 
+    /**
+     * Constructor
+     */
     public LoginFragment() {
         // Required empty public constructor
     }
