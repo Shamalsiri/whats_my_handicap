@@ -1,6 +1,8 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import com.siriwardana.whatsmyhandicap.helpers.UserRegistrationHelper;
 
 public class LoginFragment extends Fragment {
 
+    private final String TAG = LoginFragment.class.getName();
     private PasswordVisibilityToggleHelper passwordVisibilityToggleHelper;
     private UserRegistrationHelper userRegistrationHelper;
     private DatabaseSingleton dbSingleton;
@@ -28,6 +31,7 @@ public class LoginFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public class LoginFragment extends Fragment {
         //Needed to validate the email
         userRegistrationHelper = new UserRegistrationHelper();
         //Needed to validate login
-        dbSingleton = DatabaseSingleton.getDBInstance(getContext().getApplicationContext());
+        dbSingleton = DatabaseSingleton.getDBInstance(getContext());
 
         view.findViewById(R.id.btn_login).setOnClickListener(v -> {
             String email = emailET.getText().toString().trim();
@@ -52,10 +56,12 @@ public class LoginFragment extends Fragment {
 
             boolean canLogin;
             if (!userRegistrationHelper.validateEmail(email)) {
-                showErrorMsg("Invalid email");
+                Log.d(TAG, "onCreateView: Invalid Email");
+                showErrorMsg(getString(R.string.invalid_email));
                 canLogin = false;
             } else if (!validateLoginCredentials(email, password)) {
-                showErrorMsg("Username and Password didn't match our records");
+                Log.d(TAG, "onCreateView: Invalid Username and Password");
+                showErrorMsg(getString(R.string.username_and_password_didn_t_match_our_records));
                 canLogin = false;
             } else {
                 errorTV.setText("");
@@ -63,15 +69,19 @@ public class LoginFragment extends Fragment {
                 canLogin = true;
             }
 
-            ((onLoginButtonClickListener) requireActivity()).onLoginFragmentLoginButtonClicked(canLogin, userId);
+            ((onLoginButtonClickListener) requireActivity())
+                    .onLoginFragmentLoginButtonClicked(canLogin, userId);
         });
 
         view.findViewById(R.id.btn_register).setOnClickListener(v -> {
+
             ((onLoginButtonClickListener) requireActivity()).onLoginFragmentRegisterButtonClicked();
         });
 
         // Password visibility toggle logic
         passwordVisibilityToggleHelper = new PasswordVisibilityToggleHelper();
+
+        Log.d(TAG, "onCreateView: Hiding Password");
         passwordET.setCompoundDrawablesWithIntrinsicBounds(0, 0,
                 R.drawable.ic_password_visibility_off, 0);
         passwordET.setOnTouchListener(passwordVisibilityToggleHelper
@@ -81,17 +91,34 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Update the error TextView
+     * Set TextView visible
+     *
+     * @param msg
+     */
     public void showErrorMsg(String msg) {
+        Log.d(TAG, "showErrorMsg: Error Message: " + msg);
         errorTV.setText(msg);
+        Log.d(TAG, "showErrorMsg: Showing Error Message");
         errorTV.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Validate if the username and password match the database records
+     *
+     * @param email
+     * @param password
+     * @return
+     */
     private boolean validateLoginCredentials(String email, String password) {
         User user;
+        Log.d(TAG, "validateLoginCredentials: Getting User by Email");
         user = dbSingleton.UserDao().getUserByEmail(email);
 
         if (user != null && user.getPassword().equals(password)) {
             userId = user.getUserId();
+            Log.d(TAG, "validateLoginCredentials: Email and Password Matches DB Records");
             return true;
         }
         return false;

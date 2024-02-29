@@ -1,6 +1,7 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.siriwardana.whatsmyhandicap.R;
 
 public class MainFragment extends Fragment {
 
+    private final String TAG = MainFragment.class.getName();
     private Button newRoundBTN, prevScoresBTN;
     private TextView handicapTV, handicapNoteTV;
     private ImageButton settingsIB, logoutIB;
@@ -30,6 +32,7 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         Bundle bundle = getArguments();
+        assert bundle != null;
         this.userId = bundle.getInt("userId");
 
         newRoundBTN = view.findViewById(R.id.btn_new_round);
@@ -63,6 +66,25 @@ public class MainFragment extends Fragment {
                 ((onMainFragmentButtonClickListener) requireActivity()).onMainFragmentLogoutButtonClicked());
 
         return view;
+    }
+
+    /**
+     * Calculate the user Handicap;
+     *
+     * @return
+     */
+    private double calculateHandicap() {
+        Log.d(TAG, "calculateHandicap: Calculating User Handicap");
+        // Todo: Calculate Handicap
+        return 0.0;
+    }
+
+    /**
+     * Store User Handicap in the Database
+     */
+    private void storeUserHandicap() {
+        Log.d(TAG, "storeUserHandicap: Storing User Handicap in Database");
+        // Todo: Store User Handicap in the DB
     }
 
     public interface onMainFragmentButtonClickListener {
