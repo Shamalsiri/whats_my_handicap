@@ -2,6 +2,7 @@ package com.siriwardana.whatsmyhandicap.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.util.Date;
 
 public class RegisterFragment extends Fragment {
 
+    private final String TAG = RegisterFragment.class.getName();
     private PasswordVisibilityToggleHelper passwordVisibilityToggleHelper;
     private UserRegistrationHelper userRegistrationHelper;
     private TextView errorMsgTV;
@@ -29,6 +31,9 @@ public class RegisterFragment extends Fragment {
     private DatabaseSingleton dbSingleton;
     private String fName, lName, dob, email, confirmEmail, password, confirmPassword;
 
+    /**
+     * Constructor
+     */
     public RegisterFragment() {
         // Required empty public constructor
     }
@@ -40,7 +45,7 @@ public class RegisterFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         userRegistrationHelper = new UserRegistrationHelper();
-        dbSingleton = DatabaseSingleton.getDBInstance(getContext().getApplicationContext());
+        dbSingleton = DatabaseSingleton.getDBInstance(getContext());
 
         errorMsgTV = view.findViewById(R.id.tv_error_msg);
         errorMsgTV.setVisibility(View.INVISIBLE);
@@ -85,15 +90,27 @@ public class RegisterFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Validate the new user email isn't on the database
+     *
+     * @param email
+     * @return
+     */
     public boolean validateNewUser(String email) {
         if (dbSingleton.UserDao().getUserCountByEmail(email) == 0) {
             return true;
         }
         showErrorMsg("Email is already Registered");
+        Log.d(TAG, "validateNewUser: Email is already registered");
         return false;
     }
 
+    /**
+     * Validate that the inputs from the register form are valid values
+     * @return
+     */
     public boolean validateRegisterFormInput() {
+        Log.d(TAG, "validateRegisterFormInput: Validating Register Form Input");
         fName = fNameET.getText().toString().trim();
         lName = lNameET.getText().toString().trim();
         dob = dobET.getText().toString().trim();
@@ -114,35 +131,43 @@ public class RegisterFragment extends Fragment {
 
         // Check for a valid date
         if (!userRegistrationHelper.isValidDate(dob)) {
-            showErrorMsg("Invalid dob. Enter the date in format mm-dd-yyyy");
+            Log.d(TAG, "validateRegisterFormInput: Validating Date of Birth Failed");
+            showErrorMsg(getString(R.string.invalid_dob));
             return false;
         }
 
         // Check for a valid email
         if (!userRegistrationHelper.validateEmail(email)) {
-            showErrorMsg("Invalid email");
+            Log.d(TAG, "validateRegisterFormInput: Validating Email Failed");
+            showErrorMsg(getString(R.string.invalid_email));
             return false;
         }
         if (!userRegistrationHelper.validateEmail(confirmEmail)) {
-            showErrorMsg("Invalid confirm email");
+            Log.d(TAG, "validateRegisterFormInput: Validating Confirm Email Failed");
+            showErrorMsg(getString(R.string.invalid_confirm_email));
             return false;
         }
 
         // Check if emails match
         if (!userRegistrationHelper.validateStringMatch(email, confirmEmail)) {
-            showErrorMsg("Emails do not match");
+            Log.d(TAG, "validateRegisterFormInput: Email and Confirm Email didn't match");
+            showErrorMsg(getString(R.string.emails_do_not_match));
             return false;
         }
 
         // Check if password match
         if (!userRegistrationHelper.validateStringMatch(password, confirmPassword)) {
-            showErrorMsg("Passwords do not match");
+            Log.d(TAG, "validateRegisterFormInput: Password and Confirm Password didn't match");
+            showErrorMsg(getString(R.string.passwords_do_not_match));
             return false;
         }
 
         return true;
     }
 
+    /**
+     * Registers New User
+     */
     public void registerNewUser() {
         Date birthday = userRegistrationHelper.str2Date(dob);
         long bDay;
@@ -159,10 +184,17 @@ public class RegisterFragment extends Fragment {
         newUser.setEmail(email);
         newUser.setPassword(password);
 
+        Log.d(TAG, "registerNewUser: Inserting New User to the database");
         dbSingleton.UserDao().insert(newUser);
     }
 
+    /**
+     * Showing Error Message
+     *
+     * @param msg
+     */
     public void showErrorMsg(String msg) {
+        Log.d(TAG, "showErrorMsg: Showing Error Message");
         errorMsgTV.setText(msg);
         errorMsgTV.setVisibility(View.VISIBLE);
     }

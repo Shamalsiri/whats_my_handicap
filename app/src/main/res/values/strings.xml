@@ -29,4 +29,8 @@
     <string name="finish_round">Finish Round</string>
     <string name="invalid_email">Invalid email</string>
     <string name="username_and_password_didn_t_match_our_records">Username and Password didn\'t match our records</string>
+    <string name="invalid_dob">Invalid dob. Enter the date in format mm-dd-yyyy</string>
+    <string name="invalid_confirm_email">Invalid confirm email</string>
+    <string name="emails_do_not_match">Emails do not match</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
 </resources>

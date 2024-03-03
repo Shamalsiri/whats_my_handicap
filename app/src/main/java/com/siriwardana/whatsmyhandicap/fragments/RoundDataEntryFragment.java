@@ -23,7 +23,8 @@ import com.siriwardana.whatsmyhandicap.helpers.DataStorageHelper;
 import java.util.List;
 
 public class RoundDataEntryFragment extends Fragment {
-
+    
+    private final String TAG = RoundDataEntryFragment.class.getName();
     private EditText parET, distanceET;
     private TextView holeNumTV, strokeCountTV, roundScoreTV, errorMsg1TV, errorMsg2TV;
     private int roundId, userId, currentHole, numHolesThisRound, numStrokes, roundScore;
@@ -42,7 +43,7 @@ public class RoundDataEntryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_round_data_entry, container, false);
-        context = getContext().getApplicationContext();
+        context = getContext();
         dbSingleton = DatabaseSingleton.getDBInstance(context);
         dataStorageHelper = new DataStorageHelper(context);
 
@@ -62,6 +63,8 @@ public class RoundDataEntryFragment extends Fragment {
         prevBTN = view.findViewById(R.id.btn_prev);
         nextBTN = view.findViewById(R.id.btn_next);
         exitBTN = view.findViewById(R.id.btn_exit);
+        
+        //todo: Convert the modes to ENUM
 
         final String MODE_NEW_ROUND = "new_round"; // default case
         final String MODE_SINGLE_HOLE = "single_hole";
@@ -78,14 +81,14 @@ public class RoundDataEntryFragment extends Fragment {
 
         switch (mode) {
             case MODE_SINGLE_HOLE:
-                Log.d("SSIRI", "Open Round Data Fragment in Mode: Single Hole");
+                Log.d(TAG, "onCreateView: Open Round Data Fragment in Mode: Single Hole");
                 break;
 
             case MODE_EDIT_ROUND:
-                Log.d("SSIRI", "Open Round Data Fragment in Mode: Edit Round");
+                Log.d(TAG, "onCreateView: Open Round Data Fragment in Mode: Edit Round");
                 break;
             default:
-                Log.d("SSIRI", "Open Round Data Fragment in Mode: New Round");
+                Log.d(TAG, "onCreateView: Open Round Data Fragment in Mode: New Round");
                 startNewRound();
                 break;
         }
@@ -94,11 +97,11 @@ public class RoundDataEntryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (prevBTN.getText().toString().equalsIgnoreCase("Exit")) {
-                    Log.d("SSIRI", "Exit Button Clicked");
+                    Log.d(TAG, "onClick: Exit Button Clicked");
 
                     exit();
                 } else {
-                    Log.d("SSIRI", "Prev Hole Button Clicked");
+                    Log.d(TAG, "onClick: Prev Hole Button Clicked");
                     if (currentHole > 1) {
                         currentHole--;
                         loadHoleFromDB(currentHole);
@@ -112,7 +115,7 @@ public class RoundDataEntryFragment extends Fragment {
             public void onClick(View view) {
                 String btnText = nextBTN.getText().toString();
                 if (btnText.equalsIgnoreCase("Next Hole")) {
-                    Log.d("SSIRI", "Next Hole Button Clicked");
+                    Log.d(TAG, "onClick: Next Hole Button Clicked");
                     if (validateData()) {
                         saveHoleData(currentHole);
                         currentHole++;
@@ -120,7 +123,7 @@ public class RoundDataEntryFragment extends Fragment {
 
                     }
                 } else if (btnText.equalsIgnoreCase("Save Round")) {
-                    Log.d("SSIRI", "Save Round Hole Button Clicked");
+                    Log.d(TAG, "onClick: Save Round Hole Button Clicked");
                     if (validateData()) {
                         saveHoleData(currentHole);
                     }
@@ -129,7 +132,7 @@ public class RoundDataEntryFragment extends Fragment {
                     int numHolesInRound = holeList.size();
                     if (numHolesInRound % 9 == 0) {
                         //Todo: Open confirm score fragment
-                        Log.d("SSIRI", "Opening confirm score fragment");
+                        Log.d(TAG, "onClick: Opening confirm score fragment");
 
                         updateRoundWithScore();
                     }
@@ -144,6 +147,7 @@ public class RoundDataEntryFragment extends Fragment {
         exitBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, "onClick: Exit button clicked");
                 exit();
             }
         });
@@ -152,7 +156,7 @@ public class RoundDataEntryFragment extends Fragment {
         plusIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("SSIRI", "Add Stroke Button clicked");
+                Log.d(TAG, "onClick: Add Stroke Button clicked");
                 numStrokes++;
                 strokeCountTV.setText(String.valueOf(numStrokes));
 
@@ -163,7 +167,7 @@ public class RoundDataEntryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (numStrokes > 0) {
-                    Log.d("SSIRI", "Minus Stroke Button clicked");
+                    Log.d(TAG, "onClick: Minus Stroke Button clicked");
                     numStrokes--;
                     strokeCountTV.setText(String.valueOf(numStrokes));
                 }
@@ -181,7 +185,7 @@ public class RoundDataEntryFragment extends Fragment {
         calculateRoundScore(round.getNumHoles());
         round.setScore(roundScore);
 
-        Log.d("SSIRI", "updating the round record with the score");
+        Log.d(TAG, "updateRoundWithScore: Updating the Round table with the score");
         dbSingleton.RoundDao().update(round);
     }
 
@@ -195,7 +199,7 @@ public class RoundDataEntryFragment extends Fragment {
         if ((numHolesThisRound == 9 && numHolesInRound != 9) ||
                 (numHolesThisRound == 18 && numHolesInRound != 18)) {
             //Todo: Remove data in holes table with roundId
-            Log.d("SSIRI", "Removing all holes with roundId: " + roundId);
+            Log.d(TAG, "exit: Removing all holes with roundId: " + roundId);
         }
 
         ((onRoundDataEntryButtonClickListener) requireActivity())
@@ -210,6 +214,7 @@ public class RoundDataEntryFragment extends Fragment {
     private void saveHoleData(int holeNum) {
         if (holeDataExist(holeNum)) {
             Hole hole = dataStorageHelper.getHoleByRound(roundId, holeNum);
+            Log.d(TAG, "saveHoleData: Updating Hole data for hole: " + hole);
             updateHoleData(hole);
         } else {
             saveHoleData(new Hole());
@@ -230,8 +235,10 @@ public class RoundDataEntryFragment extends Fragment {
      */
     private void loadHole(int holeNum) {
         if (holeDataExist(holeNum)) {
+            Log.d(TAG, "loadHole: Loading hole from DB: " + holeNum);
             loadHoleFromDB(holeNum);
         } else {
+            Log.d(TAG, "loadHole: Loading New hole");
             loadNewHole();
         }
     }
@@ -246,13 +253,14 @@ public class RoundDataEntryFragment extends Fragment {
         Hole hole;
         hole = dataStorageHelper.getHoleByRound(roundId, holeNum);
 
-        return hole != null;
+        return (hole != null);
     }
 
     /**
      * Setup the first hole for a new round
      */
     private void startNewRound() {
+        Log.d(TAG, "startNewRound: ");
         currentHole = 1;
         numStrokes = 0;
         roundScore = 0;

@@ -178,6 +178,7 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
      */
     @Override
     public void reloadPreviousScoreUI() {
+        Log.d(TAG, "reloadPreviousScoreUI: Callback executed");
         updateAllRoundRecyclerView(context);
         updateBestRoundRecyclerView(context);
     }
