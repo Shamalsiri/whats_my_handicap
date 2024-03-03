@@ -97,11 +97,12 @@ public class RegisterFragment extends Fragment {
      * @return
      */
     public boolean validateNewUser(String email) {
+        Log.d(TAG, "validateNewUser: Validating New User");
         if (dbSingleton.UserDao().getUserCountByEmail(email) == 0) {
             return true;
         }
-        showErrorMsg("Email is already Registered");
-        Log.d(TAG, "validateNewUser: Email is already registered");
+        showErrorMsg(getString(R.string.email_is_already_registered));
+        Log.d(TAG, getString(R.string.email_is_already_registered));
         return false;
     }
 
@@ -169,6 +170,7 @@ public class RegisterFragment extends Fragment {
      * Registers New User
      */
     public void registerNewUser() {
+        Log.d(TAG, "registerNewUser: Registering New User");
         Date birthday = userRegistrationHelper.str2Date(dob);
         long bDay;
         if (birthday != null) {

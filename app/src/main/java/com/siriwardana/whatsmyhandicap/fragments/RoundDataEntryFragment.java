@@ -29,7 +29,6 @@ public class RoundDataEntryFragment extends Fragment {
     private TextView holeNumTV, strokeCountTV, roundScoreTV, errorMsg1TV, errorMsg2TV;
     private int roundId, userId, currentHole, numHolesThisRound, numStrokes, roundScore;
     private Button prevBTN, nextBTN, exitBTN;
-
     private Context context;
     private DatabaseSingleton dbSingleton;
     private DataStorageHelper dataStorageHelper;
@@ -87,6 +86,7 @@ public class RoundDataEntryFragment extends Fragment {
             case MODE_EDIT_ROUND:
                 Log.d(TAG, "onCreateView: Open Round Data Fragment in Mode: Edit Round");
                 break;
+
             default:
                 Log.d(TAG, "onCreateView: Open Round Data Fragment in Mode: New Round");
                 startNewRound();
@@ -191,9 +191,10 @@ public class RoundDataEntryFragment extends Fragment {
 
     /**
      * Remove round hole data since round wasn't completed.
-     * exit
+     * exit fragment
      */
     private void exit() {
+        Log.d(TAG, "exit: Exiting Round Data Entry Fragment");
         List<Hole> holeList = dataStorageHelper.getHolesByRound(roundId);
         int numHolesInRound = holeList.size();
         if ((numHolesThisRound == 9 && numHolesInRound != 9) ||
@@ -222,13 +223,6 @@ public class RoundDataEntryFragment extends Fragment {
     }
 
     /**
-     * Load new hole
-     */
-    private void loadNewHole() {
-        setNewHoleUI();
-    }
-
-    /**
      * load hole
      *
      * @param holeNum
@@ -239,7 +233,7 @@ public class RoundDataEntryFragment extends Fragment {
             loadHoleFromDB(holeNum);
         } else {
             Log.d(TAG, "loadHole: Loading New hole");
-            loadNewHole();
+            setNewHoleUI();;
         }
     }
 
@@ -250,6 +244,7 @@ public class RoundDataEntryFragment extends Fragment {
      * @return
      */
     private boolean holeDataExist(int holeNum) {
+        Log.d(TAG, "holeDataExist: Checking if data exist for  hole number:" + holeNum);
         Hole hole;
         hole = dataStorageHelper.getHoleByRound(roundId, holeNum);
 
@@ -260,7 +255,7 @@ public class RoundDataEntryFragment extends Fragment {
      * Setup the first hole for a new round
      */
     private void startNewRound() {
-        Log.d(TAG, "startNewRound: ");
+        Log.d(TAG, "startNewRound: Starting a new round");
         currentHole = 1;
         numStrokes = 0;
         roundScore = 0;
@@ -275,18 +270,21 @@ public class RoundDataEntryFragment extends Fragment {
      * update the hole number on UI
      */
     private void setHoleSpecificBtnUI() {
+        Log.d(TAG, "setHoleSpecificBtnUI: Setting up UI for hole: " + currentHole);
         if (currentHole == 1) {
             prevBTN.setText(R.string.exit);
             prevBTN.setBackgroundColor(ContextCompat.getColor(context, R.color.wmh_red));
             exitBTN.setVisibility(View.GONE);
-
             nextBTN.setText(R.string.next_hole);
+
         } else if (currentHole == 2) {
             prevBTN.setText(R.string.prev_hole);
             prevBTN.setBackgroundColor(ContextCompat.getColor(context, R.color.wmh_orange));
             exitBTN.setVisibility(View.VISIBLE);
+
         } else if (currentHole == 9 && numHolesThisRound == 9) {
             nextBTN.setText(R.string.save_round);
+
         } else if (currentHole == 18) {
             nextBTN.setText(R.string.save_round);
         }
@@ -299,6 +297,7 @@ public class RoundDataEntryFragment extends Fragment {
      * Reset par, distance and stroke count
      */
     private void setNewHoleUI() {
+        Log.d(TAG, "setNewHoleUI: Setting up New Hole UI");
         setHoleSpecificBtnUI();
         holeNumTV.setText(String.valueOf(currentHole));
         numStrokes = 0;
@@ -320,6 +319,7 @@ public class RoundDataEntryFragment extends Fragment {
      * @param holeNum
      */
     private void loadHoleFromDB(int holeNum) {
+        Log.d(TAG, "loadHoleFromDB: Loading Hole data from the DB");
         setNewHoleUI();
         Hole hole;
         hole = dataStorageHelper.getHoleByRound(roundId, holeNum);
@@ -342,6 +342,7 @@ public class RoundDataEntryFragment extends Fragment {
      * @return
      */
     private boolean validateData() {
+        Log.d(TAG, "validateData: Validating Hole Data Entered");
         boolean validated = true;
 
         if (parET.getText().toString().length() == 0) {
@@ -381,7 +382,7 @@ public class RoundDataEntryFragment extends Fragment {
     private void saveHoleData(Hole hole) {
         hole = createHoleObject(hole);
 
-        Log.d("SSIRI", "Saving values for hole: " + hole.getHoleNumber());
+        Log.d(TAG, "saveHoleData: Saving values for hole: " + hole.getHoleNumber());
         dataStorageHelper.insertHoleData(hole);
     }
 
@@ -393,7 +394,7 @@ public class RoundDataEntryFragment extends Fragment {
     private void updateHoleData(Hole hole) {
         hole = createHoleObject(hole);
 
-        Log.d("SSIRI", "Updating values for hole: " + hole.getHoleNumber());
+        Log.d(TAG, "updateHoleData: Updating values for hole: " + hole.getHoleNumber());
         dataStorageHelper.updateHole(hole);
 
         calculateRoundScore(currentHole);
@@ -406,6 +407,7 @@ public class RoundDataEntryFragment extends Fragment {
      * @return
      */
     private Hole createHoleObject(Hole hole) {
+        Log.d(TAG, "createHoleObject: Creating Hole Object");
         int par = Integer.parseInt(parET.getText().toString().trim());
         int distance = distanceET.getText().toString().length() > 0 ?
                 Integer.parseInt(distanceET.getText().toString().trim()) : 0;
@@ -429,6 +431,7 @@ public class RoundDataEntryFragment extends Fragment {
      * @param holeNum
      */
     private void calculateRoundScore(int holeNum) {
+        Log.d(TAG, "calculateRoundScore: Calculating Round Score");
         int score = 0;
         Hole hole;
         if (holeNum != 1 || holeDataExist(1)) {

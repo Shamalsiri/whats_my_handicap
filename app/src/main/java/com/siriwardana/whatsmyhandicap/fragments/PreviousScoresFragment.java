@@ -156,7 +156,7 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
             hole = bestRound.get(i);
 
             if (hole.getDistance() == 0) {
-                Log.d(TAG, "updateBestRoundTotal: Distance NOT Entered for hole: " + i + 1);
+                Log.d(TAG, "updateBestRoundTotal: Distance NOT Entered for hole: " + (i + 1));
                 distanceNotEntered = true;
             }
             totalScore = totalScore + hole.getHoleScore();
