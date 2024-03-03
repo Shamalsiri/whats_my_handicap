@@ -1,5 +1,8 @@
 package com.siriwardana.whatsmyhandicap.dialogs;
 
+/**
+ * Edit Data Dialog Enums
+ */
 public enum EditModeEnums {
     EDIT_COURSE_NAME,
     EDIT_CLUB_NAME,

@@ -1,5 +1,6 @@
 package com.siriwardana.whatsmyhandicap.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.siriwardana.whatsmyhandicap.R;
-import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
 import com.siriwardana.whatsmyhandicap.helpers.DataStorageHelper;
@@ -26,23 +26,24 @@ import java.util.List;
 
 public class EditHoleDialog extends Dialog implements View.OnClickListener {
 
-    ImageView closeIV;
-    TextView clubNameTV, courseNameTV, distanceTV, parTV, scoreTV;
-    Button editClubNameBTN, editCourseNameBTN, editDistanceBTN, editParBTN, editScoreBTN;
-    Spinner selectHoleSP;
-    int roundId, holeId;
-    Round round;
-    Hole hole;
-    int currentHoleNumber;
-    Context context;
-    DatabaseSingleton databaseSingleton;
-    DataStorageHelper dataStorageHelper;
+    private final String TAG = EditDataDialog.class.getName();
+    private TextView clubNameTV, courseNameTV, distanceTV, parTV, scoreTV;
+    private final Round round;
+    private Hole hole;
+    private int currentHoleNumber;
+    private final Context context;
+    private final DataStorageHelper dataStorageHelper;
 
+    /**
+     * Constructor
+     *
+     * @param context
+     * @param round
+     */
     public EditHoleDialog(@NonNull Context context, Round round) {
         super(context);
         this.context = context;
         this.round = round;
-        databaseSingleton = DatabaseSingleton.getDBInstance(context);
         dataStorageHelper = new DataStorageHelper(context);
     }
 
@@ -57,19 +58,19 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
         parTV = findViewById(R.id.tv_edit_par);
         scoreTV = findViewById(R.id.tv_edit_score);
 
-        editClubNameBTN = findViewById(R.id.btn_edit_club_name);
+        Button editClubNameBTN = findViewById(R.id.btn_edit_club_name);
         editClubNameBTN.setOnClickListener(this);
-        editCourseNameBTN = findViewById(R.id.btn_edit_course_name);
+        Button editCourseNameBTN = findViewById(R.id.btn_edit_course_name);
         editCourseNameBTN.setOnClickListener(this);
-        editDistanceBTN = findViewById(R.id.btn_edit_distance);
+        Button editDistanceBTN = findViewById(R.id.btn_edit_distance);
         editDistanceBTN.setOnClickListener(this);
-        editParBTN = findViewById(R.id.btn_edit_par);
+        Button editParBTN = findViewById(R.id.btn_edit_par);
         editParBTN.setOnClickListener(this);
-        editScoreBTN = findViewById(R.id.btn_edit_score);
+        Button editScoreBTN = findViewById(R.id.btn_edit_score);
         editScoreBTN.setOnClickListener(this);
 
-        closeIV = findViewById(R.id.iv_close);
-        selectHoleSP = findViewById(R.id.sp_select_hole);
+        ImageView closeIV = findViewById(R.id.iv_close);
+        Spinner selectHoleSP = findViewById(R.id.sp_select_hole);
 
         int numHoles = round.getNumHoles();
         List<String> spinnerValues = new ArrayList<>();
@@ -97,7 +98,7 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
         selectHoleSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("SSIRI", "Selected: " + i);
+                Log.d(TAG, "onItemSelected: Selected hole: " + i);
                 currentHoleNumber = i + 1;
                 updateUIByHole(currentHoleNumber);
             }
@@ -111,6 +112,12 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
 
     }
 
+    /**
+     * Set the mode enum and opens edit dialog
+     *
+     * @param v
+     */
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         EditDataDialog editDataDialog;
@@ -134,6 +141,7 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
                 break;
         }
 
+        Log.d(TAG, "onClick: Showing Edit Data Dialog");
         editDataDialog = new EditDataDialog(context, mode, hole, round);
         editDataDialog.show();
 
@@ -147,8 +155,13 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
 
     }
 
+    /**
+     * Update Dialog UI by Hole
+     *
+     * @param holeNum
+     */
     public void updateUIByHole(int holeNum) {
-        Log.d("SSIRI", "Current Hole: " + holeNum);
+        Log.d(TAG, "updateUIByHole: Current Hole: " + holeNum);
         hole = dataStorageHelper.getHoleByRound(round.getRoundId(), holeNum);
         int score = hole.getHoleScore();
         distanceTV.setText(String.valueOf(hole.getDistance()));
@@ -157,7 +170,11 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
 
     }
 
+    /**
+     * Update Round Data
+     */
     public void updateRoundData() {
+        Log.d(TAG, "updateRoundData: Updating Dialog UI");
         clubNameTV.setText(round.getClubName());
         courseNameTV.setText(round.getCourseName());
 

@@ -34,4 +34,9 @@
     <string name="emails_do_not_match">Emails do not match</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
     <string name="email_is_already_registered">Email is already Registered</string>
+    <string name="club_name">Club Name</string>
+    <string name="course_name">Course Name</string>
+    <string name="distance">Distance</string>
+    <string name="par">Par</string>
+    <string name="stroke_count">Stroke Count</string>
 </resources>
