@@ -12,6 +12,9 @@
         android:theme="@style/Theme.WhatsMyHandicap"
         tools:targetApi="31">
         <activity
+            android:name=".RoundDataEntryActivity"
+            android:exported="false" />
+        <activity
             android:name=".PrevScoresActivity"
             android:exported="false" />
         <activity
