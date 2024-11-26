@@ -9,10 +9,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+
 import com.siriwardana.whatsmyhandicap.fragments.MainFragment;
 import com.siriwardana.whatsmyhandicap.fragments.NewRoundFragment;
 import com.siriwardana.whatsmyhandicap.fragments.PreviousScoresFragment;
 import com.siriwardana.whatsmyhandicap.fragments.RoundDataEntryFragment;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity
         implements MainFragment.onMainFragmentButtonClickListener,
@@ -22,6 +28,8 @@ public class MainActivity extends AppCompatActivity
     private final String TAG = MainActivity.class.getName();
     private FragmentTransaction fragmentTransaction;
     private int userId, roundId;
+
+    Button registerBtn, loginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,5 +167,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onNextButtonClicked() {
         Log.d(TAG, "onNextButtonClicked: Next Button Clicked");
+
+        loginBtn = (Button) findViewById(R.id.btn_login);
+        registerBtn = (Button) findViewById(R.id.btn_register);
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MainMenuActivity.class);
+                MainActivity.this.startActivity(intent);
+
+            }
+        });
     }
 }
