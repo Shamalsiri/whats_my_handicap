@@ -33,6 +33,17 @@ public class LoginActivity extends AppCompatActivity implements
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.login_fragment_container);
+
+        if (!(currentFragment instanceof LoginFragment)) {
+            super.onBackPressed();
+        } else {
+            // todo: show exit dialog
+        }
+    }
+
     /**
      * Load fragment
      *
@@ -42,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements
         Log.d(TAG, "loadFragment: Loading Fragment: " + fragment.toString());
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.replace(R.id.login_fragment_container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }

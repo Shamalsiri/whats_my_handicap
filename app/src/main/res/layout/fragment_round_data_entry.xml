@@ -184,8 +184,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="52dp"
-        android:text="Prev Hole"
         android:backgroundTint="@color/wmh_orange"
+        android:text="Prev Hole"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_next"
         app:layout_constraintHorizontal_bias="0.5"
@@ -196,8 +196,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="52dp"
-        android:text="Next Hole"
         android:backgroundTint="@color/wmh_blue"
+        android:text="Next Hole"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -208,12 +208,25 @@
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/wmh_red"
         android:text="@string/finish_round"
         android:textSize="10sp"
-        android:backgroundTint="@color/wmh_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btn_next"
         app:layout_constraintStart_toStartOf="@+id/btn_prev" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:text="@string/round_score_will_be_calculated"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_round_score_border" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

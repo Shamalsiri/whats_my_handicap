@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity
     private final String TAG = MainActivity.class.getName();
     private FragmentTransaction fragmentTransaction;
     private int userId, roundId;
+    private MainFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,17 @@ public class MainActivity extends AppCompatActivity
         MainFragment mainFragment = new MainFragment();
         mainFragment.setArguments(bundle);
         loadFragment(mainFragment);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.main_fragment_container);
+
+        if (!(currentFragment instanceof MainFragment)) {
+            super.onBackPressed();
+        } else {
+            // todo: show logout dialog
+        }
     }
 
     /**
@@ -70,6 +82,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMainFragmentLogoutButtonClicked() {
         Log.d(TAG, "onMainFragmentLogoutButtonClicked: Logout button clicked");
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     /**

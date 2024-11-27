@@ -39,4 +39,5 @@
     <string name="distance">Distance</string>
     <string name="par">Par</string>
     <string name="stroke_count">Stroke Count</string>
+    <string name="round_score_will_be_calculated">The round score will be calulated when your click Next Hole</string>
 </resources>
