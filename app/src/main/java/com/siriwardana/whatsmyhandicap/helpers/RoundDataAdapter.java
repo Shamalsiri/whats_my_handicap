@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
+import com.siriwardana.whatsmyhandicap.dialogs.DeleteRoundDialog;
 import com.siriwardana.whatsmyhandicap.dialogs.EditHoleDialog;
 import com.siriwardana.whatsmyhandicap.fragments.PreviousScoresFragment;
 
@@ -56,11 +57,29 @@ public class RoundDataAdapter extends RecyclerView.Adapter<RoundDataViewHolder> 
         holder.editRoundIB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("SSIRI", "Edit " + location + " Clicked");
+                Log.d("SSIRI", "Edit round at " + location + " with roundId " + roundId +  " Clicked");
                 EditHoleDialog editRoundDialog = new EditHoleDialog(context, round);
                 editRoundDialog.show();
 
                 editRoundDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        ReloadScoresCallback reloadPreviousScoreUICallback = fragment;
+                        reloadPreviousScoreUICallback.reloadPreviousScoreUI();
+
+                    }
+                });
+            }
+        });
+
+        holder.deleteRoundIB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("SSIRI", "Delete round at " + location + " with roundId " + roundId +  " Clicked");
+                DeleteRoundDialog deleteRoundDialog = new DeleteRoundDialog(context, round);
+                deleteRoundDialog.show();
+
+                deleteRoundDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         ReloadScoresCallback reloadPreviousScoreUICallback = fragment;

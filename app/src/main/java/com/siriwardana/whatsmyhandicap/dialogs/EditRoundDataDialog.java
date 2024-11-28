@@ -23,9 +23,9 @@ import com.siriwardana.whatsmyhandicap.database.Hole;
 import com.siriwardana.whatsmyhandicap.database.Round;
 import com.siriwardana.whatsmyhandicap.helpers.DataStorageHelper;
 
-public class EditDataDialog extends Dialog {
+public class EditRoundDataDialog extends Dialog {
 
-    private final String TAG = EditDataDialog.class.getName();
+    private final String TAG = EditRoundDataDialog.class.getName();
     private TextView titleTV, currentValTV;
     private EditText newValET;
     private final DataStorageHelper dataStorageHelper;
@@ -42,7 +42,7 @@ public class EditDataDialog extends Dialog {
      * @param hole
      * @param round
      */
-    public EditDataDialog(@NonNull Context context, EditModeEnums mode, Hole hole, Round round) {
+    public EditRoundDataDialog(@NonNull Context context, EditModeEnums mode, Hole hole, Round round) {
         super(context);
         dataStorageHelper = new DataStorageHelper(context);
         this.context = context;
@@ -59,10 +59,10 @@ public class EditDataDialog extends Dialog {
         titleTV = findViewById(R.id.tv_edit_title);
         currentValTV = findViewById(R.id.tv_current_value);
 
-        newValET = findViewById(R.id.et_new_value);
+        newValET = findViewById(R.id.tv_delete_round_played_on);
 
         Button saveBTN = findViewById(R.id.btn_edit_save);
-        Button exitBTN = findViewById(R.id.btn_edit_exit);
+        Button exitBTN = findViewById(R.id.btn_delete_exit);
 
         ImageButton closeIB = findViewById(R.id.ib_close);
 

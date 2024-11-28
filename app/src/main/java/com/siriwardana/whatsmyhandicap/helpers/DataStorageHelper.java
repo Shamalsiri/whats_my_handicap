@@ -60,5 +60,8 @@ public class DataStorageHelper {
         updateRound(round);
     }
 
+    public void deleteRound(Round round) {
+        databaseSingleton.RoundDao().delete(round);
+    }
 
 }
