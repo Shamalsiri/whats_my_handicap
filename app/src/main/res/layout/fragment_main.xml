@@ -8,12 +8,12 @@
 
     <ImageView
         android:id="@+id/iv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="#331F1F"
-        android:src="@drawable/ic_launcher_foreground"
+        android:layout_width="350dp"
+        android:layout_height="370dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/golfer_logo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,11 +21,10 @@
         android:id="@+id/btn_new_round"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="24dp"
         android:text="New Round"
         android:backgroundTint="@color/wmh_green"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
@@ -33,7 +32,7 @@
         android:id="@+id/btn_prev_scores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="@color/wmh_orange"
         android:text="Previous Scores"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +66,7 @@
         android:id="@+id/tv_handicap_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:text="Your Handicap:"
         android:textColor="#009688"
         android:textSize="20sp"
