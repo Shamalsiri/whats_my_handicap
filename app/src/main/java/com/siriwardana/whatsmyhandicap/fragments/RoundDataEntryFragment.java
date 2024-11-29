@@ -196,10 +196,13 @@ public class RoundDataEntryFragment extends Fragment {
     private void exit() {
         Log.d(TAG, "exit: Exiting Round Data Entry Fragment");
         List<Hole> holeList = dataStorageHelper.getHolesByRound(roundId);
+        Round round = dbSingleton.RoundDao().getRoundById(roundId);
         int numHolesInRound = holeList.size();
         if ((numHolesThisRound == 9 && numHolesInRound != 9) ||
                 (numHolesThisRound == 18 && numHolesInRound != 18)) {
             //Todo: Remove data in holes table with roundId
+            dataStorageHelper.deleteHolesByRoundID(roundId);
+            dataStorageHelper.deleteRound(round);
             Log.d(TAG, "exit: Removing all holes with roundId: " + roundId);
         }
 

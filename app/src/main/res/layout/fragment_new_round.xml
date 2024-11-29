@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="44dp"
         android:text="Club Name:"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -85,12 +85,13 @@
         android:id="@+id/tv_num_holes_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="24dp"
         android:text="This field is required"
         android:textColor="#E80303"
         android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/rg_num_holes"
-        app:layout_constraintTop_toBottomOf="@+id/rg_num_holes" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_num_holes_title"
+        app:layout_constraintStart_toEndOf="@+id/tv_num_holes_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_num_holes_title" />
 
     <RadioGroup
         android:id="@+id/rg_num_holes"
@@ -119,10 +120,11 @@
         android:id="@+id/tv_new_round_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="76dp"
         android:text="New Round Setup"
         android:textColor="#000000"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -131,12 +133,12 @@
         android:id="@+id/btn_nr_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="88dp"
         android:backgroundTint="@color/wmh_orange"
         android:text="Back"
         app:layout_constraintEnd_toStartOf="@+id/btn_nr_start_round"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_num_holes_label" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
         android:id="@+id/btn_nr_start_round"
@@ -149,4 +151,35 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_nr_back"
         app:layout_constraintTop_toTopOf="@+id/btn_nr_back" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Select a Tee:"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/rg_num_holes"
+        app:layout_constraintTop_toBottomOf="@+id/rg_num_holes" />
+
+    <Spinner
+        android:id="@+id/sp_slope_rating"
+        android:layout_width="355dp"
+        android:layout_height="39dp"
+        app:layout_constraintEnd_toEndOf="@+id/et_course_name"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+
+    <TextView
+        android:id="@+id/tv_select_tee_req_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This field is required"
+        android:textColor="#E80303"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/tv_club_name_label"
+        app:layout_constraintTop_toBottomOf="@+id/sp_slope_rating" />
 </androidx.constraintlayout.widget.ConstraintLayout>

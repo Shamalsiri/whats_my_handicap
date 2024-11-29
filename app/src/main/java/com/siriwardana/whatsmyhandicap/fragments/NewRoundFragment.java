@@ -8,10 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import java.time.format.DateTimeFormatter;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -27,11 +30,12 @@ public class NewRoundFragment extends Fragment {
     private final String TAG = NewRoundFragment.class.getName();
     private Button backBTN, startRoundBTN;
     private EditText clubNameET, courseNameET;
-    private TextView clubNameLabelTV, numHolesLabelTV;
+    private TextView clubNameLabelTV, numHolesLabelTV, selectTeeWarningTV;
     private RadioGroup holesRG;
     private RadioButton checkedRadioButton;
     private String clubName, courseName;
-    private int numHoles, userId, roundId;
+    private Spinner slopeRatingSP;
+    private int numHoles, userId, roundId, teeSelected, slopeRating;
     private DatabaseSingleton dbSingleton;
 
     /**
@@ -44,6 +48,8 @@ public class NewRoundFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        String[] courses = {"one", "two", "three"};
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_round, container, false);
         dbSingleton = DatabaseSingleton.getDBInstance(getContext());
@@ -60,8 +66,11 @@ public class NewRoundFragment extends Fragment {
 
         clubNameLabelTV = view.findViewById(R.id.tv_club_name_label);
         numHolesLabelTV = view.findViewById(R.id.tv_num_holes_label);
+        selectTeeWarningTV = view.findViewById(R.id.tv_select_tee_req_label);
 
         holesRG = view.findViewById(R.id.rg_num_holes);
+
+        slopeRatingSP = view.findViewById(R.id.sp_slope_rating);
 
         backBTN.setOnClickListener(v ->
                 ((onNewRoundButtonClickListener) requireActivity()).onNewRoundFragmentBackButtonClicked()
@@ -102,6 +111,7 @@ public class NewRoundFragment extends Fragment {
                 newRound.setCourseName(courseName);
                 newRound.setNumHoles(numHoles);
                 newRound.setDate(timeDate);
+                newRound.setSlopeRating(slopeRating);
                 Log.d(TAG, "onCreateView: Inserting Round data to the Round table");
                 dbSingleton.RoundDao().insert(newRound);
                 roundId = dbSingleton.RoundDao().getLatestRoundId();
@@ -111,6 +121,30 @@ public class NewRoundFragment extends Fragment {
             ((onNewRoundButtonClickListener) requireActivity()).onNewRoundFragmentStartButtonClicked(canStart,
                     roundId, numHoles);
         });
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> dataAdapter = ArrayAdapter.createFromResource(
+                getContext(),
+                R.array.slope_rating,    // The array resource
+                android.R.layout.simple_spinner_item // Default layout for spinner items
+        );
+        // Specify the layout to use when the list of choices appears
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        slopeRatingSP.setAdapter(dataAdapter);
+
+        slopeRatingSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                teeSelected = i;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         return view;
     }
 
@@ -146,6 +180,31 @@ public class NewRoundFragment extends Fragment {
             canStart = false;
         }
 
+        if (teeSelected == 0 ) {
+            selectTeeWarningTV.setVisibility(View.VISIBLE);
+            canStart = false;
+        } else {
+            canStart = true;
+            switch (teeSelected) {
+                case 1:
+                    slopeRating = 95;
+                    break;
+                case 2:
+                    slopeRating = 105;
+                    break;
+                case 3:
+                    slopeRating = 115;
+                    break;
+                case 4:
+                    slopeRating = 125;
+                    break;
+                case 5:
+                    slopeRating = 135;
+                    break;
+                default:
+                    slopeRating = -1;
+            }
+        }
         return canStart;
     }
 

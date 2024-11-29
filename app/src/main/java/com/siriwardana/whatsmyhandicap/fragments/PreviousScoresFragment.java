@@ -173,7 +173,7 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
             totalDistance = totalDistance + hole.getDistance();
         }
 
-        String courseName = round.getClubName() + " | " + round.getCourseName() + " Course";
+        String courseName = round.getClubName() + " \n" + round.getCourseName() + " Course";
         bestTotalScore.setText(String.valueOf(totalScore));
         bestTotalParTV.setText(String.valueOf(totalPar));
         bestTotalDistanceTV.setText(distanceNotEntered ? "-" : String.valueOf(totalDistance));

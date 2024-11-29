@@ -45,7 +45,7 @@ public class RoundDataAdapter extends RecyclerView.Adapter<RoundDataViewHolder> 
         List<Hole> holes = roundDataList.get(position).getHoles();
 
         int roundId = round.getRoundId();
-        String location = round.getClubName() + " | " + round.getCourseName() + " Course";
+        String location = round.getClubName() + " \n" + round.getCourseName() + " Course";
 
         holder.holeDataRV.setLayoutManager(new LinearLayoutManager(context,
                 LinearLayoutManager.HORIZONTAL, false));

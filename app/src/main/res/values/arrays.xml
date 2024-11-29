@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="slope_rating">
+        <item>select a slope rating...</item>
+        <item>Red   - SR: 95</item>
+        <item>Gold  - SR: 105</item>
+        <item>White - SR: 115</item>
+        <item>Blue  - SR: 125</item>
+        <item>Black - SR: 135</item>
+    </array>
+</resources>
