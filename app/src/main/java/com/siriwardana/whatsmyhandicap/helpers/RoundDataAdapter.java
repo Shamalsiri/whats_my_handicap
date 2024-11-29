@@ -54,6 +54,8 @@ public class RoundDataAdapter extends RecyclerView.Adapter<RoundDataViewHolder> 
         holder.courseNameTV.setText(location);
         updateHoleTotal(holes, holder);
 
+        holder.dateTV.setText(round.getDate());
+
         holder.editRoundIB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

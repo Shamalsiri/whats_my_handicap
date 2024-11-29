@@ -1,9 +1,12 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
+import static java.lang.Integer.parseInt;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import java.time.format.DateTimeFormatter;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Round;
+
+import java.time.LocalDateTime;
 
 public class NewRoundFragment extends Fragment {
 
@@ -75,11 +80,28 @@ public class NewRoundFragment extends Fragment {
 
             Log.d(TAG, "onCreateView: Can Start a New Round: " + canStart);
             if (canStart) {
+                LocalDateTime current = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy | HH:mm a");
+                String formattedDateTime = current.format(formatter);
+                String[] date = formattedDateTime.split("\\|");
+                String time = date[1].trim();
+                int hour = parseInt(date[1].trim().substring(0,2));
+                if ( hour > 12) {
+                    hour = hour - 12;
+                    time = hour + time.substring(2);
+                    date[1] = time;
+                }
+
+                String timeDate = String.join(" | ", date[0], date[1]);
+
+
+
                 Round newRound = new Round();
                 newRound.setUserId(userId);
                 newRound.setClubName(clubName);
                 newRound.setCourseName(courseName);
                 newRound.setNumHoles(numHoles);
+                newRound.setDate(timeDate);
                 Log.d(TAG, "onCreateView: Inserting Round data to the Round table");
                 dbSingleton.RoundDao().insert(newRound);
                 roundId = dbSingleton.RoundDao().getLatestRoundId();

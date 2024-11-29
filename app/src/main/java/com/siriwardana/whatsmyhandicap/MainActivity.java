@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        hideSystemBars();
+
         Intent intent = getIntent();
         if (intent != null) {
             userId = intent.getIntExtra("userId", 0);
@@ -41,6 +43,15 @@ public class MainActivity extends AppCompatActivity
         MainFragment mainFragment = new MainFragment();
         mainFragment.setArguments(bundle);
         loadFragment(mainFragment);
+    }
+
+    private void hideSystemBars() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        );
     }
 
 
