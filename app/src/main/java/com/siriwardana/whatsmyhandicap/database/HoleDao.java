@@ -32,4 +32,7 @@ public interface HoleDao {
 
     @Query("SELECT COUNT(hole_score) FROM hole WHERE hole.round_id = :roundId")
     int getRoundHoleCount(int roundId);
+
+    @Query("DELETE FROM hole WHERE hole.round_id = :roundID")
+    void deleteHolesByRoundID(int roundID);
 }

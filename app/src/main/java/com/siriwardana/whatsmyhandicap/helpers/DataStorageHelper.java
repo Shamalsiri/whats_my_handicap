@@ -64,4 +64,8 @@ public class DataStorageHelper {
         databaseSingleton.RoundDao().delete(round);
     }
 
+    public void deleteHolesByRoundID(int roundID) {
+        databaseSingleton.HoleDao().deleteHolesByRoundID(roundID);
+    }
+
 }

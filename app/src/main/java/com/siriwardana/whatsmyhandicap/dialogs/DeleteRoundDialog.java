@@ -61,6 +61,7 @@ public class DeleteRoundDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 dataStorageHelper.deleteRound(round);
+                dataStorageHelper.deleteHolesByRoundID(round.roundId);
                 dismiss();
             }
         });
