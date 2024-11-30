@@ -13,6 +13,7 @@ public class RoundDataViewHolder extends RecyclerView.ViewHolder {
 
     TextView courseNameTV, dateTV, totalDistanceTV, totalParTV, totalScoreTV;
     ImageButton editRoundIB;
+    ImageButton deleteRoundIB;
     RecyclerView holeDataRV;
 
     public RoundDataViewHolder(@NonNull View itemView) {
@@ -25,6 +26,7 @@ public class RoundDataViewHolder extends RecyclerView.ViewHolder {
         totalScoreTV = itemView.findViewById(R.id.tv_round_total_score);
 
         editRoundIB = itemView.findViewById(R.id.ib_edit_round);
+        deleteRoundIB = itemView.findViewById(R.id.ib_delete_round);
 
         holeDataRV = itemView.findViewById(R.id.rv_round_holes_data);
     }

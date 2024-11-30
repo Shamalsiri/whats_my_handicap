@@ -1,14 +1,20 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
+import static java.lang.Integer.parseInt;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import java.time.format.DateTimeFormatter;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -17,16 +23,19 @@ import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.DatabaseSingleton;
 import com.siriwardana.whatsmyhandicap.database.Round;
 
+import java.time.LocalDateTime;
+
 public class NewRoundFragment extends Fragment {
 
     private final String TAG = NewRoundFragment.class.getName();
     private Button backBTN, startRoundBTN;
     private EditText clubNameET, courseNameET;
-    private TextView clubNameLabelTV, numHolesLabelTV;
+    private TextView clubNameLabelTV, numHolesLabelTV, selectTeeWarningTV;
     private RadioGroup holesRG;
     private RadioButton checkedRadioButton;
     private String clubName, courseName;
-    private int numHoles, userId, roundId;
+    private Spinner slopeRatingSP;
+    private int numHoles, userId, roundId, teeSelected, slopeRating;
     private DatabaseSingleton dbSingleton;
 
     /**
@@ -39,6 +48,8 @@ public class NewRoundFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        String[] courses = {"one", "two", "three"};
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_round, container, false);
         dbSingleton = DatabaseSingleton.getDBInstance(getContext());
@@ -55,8 +66,11 @@ public class NewRoundFragment extends Fragment {
 
         clubNameLabelTV = view.findViewById(R.id.tv_club_name_label);
         numHolesLabelTV = view.findViewById(R.id.tv_num_holes_label);
+        selectTeeWarningTV = view.findViewById(R.id.tv_select_tee_req_label);
 
         holesRG = view.findViewById(R.id.rg_num_holes);
+
+        slopeRatingSP = view.findViewById(R.id.sp_slope_rating);
 
         backBTN.setOnClickListener(v ->
                 ((onNewRoundButtonClickListener) requireActivity()).onNewRoundFragmentBackButtonClicked()
@@ -75,11 +89,29 @@ public class NewRoundFragment extends Fragment {
 
             Log.d(TAG, "onCreateView: Can Start a New Round: " + canStart);
             if (canStart) {
+                LocalDateTime current = LocalDateTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy | HH:mm a");
+                String formattedDateTime = current.format(formatter);
+                String[] date = formattedDateTime.split("\\|");
+                String time = date[1].trim();
+                int hour = parseInt(date[1].trim().substring(0,2));
+                if ( hour > 12) {
+                    hour = hour - 12;
+                    time = hour + time.substring(2);
+                    date[1] = time;
+                }
+
+                String timeDate = String.join(" | ", date[0], date[1]);
+
+
+
                 Round newRound = new Round();
                 newRound.setUserId(userId);
                 newRound.setClubName(clubName);
                 newRound.setCourseName(courseName);
                 newRound.setNumHoles(numHoles);
+                newRound.setDate(timeDate);
+                newRound.setSlopeRating(slopeRating);
                 Log.d(TAG, "onCreateView: Inserting Round data to the Round table");
                 dbSingleton.RoundDao().insert(newRound);
                 roundId = dbSingleton.RoundDao().getLatestRoundId();
@@ -89,6 +121,30 @@ public class NewRoundFragment extends Fragment {
             ((onNewRoundButtonClickListener) requireActivity()).onNewRoundFragmentStartButtonClicked(canStart,
                     roundId, numHoles);
         });
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> dataAdapter = ArrayAdapter.createFromResource(
+                getContext(),
+                R.array.slope_rating,    // The array resource
+                android.R.layout.simple_spinner_item // Default layout for spinner items
+        );
+        // Specify the layout to use when the list of choices appears
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        slopeRatingSP.setAdapter(dataAdapter);
+
+        slopeRatingSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                teeSelected = i;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         return view;
     }
 
@@ -124,6 +180,31 @@ public class NewRoundFragment extends Fragment {
             canStart = false;
         }
 
+        if (teeSelected == 0 ) {
+            selectTeeWarningTV.setVisibility(View.VISIBLE);
+            canStart = false;
+        } else {
+            canStart = true;
+            switch (teeSelected) {
+                case 1:
+                    slopeRating = 95;
+                    break;
+                case 2:
+                    slopeRating = 105;
+                    break;
+                case 3:
+                    slopeRating = 115;
+                    break;
+                case 4:
+                    slopeRating = 125;
+                    break;
+                case 5:
+                    slopeRating = 135;
+                    break;
+                default:
+                    slopeRating = -1;
+            }
+        }
         return canStart;
     }
 

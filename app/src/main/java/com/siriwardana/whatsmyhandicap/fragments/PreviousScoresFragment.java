@@ -1,5 +1,7 @@
 package com.siriwardana.whatsmyhandicap.fragments;
 
+import static java.lang.Integer.parseInt;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +30,8 @@ import java.util.List;
 public class PreviousScoresFragment extends Fragment implements ReloadScoresCallback {
     private final String TAG = PreviousScoresFragment.class.getName();
     private int userId;
-    private TextView bestTotalDistanceTV, bestTotalParTV, bestTotalScore, bestCourseName;
+    private TextView bestTotalDistanceTV, bestTotalParTV,
+            bestTotalScore, bestCourseName, bestDate;
     private Button exitBTN;
     private DatabaseSingleton databaseSingleton;
     private View view;
@@ -56,6 +59,7 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
         bestTotalParTV = view.findViewById(R.id.tv_round_par);
         bestTotalScore = view.findViewById(R.id.tv_round_total_score);
         bestCourseName = view.findViewById(R.id.tv_best_course_name);
+        bestDate = view.findViewById(R.id.tv_best_round_date);
         exitBTN = view.findViewById(R.id.btn_exit_home);
 
         context = getContext();
@@ -119,7 +123,7 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
             Round round = roundList.get(i);
             holeList = databaseSingleton.HoleDao().getHolesByRound(round.getRoundId());
 
-            if (holeList.size() > 0) {
+            if (!holeList.isEmpty()) {
                 roundDataList.add(new RoundData(holeList, round));
             }
         }
@@ -145,6 +149,11 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
         int size = bestRound.size();
         if (size == 0) {
             Log.d(TAG, "updateBestRoundTotal: No Round Data in the DB yet");
+            bestTotalScore.setText("");
+            bestTotalParTV.setText("");
+            bestTotalDistanceTV.setText("");
+            bestCourseName.setText("");
+            bestDate.setText("");
             return;
         }
         boolean distanceNotEntered = false;
@@ -164,13 +173,12 @@ public class PreviousScoresFragment extends Fragment implements ReloadScoresCall
             totalDistance = totalDistance + hole.getDistance();
         }
 
-        String courseName = round.getClubName() + " | " + round.getCourseName() + " Course";
+        String courseName = round.getClubName() + " \n" + round.getCourseName() + " Course";
         bestTotalScore.setText(String.valueOf(totalScore));
         bestTotalParTV.setText(String.valueOf(totalPar));
         bestTotalDistanceTV.setText(distanceNotEntered ? "-" : String.valueOf(totalDistance));
         bestCourseName.setText(courseName);
-
-
+        bestDate.setText(round.getDate());
     }
 
     /**

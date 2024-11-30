@@ -26,7 +26,7 @@ import java.util.List;
 
 public class EditHoleDialog extends Dialog implements View.OnClickListener {
 
-    private final String TAG = EditDataDialog.class.getName();
+    private final String TAG = EditRoundDataDialog.class.getName();
     private TextView clubNameTV, courseNameTV, distanceTV, parTV, scoreTV;
     private final Round round;
     private Hole hole;
@@ -120,7 +120,7 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        EditDataDialog editDataDialog;
+        EditRoundDataDialog editDataDialog;
         EditModeEnums mode = null;
 
         switch (v.getId()) {
@@ -142,7 +142,7 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
         }
 
         Log.d(TAG, "onClick: Showing Edit Data Dialog");
-        editDataDialog = new EditDataDialog(context, mode, hole, round);
+        editDataDialog = new EditRoundDataDialog(context, mode, hole, round);
         editDataDialog.show();
 
         editDataDialog.setOnDismissListener(new OnDismissListener() {

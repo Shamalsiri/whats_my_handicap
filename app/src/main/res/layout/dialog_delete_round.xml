@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Title"
+        android:text="Delete Round?"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Orignal Value: "
+        android:text="Course Name: "
         app:layout_constraintEnd_toStartOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/tv_edit_title" />
 
@@ -33,23 +33,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="New Value: "
+        android:text="Played On: "
         app:layout_constraintEnd_toEndOf="@+id/tv_label_original_value"
         app:layout_constraintEnd_toStartOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/tv_edit_title" />
 
-    <EditText
+    <TextView
         android:id="@+id/tv_delete_round_played_on"
         android:layout_width="72dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:hint="new value"
         android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_label_new_value"
         app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/tv_current_value" />
+        app:layout_constraintTop_toTopOf="@+id/tv_label_new_value" />
 
     <TextView
-        android:id="@+id/tv_current_value"
+        android:id="@+id/tv_delete_course_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -72,21 +72,21 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="28dp"
         android:layout_marginEnd="20dp"
-        android:backgroundTint="#F44336"
+        android:backgroundTint="@color/wmh_green"
         android:text="Exit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_edit_save"
+        app:layout_constraintEnd_toStartOf="@+id/btn_delete_dialog_delete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_delete_round_played_on" />
 
     <Button
-        android:id="@+id/btn_edit_save"
+        android:id="@+id/btn_delete_dialog_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
         android:layout_marginStart="20dp"
-        android:backgroundTint="#4CAF50"
-        android:text="Save"
+        android:backgroundTint="@color/wmh_red"
+        android:text="Delete Round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

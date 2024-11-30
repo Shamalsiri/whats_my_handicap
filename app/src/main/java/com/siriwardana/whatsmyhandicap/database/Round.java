@@ -27,6 +27,12 @@ public class Round {
     @Nullable
     public int score;
 
+    @ColumnInfo(name = "date")
+    public String date;
+
+    @ColumnInfo(name = "slope_rating")
+    public int slopeRating;
+
     public int getRoundId() {
         return roundId;
     }
@@ -73,5 +79,21 @@ public class Round {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getSlopeRating() {
+        return slopeRating;
+    }
+
+    public void setSlopeRating(int slopeRating) {
+        this.slopeRating = slopeRating;
     }
 }
