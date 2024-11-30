@@ -46,6 +46,8 @@
         android:layout_height="wrap_content"
         android:text="##.#"
         android:textSize="34sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@id/iv_box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,8 +55,8 @@
 
     <ImageView
         android:id="@+id/iv_box"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_width="155dp"
+        android:layout_height="155dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/baseline_check_box_outline_blank_24"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +83,6 @@
         android:layout_height="wrap_content"
         android:text="Note: Your Handicap will be calculated when you have played at least full 8 rounds"
         app:layout_constraintEnd_toEndOf="@+id/iv_box"
-        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="@+id/iv_box"
         app:layout_constraintTop_toBottomOf="@+id/iv_box" />
 
