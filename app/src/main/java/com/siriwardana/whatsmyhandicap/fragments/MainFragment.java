@@ -95,7 +95,8 @@ public class MainFragment extends Fragment {
         int size;
 
         if (rounds.size() != 8) {
-            throw new IllegalArgumentException("The list must contain exactly 8 rounds.");
+            Log.d(TAG, "The list must contain exactly 8 rounds.");
+            return;
         }
 
         // Calculate score differentials for each round
