@@ -16,7 +16,7 @@ when the stroke is completed not when the hole is completed  </p>
 - Once logged in, the user can start a new round and keep track of the user's round data
 - Once logged in, the user can also review the user's previous scores, 
 edit and delete rounds if needed 
-- With 8 or more rounds stored in the db, the application will calculate the user's Handicap
+- With 8 or more rounds stored in the database, the application will calculate the user's Handicap
 
 
 ### Algorithm to calculate the Player Handicap
