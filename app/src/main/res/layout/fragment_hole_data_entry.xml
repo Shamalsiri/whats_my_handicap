@@ -162,7 +162,7 @@
         android:id="@+id/iv_round_score_border"
         android:layout_width="105dp"
         android:layout_height="93dp"
-        android:src="@drawable/baseline_check_box_outline_blank_24"
+        android:src="@drawable/baseline_crop_square_24"
         app:layout_constraintBottom_toTopOf="@+id/btn_next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
