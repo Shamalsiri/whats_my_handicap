@@ -52,10 +52,7 @@ public class MainFragment extends Fragment {
 
         settingsIB = view.findViewById(R.id.ib_settings);
         logoutIB = view.findViewById(R.id.ib_logout);
-
-        List<Round> bestRounds = DatabaseSingleton.getDBInstance(getContext())
-                                    .RoundDao().getBest8RoundsByUserID(userId);
-        calculateHandicap(bestRounds);
+        calculateHandicap();
 
         newRoundBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,9 +81,10 @@ public class MainFragment extends Fragment {
     /**
      * Calculate the user Handicap;
      */
-    private void calculateHandicap(List<Round> rounds) {
+    private void calculateHandicap() {
         Log.d(TAG, "calculateHandicap: Calculating User Handicap");
         DatabaseSingleton databaseSingleton = DatabaseSingleton.getDBInstance(getContext());
+        List<Round> bestRounds = databaseSingleton.RoundDao().getBest8RoundsByUserID(userId);
         Round round;
         Hole hole;
         int roundId;
@@ -94,47 +92,56 @@ public class MainFragment extends Fragment {
         int totalScore;
         int size;
 
-        if (rounds.size() != 8) {
-            Log.d(TAG, "The list must contain exactly 8 rounds.");
+        if (bestRounds.size() != 8) {
+            Log.w(TAG, "The list must contain exactly 8 rounds.");
             return;
         }
 
         // Calculate score differentials for each round
         double[] differentials = new double[8];
-        for (int i = 0; i < rounds.size(); i++) {
+        for (int i = 0; i < bestRounds.size(); i++) {
 
             totalPar = 0;
             totalScore = 0;
 
-            roundId = rounds.get(i).getRoundId();
+            roundId = bestRounds.get(i).getRoundId();
             round = databaseSingleton.RoundDao().getRoundById(roundId);
 
             size = round.getNumHoles();
             for (int j = 0; j < size; j++) {
                 hole = databaseSingleton.HoleDao().getHoleByRound(roundId, j + 1 );
 
+                if (hole == null) {
+                    databaseSingleton.RoundDao().delete(round);
+                    databaseSingleton.HoleDao().deleteHolesByRoundID(roundId);
+                    calculateHandicap();
+                    return;
+                }
+
                 totalScore = totalScore + hole.getHoleScore();
                 totalPar = totalPar + hole.getPar();
             }
 
-            // Adjust for 9-hole rounds by doubling scores and par
-            if (size == 9) {
-                totalScore *= 2;
-                totalPar *= 2;
-            } else if (size != 18) {
-                throw new IllegalArgumentException("Rounds must be either 9 or 18 holes.");
+            if (totalPar != 0 ) {
+                // Adjust for 9-hole rounds by doubling scores and par
+                if (size == 9) {
+                    totalScore *= 2;
+                    totalPar *= 2;
+                } else if (size != 18) {
+                    Log.e(TAG,"Rounds must be either 9 or 18 holes.");
+                }
+
+                if (i % 2 == 0) {
+                    totalScore = totalScore - 1;
+                }
+
+                double adjustedGrossScore = totalScore + totalPar;
+                double courseRating = totalPar;
+                double slopeRating = round.getSlopeRating();
+
+                // Formula: (Adjusted Gross Score - Course Rating) / Slope Rating * 113
+                differentials[i] = ((adjustedGrossScore - courseRating) / slopeRating) * 113;
             }
-
-            if (i % 2 == 0) {
-                totalScore = totalScore - 1;
-            }
-
-            double adjustedGrossScore = totalScore + totalPar;
-            double courseRating = totalPar;
-            double slopeRating = round.getSlopeRating();
-
-            // Formula: (Adjusted Gross Score - Course Rating) / Slope Rating * 113
-            differentials[i] = ((adjustedGrossScore - courseRating) / slopeRating) * 113;
         }
 
         // Average the best 2 differentials (lowest values)
