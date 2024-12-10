@@ -103,11 +103,4 @@
     <string name="delete">delete</string>2
 <!--    -->
 <!--    Test Values-->
-    <string name="test_email">shamal1@gmail.com</string>
-    <string name="test_password">123456</string>
-    <string name="test_club">Eagle\'s Nest Golf Club</string>
-    <string name="test_course_name">Green Course</string>
-    <string name="test_firstname">Shamal</string>
-    <string name="test_lastname">Siri</string>
-    <string name="test_dob">08-08-1996</string>
 </resources>
