@@ -1,11 +1,15 @@
 package com.siriwardana.whatsmyhandicap;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity
     private final String TAG = MainActivity.class.getName();
     private FragmentTransaction fragmentTransaction;
     private int userId, roundId;
+    private boolean canLogout = false;
     private MainFragment fragment;
 
     @Override
@@ -94,10 +99,41 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     public void onMainFragmentLogoutButtonClicked() {
-        Log.d(TAG, "onMainFragmentLogoutButtonClicked: Logout button clicked");
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
+        canLogout = false;
+        LogoutDialog();
+    }
+
+    private void LogoutDialog() {
+
+        Log.d(TAG, "exit: Showing Exit Alert Dialog");
+        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create(); //Read Update
+        alertDialog.setTitle("Confirm Logout");
+        alertDialog.setMessage("Are you sure you want to Logout?");
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Logout", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // here you can add functions
+                alertDialog.dismiss();
+                Log.d(TAG, "onMainFragmentLogoutButtonClicked: Logout button clicked");
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // here you can add functions
+                alertDialog.dismiss();
+            }
+        });
+
+        alertDialog.show();
+
+        Button negButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+        negButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.wmh_green));;
+        Button posButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        posButton.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.wmh_red));;
     }
 
     /**

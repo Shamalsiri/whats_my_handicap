@@ -32,16 +32,19 @@ public class DeleteRoundDialog extends Dialog {
         setContentView(R.layout.dialog_delete_round);
 
         TextView courseName = findViewById(R.id.tv_delete_course_name);
+        TextView clubName = findViewById(R.id.tv_delete_club_name);
+
         TextView playedOn = findViewById(R.id.tv_delete_round_played_on);
 
-        String name = round.getClubName() + ": " + round.getCourseName();
+        String dateTime = round.getDate();
 
         ImageView closeIV = findViewById(R.id.ib_close);
         Button btnExit = findViewById(R.id.btn_delete_exit);
         Button btnDelete = findViewById(R.id.btn_delete_dialog_delete);
 
-        courseName.setText(name);
-        playedOn.setText("00-00-0000 @ 00:00");
+        courseName.setText(round.getCourseName());
+        clubName.setText(round.getClubName());
+        playedOn.setText(dateTime);
 
         closeIV.setOnClickListener(new View.OnClickListener() {
             @Override

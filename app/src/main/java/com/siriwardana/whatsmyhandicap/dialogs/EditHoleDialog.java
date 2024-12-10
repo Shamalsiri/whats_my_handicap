@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -58,15 +59,15 @@ public class EditHoleDialog extends Dialog implements View.OnClickListener {
         parTV = findViewById(R.id.tv_edit_par);
         scoreTV = findViewById(R.id.tv_edit_score);
 
-        Button editClubNameBTN = findViewById(R.id.btn_edit_club_name);
+        ImageButton editClubNameBTN = findViewById(R.id.btn_edit_club_name);
         editClubNameBTN.setOnClickListener(this);
-        Button editCourseNameBTN = findViewById(R.id.btn_edit_course_name);
+        ImageButton editCourseNameBTN = findViewById(R.id.btn_edit_course_name);
         editCourseNameBTN.setOnClickListener(this);
-        Button editDistanceBTN = findViewById(R.id.btn_edit_distance);
+        ImageButton editDistanceBTN = findViewById(R.id.btn_edit_distance);
         editDistanceBTN.setOnClickListener(this);
-        Button editParBTN = findViewById(R.id.btn_edit_par);
+        ImageButton editParBTN = findViewById(R.id.btn_edit_par);
         editParBTN.setOnClickListener(this);
-        Button editScoreBTN = findViewById(R.id.btn_edit_score);
+        ImageButton editScoreBTN = findViewById(R.id.btn_edit_score);
         editScoreBTN.setOnClickListener(this);
 
         ImageView closeIV = findViewById(R.id.iv_close);

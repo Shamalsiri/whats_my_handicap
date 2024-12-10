@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.siriwardana.whatsmyhandicap.R;
 import com.siriwardana.whatsmyhandicap.database.Hole;
@@ -136,7 +137,6 @@ public class EditRoundDataDialog extends Dialog {
         alertDialog.setTitle("Confirm Exit");
         alertDialog.setMessage("You are exiting without saving any changes");
 
-
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Exit", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // here you can add functions
@@ -152,8 +152,13 @@ public class EditRoundDataDialog extends Dialog {
             }
         });
 
-
         alertDialog.show();
+
+        Button negButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL);
+        negButton.setTextColor(ContextCompat.getColor(getContext(), R.color.wmh_orange));;
+        Button posButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        posButton.setTextColor(ContextCompat.getColor(getContext(), R.color.wmh_red));;
+
     }
 
     /**

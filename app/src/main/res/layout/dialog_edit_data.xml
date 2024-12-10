@@ -20,42 +20,44 @@
         app:layout_constraintTop_toTopOf="@+id/textView10" />
 
     <TextView
-        android:id="@+id/tv_label_original_value"
+        android:id="@+id/tv_label_club_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Orignal Value: "
-        app:layout_constraintEnd_toStartOf="@+id/textView10"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_edit_title" />
 
     <TextView
         android:id="@+id/tv_label_new_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:text="New Value: "
-        app:layout_constraintEnd_toEndOf="@+id/tv_label_original_value"
-        app:layout_constraintEnd_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/tv_edit_title" />
+        app:layout_constraintStart_toStartOf="@+id/tv_label_club_value"
+        app:layout_constraintTop_toBottomOf="@+id/tv_label_club_value" />
 
     <EditText
         android:id="@+id/tv_delete_round_played_on"
         android:layout_width="72dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="24dp"
         android:hint="new value"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/tv_current_value" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_label_new_value"
+        app:layout_constraintStart_toEndOf="@+id/tv_label_new_value"
+        app:layout_constraintTop_toTopOf="@+id/tv_label_new_value" />
 
     <TextView
         android:id="@+id/tv_current_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toTopOf="@+id/tv_label_original_value" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_label_club_value"
+        app:layout_constraintStart_toEndOf="@+id/tv_label_club_value"
+        app:layout_constraintTop_toTopOf="@+id/tv_label_club_value"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView10"
@@ -70,8 +72,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="28dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="28dp"
         android:backgroundTint="#F44336"
         android:text="Exit"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -83,8 +85,8 @@
         android:id="@+id/btn_edit_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
         android:layout_marginStart="20dp"
+        android:layout_marginBottom="28dp"
         android:backgroundTint="#4CAF50"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
