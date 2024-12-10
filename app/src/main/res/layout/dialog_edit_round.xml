@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Edit Round"
+        android:text="@string/edit_round"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
-        android:text="Club Name: "
+        android:text="@string/club_name_label"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title_edit_round" />
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
-        android:text="Course Name:"
+        android:text="@string/course_name_label"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_edit_club_name" />
@@ -54,6 +54,7 @@
         android:id="@+id/iv_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/exit_dialog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_exit" />
@@ -65,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginTop="24dp"
-        android:text="Distance"
+        android:text="@string/distance"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sp_select_hole"
@@ -76,7 +77,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="@+id/textView4"
@@ -88,40 +88,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
+        android:contentDescription="@string/edit_distance"
         android:src="@drawable/ic_edit"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_edit_distance"
         app:layout_constraintStart_toStartOf="@+id/btn_edit_course_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_edit_distance"
-        app:layout_constraintVertical_bias="0.413"
-        app:layout_constraintWidth_percent="0.15" />
+        app:layout_constraintTop_toTopOf="@+id/tv_edit_distance" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="84dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:text="Par"
+        android:text="@string/par"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/tv_edit_distance"
-        app:layout_constraintWidth_percent="0.25" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_edit_distance" />
 
     <TextView
         android:id="@+id/tv_edit_par"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/textView6"
         app:layout_constraintStart_toStartOf="@+id/tv_edit_distance"
-        app:layout_constraintTop_toTopOf="@+id/textView6"
-        app:layout_constraintWidth_percent="0.25" />
+        app:layout_constraintTop_toTopOf="@+id/textView6" />
 
     <ImageButton
         android:id="@+id/btn_edit_par"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
+        android:contentDescription="@string/edit_par"
         android:src="@drawable/ic_edit"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_edit_par"
@@ -135,33 +132,30 @@
         android:layout_width="89dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Score: "
+        android:text="@string/score_label"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/tv_edit_par"
-        app:layout_constraintWidth_percent="0.25" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_edit_par" />
 
     <TextView
         android:id="@+id/tv_edit_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/textView8"
         app:layout_constraintStart_toStartOf="@+id/tv_edit_par"
-        app:layout_constraintTop_toTopOf="@+id/textView8"
-        app:layout_constraintWidth_percent="0.25" />
+        app:layout_constraintTop_toTopOf="@+id/textView8" />
 
     <ImageButton
         android:id="@+id/btn_edit_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
+        android:contentDescription="@string/edit_score"
         android:src="@drawable/ic_edit"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_edit_score"
         app:layout_constraintStart_toStartOf="@+id/btn_edit_par"
-        app:layout_constraintTop_toTopOf="@+id/tv_edit_score"
-        app:layout_constraintWidth_percent="0.15" />
+        app:layout_constraintTop_toTopOf="@+id/tv_edit_score" />
 
 
     <TextView
@@ -169,7 +163,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="xxx Country Club"
         android:layout_marginEnd="4dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_edit_club_name"
         app:layout_constraintHorizontal_bias="0.0"
@@ -182,7 +175,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginEnd="4dp"
-        android:text="Red"
         app:layout_constraintEnd_toStartOf="@+id/btn_edit_course_name"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tv_label_course_name"
@@ -193,6 +185,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
+        android:contentDescription="@string/edit_club_name"
         android:src="@drawable/ic_edit"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_club_name"
@@ -204,14 +197,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/transparent"
+        android:contentDescription="@string/edit_course_name"
         android:src="@drawable/ic_edit"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_course_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btn_edit_club_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_course_name"
-        app:layout_constraintVertical_bias="0.517"
-        app:layout_constraintWidth_percent="0.15" />
+        app:layout_constraintTop_toTopOf="@+id/tv_course_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

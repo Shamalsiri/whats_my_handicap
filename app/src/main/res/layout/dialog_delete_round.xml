@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Delete Round?"
+        android:text="@string/delete_round_question"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Course Name: "
+        android:text="@string/club_name_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_edit_title" />
 
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Course Name: "
+        android:text="@string/course_name_label"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_label_club_value" />
 
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:text="Played On: "
+        android:text="@string/played_on_label"
         app:layout_constraintStart_toStartOf="@+id/tv_label_club_value"
         app:layout_constraintTop_toBottomOf="@+id/tv_label_course_value" />
 
@@ -50,7 +50,7 @@
         android:id="@+id/tv_delete_round_played_on"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="new value"
+        android:hint="@string/new_value"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_label_new_value"
         app:layout_constraintStart_toStartOf="@+id/tv_delete_course_name"
@@ -61,7 +61,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="TextView"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/tv_label_club_value"
         app:layout_constraintTop_toTopOf="@+id/tv_label_club_value" />
 
@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
-        android:text="TextView"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="@+id/tv_label_course_value"
         app:layout_constraintStart_toEndOf="@+id/tv_label_club_value"
         app:layout_constraintTop_toTopOf="@+id/tv_label_club_value" />
@@ -92,7 +92,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="28dp"
         android:backgroundTint="@color/wmh_green"
-        android:text="Exit"
+        android:text="@string/exit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_delete_dialog_delete"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +105,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginBottom="28dp"
         android:backgroundTint="@color/wmh_red"
-        android:text="Delete Round"
+        android:text="@string/delete_round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -116,6 +116,7 @@
         android:layout_width="33dp"
         android:layout_height="31dp"
         android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/close_button_content_desc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_exit" />

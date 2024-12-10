@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Previous Scores"
+        android:text="@string/previous_scores"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Hole"
+            android:text="@string/hole"
             android:textAlignment="center"
             android:textStyle="bold" />
 
@@ -44,21 +44,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Distance" />
+            android:text="@string/distance" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Par" />
+            android:text="@string/par" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Score" />
+            android:text="@string/score" />
 
     </LinearLayout>
 
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Total"
+            android:text="@string/total"
             android:textAlignment="center"
             android:textStyle="bold" />
 
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="####" />
+            android:text="@string/num_substitute" />
 
         <TextView
             android:id="@+id/tv_round_par"
@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="##" />
+            android:text="@string/_2_pounds" />
 
         <TextView
             android:id="@+id/tv_round_total_score"
@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="##" />
+            android:text="@string/_2_pounds" />
 
 
     </LinearLayout>
@@ -124,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Best Round"
+        android:text="@string/best_round"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_prev_score_title" />
@@ -134,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="course name"
+        android:text="@string/course_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_label_best_round" />
 
@@ -143,6 +143,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="4dp"
+        android:paddingEnd="4dp"
         android:text=""
         app:layout_constraintBottom_toTopOf="@+id/ll_labels"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -163,7 +164,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="All Rounds"
+        android:text="@string/all_rounds"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_labels" />

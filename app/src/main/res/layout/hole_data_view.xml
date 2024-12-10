@@ -14,7 +14,7 @@
         android:id="@+id/tv_hole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hole"
+        android:text="@string/hole"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
         android:id="@+id/tv_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Distance"
+        android:text="@string/distance"
         app:layout_constraintEnd_toEndOf="@+id/tv_hole"
         app:layout_constraintStart_toStartOf="@+id/tv_hole"
         app:layout_constraintTop_toBottomOf="@+id/tv_hole" />
@@ -33,7 +33,7 @@
         android:id="@+id/tv_par"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Par"
+        android:text="@string/par"
         app:layout_constraintEnd_toEndOf="@+id/tv_hole"
         app:layout_constraintStart_toStartOf="@+id/tv_hole"
         app:layout_constraintTop_toBottomOf="@+id/tv_distance" />
@@ -42,7 +42,7 @@
         android:id="@+id/tv_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Score"
+        android:text="@string/score"
         app:layout_constraintEnd_toEndOf="@+id/tv_hole"
         app:layout_constraintStart_toStartOf="@+id/tv_hole"
         app:layout_constraintTop_toBottomOf="@+id/tv_par" />

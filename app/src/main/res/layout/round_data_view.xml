@@ -12,7 +12,6 @@
         android:id="@+id/tv_round_course_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Country Club\n Course"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +22,7 @@
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="2dp"
         android:paddingStart="2dp"
-        android:text="00/00/0000 - 00:00"
+        android:paddingEnd="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_round_course_name"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -44,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Hole"
+            android:text="@string/hole"
             android:textAlignment="center"
             android:textStyle="bold" />
 
@@ -53,21 +52,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Distance" />
+            android:text="@string/distance" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Par" />
+            android:text="@string/par" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Score" />
+            android:text="@string/score" />
 
     </LinearLayout>
 
@@ -99,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Total"
+            android:text="@string/total"
             android:textAlignment="center"
             android:textStyle="bold" />
 
@@ -109,7 +108,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="####" />
+            android:text="@string/num_substitute" />
 
         <TextView
             android:id="@+id/tv_round_par"
@@ -117,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="##" />
+            android:text="@string/_2_pounds" />
 
         <TextView
             android:id="@+id/tv_round_total_score"
@@ -125,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="##" />
+            android:text="@string/_2_pounds" />
 
 
     </LinearLayout>
@@ -146,7 +145,7 @@
             android:layout_weight="1"
             android:padding="4dp"
             android:src="@drawable/ic_edit"
-            android:text="edit" />
+            android:text="@string/edit" />
 
         <ImageButton
             android:id="@+id/ib_delete_round"
@@ -155,7 +154,7 @@
             android:layout_weight="1"
             android:backgroundTint="@android:color/transparent"
             android:src="@drawable/ic_delete"
-            android:text="delete" />
+            android:text="@string/delete" />
 
     </LinearLayout>
 
