@@ -47,7 +47,7 @@
     <string name="new_value">New Value</string>
     <string name="delete_round">Delete Round</string>
     <string name="close_button_content_desc">close button</string>
-    <string name="orignal_value_label">Orignal Value:</string>
+    <string name="original_value_label">Original Value:</string>
     <string name="new_value_label">New Value:</string>
     <string name="save">Save</string>
     <string name="edit_round">Edit Round</string>
@@ -70,9 +70,7 @@
     <string name="previous_hole">Prev Hole</string>
     <string name="login">Login</string>
     <string name="email">Email</string>
-    <string name="test_email">shamal1@gmail.com</string>
     <string name="password">Password</string>
-    <string name="test_password">123456</string>
     <string name="title_p2">Handicap?</string>
     <string name="title_p1">What\'s my</string>
     <string name="new_round">New Round</string>
@@ -84,9 +82,7 @@
     <string name="handicap_border">Handicap Border</string>
     <string name="number_of_holes_label">Number of Holes:</string>
     <string name="enter_club_name">Enter Club name</string>
-    <string name="test_club">Eagle\'s Nest Golf Club</string>
     <string name="enter_course_name">Enter Course name</string>
-    <string name="test_course_name">Green Course</string>
     <string name="this_field_is_required">This field is required</string>
     <string name="_9_holes">9 Holes</string>
     <string name="_18_holes">18 Holes</string>
@@ -100,12 +96,18 @@
     <string name="best_round">Best Round</string>
     <string name="all_rounds">All Rounds</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="test_firstname">Shamal</string>
-    <string name="test_lastname">Siri</string>
     <string name="d_o_b_format">D.O.B (mm-dd-yyyy)</string>
-    <string name="test_dob">08-08-1996</string>
     <string name="confirm_email">Confirm Email</string>
     <string name="show_error_here">Show Error Here</string>
     <string name="edit">edit</string>
-    <string name="delete">delete</string>
+    <string name="delete">delete</string>2
+<!--    -->
+<!--    Test Values-->
+    <string name="test_email">shamal1@gmail.com</string>
+    <string name="test_password">123456</string>
+    <string name="test_club">Eagle\'s Nest Golf Club</string>
+    <string name="test_course_name">Green Course</string>
+    <string name="test_firstname">Shamal</string>
+    <string name="test_lastname">Siri</string>
+    <string name="test_dob">08-08-1996</string>
 </resources>
