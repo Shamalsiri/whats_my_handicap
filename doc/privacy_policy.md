@@ -53,4 +53,4 @@ We may update this Privacy Policy from time to time to reflect changes in our ap
 ## 7. Contact Us
 If you have questions or concerns about this Privacy Policy, please contact us at:
 
-**Email**: [**someone@gmail.com**](mailto:someone@gmail.com) 
+**Email**: [**shamalsiriwardana.work@gmail.com**](mailto:shamalsiriwardana.work@gmail.com) 
