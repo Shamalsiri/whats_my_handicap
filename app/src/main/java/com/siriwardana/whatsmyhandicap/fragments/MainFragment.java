@@ -176,5 +176,6 @@ public class MainFragment extends Fragment {
         void onMainFragmentSettingsButtonClicked();
 
         void onMainFragmentLogoutButtonClicked();
+
     }
 }

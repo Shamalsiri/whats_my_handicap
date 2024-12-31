@@ -100,7 +100,9 @@
     <string name="confirm_email">Confirm Email</string>
     <string name="show_error_here">Show Error Here</string>
     <string name="edit">edit</string>
-    <string name="delete">delete</string>2
+    <string name="delete">delete</string>
+    <string name="app_version">App Version:</string>
+    <string name="settings">Settings</string>2
 <!--    -->
 <!--    Test Values-->
 </resources>
