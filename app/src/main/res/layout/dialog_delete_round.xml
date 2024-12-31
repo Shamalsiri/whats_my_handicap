@@ -50,7 +50,6 @@
         android:id="@+id/tv_delete_round_played_on"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/new_value"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_label_new_value"
         app:layout_constraintStart_toStartOf="@+id/tv_delete_course_name"
@@ -60,9 +59,8 @@
         android:id="@+id/tv_delete_club_name"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text=""
-        app:layout_constraintStart_toEndOf="@+id/tv_label_club_value"
+        app:layout_constraintStart_toStartOf="@+id/tv_delete_course_name"
         app:layout_constraintTop_toTopOf="@+id/tv_label_club_value" />
 
     <TextView
@@ -73,8 +71,9 @@
         android:layout_marginTop="28dp"
         android:text=""
         app:layout_constraintBottom_toBottomOf="@+id/tv_label_course_value"
-        app:layout_constraintStart_toEndOf="@+id/tv_label_club_value"
-        app:layout_constraintTop_toTopOf="@+id/tv_label_club_value" />
+        app:layout_constraintStart_toEndOf="@+id/tv_label_course_value"
+        app:layout_constraintTop_toTopOf="@+id/tv_label_club_value"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView10"
