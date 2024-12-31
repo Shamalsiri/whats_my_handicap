@@ -34,7 +34,7 @@ public class DeleteRoundDialog extends Dialog {
         TextView courseName = findViewById(R.id.tv_delete_course_name);
         TextView clubName = findViewById(R.id.tv_delete_club_name);
 
-        TextView playedOn = findViewById(R.id.tv_delete_round_played_on);
+        TextView playedOn = findViewById(R.id.et_new_value);
 
         String dateTime = round.getDate();
 

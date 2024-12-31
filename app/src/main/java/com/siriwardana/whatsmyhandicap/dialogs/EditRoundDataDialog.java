@@ -60,7 +60,7 @@ public class EditRoundDataDialog extends Dialog {
         titleTV = findViewById(R.id.tv_edit_title);
         currentValTV = findViewById(R.id.tv_current_value);
 
-        newValET = findViewById(R.id.tv_delete_round_played_on);
+        newValET = findViewById(R.id.et_new_value);
 
         Button saveBTN = findViewById(R.id.btn_edit_save);
         Button exitBTN = findViewById(R.id.btn_delete_exit);
@@ -72,13 +72,11 @@ public class EditRoundDataDialog extends Dialog {
                 updateTitle(context.getString(R.string.club_name));
                 newValET.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
                 currentValTV.setText(round.getClubName());
-                setEditTextWidth();
                 break;
             case EDIT_COURSE_NAME:
                 updateTitle(context.getString(R.string.course_name));
                 newValET.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
                 currentValTV.setText(round.getCourseName());
-                setEditTextWidth();
                 break;
             case EDIT_DISTANCE:
                 updateTitle(context.getString(R.string.distance));
@@ -159,17 +157,6 @@ public class EditRoundDataDialog extends Dialog {
         Button posButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
         posButton.setTextColor(ContextCompat.getColor(getContext(), R.color.wmh_red));;
 
-    }
-
-    /**
-     * Setting EditText Width
-     */
-    private void setEditTextWidth() {
-        Log.d(TAG, "setEditTextWidth: Setting Edit Text Width");
-        int width = currentValTV.getLayoutParams().width;
-        ViewGroup.LayoutParams layoutParams = newValET.getLayoutParams();
-        layoutParams.width = width;
-        newValET.setLayoutParams(layoutParams);
     }
 
     /**
