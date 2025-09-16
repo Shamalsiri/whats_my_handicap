@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.siriwardana.whatsmyhandicap"
         minSdk 27
-        targetSdk 29
+        targetSdk 31
         versionCode 1
         versionName "1.0.0"
 
@@ -41,6 +41,17 @@ android {
 
     buildFeatures {
         viewBinding true
+    }
+
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
+            def appName = project.name // Use application name or customize as needed
+            def versionName = variant.versionName
+            def versionCode = variant.versionCode
+            def outputFileName = "whats_my_handicap-v${versionName}.apk"
+            outputFileName = outputFileName.replace(' ', '_') // Replace spaces for safety
+            output.outputFileName = outputFileName
+        }
     }
 }
 
